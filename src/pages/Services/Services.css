@@ -1,0 +1,66 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.accordion-header {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+  -ms-flex-pack: justify !important;
+  justify-content: space-between !important;
+}
+.accordion-header button {
+  /* max-width: fit-content; */
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+}
+
+.services-logo img {
+  width: 25px;
+  height: 25px;
+}
+/* .our-services {
+  width: 80%;
+  margin: auto;
+} */
+
+.our-services {
+  width: 50%;
+  height: 300px;
+  background-color: orchid;
+  margin: auto;
+  cursor: pointer;
+  -webkit-animation: layoff 1s infinite ease-in-out;
+  animation: layoff 1s infinite ease-in-out;
+}
+@-webkit-keyframes layoff {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+  }
+  50% {
+    -webkit-transform: rotateX(50deg);
+    transform: rotateX(50deg);
+  }
+  /* 100% {
+    transform: rotateX(80deg);
+  } */
+}
+@keyframes layoff {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+  }
+  50% {
+    -webkit-transform: rotateX(50deg);
+    transform: rotateX(50deg);
+  }
+  /* 100% {
+    transform: rotateX(80deg);
+  } */
+}
