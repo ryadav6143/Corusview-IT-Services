@@ -160,10 +160,11 @@ function EditServiceSolution() {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDeleteClick(solution)}>
+                <Button onClick={() => handleDeleteClick(solution)}>
                     Delete
                   </Button>
                 </TableCell>
+               
               </TableRow>
             ))}
           </TableBody>
