@@ -64,6 +64,11 @@
   font-weight: 400;
   font-family: "Playfair Display", serif;
 }
+.solution-body div:first-child p {
+  font-size: 30px;
+  font-weight: 400;
+  font-family: "Playfair Display", serif;
+}
 .proble-cards {
   display: -webkit-box;
   display: -ms-flexbox;

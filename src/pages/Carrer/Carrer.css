@@ -80,6 +80,7 @@
   font-family: "Playfair Display", serif;
   color: var(--heading-color);
   line-height: 1;
+  max-width: 600px;
 }
 .join-us p:nth-child(2) {
   font-size: 20px;
@@ -96,6 +97,12 @@
 .join-us button a {
   text-decoration: none;
   color: var(--sub-heading);
+}
+.multi-group-images {
+  margin-bottom: 120px;
+}
+.single-gallery-group {
+  margin-bottom: 100px;
 }
 .gallery {
   max-width: 1440px;
