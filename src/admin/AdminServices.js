@@ -353,3 +353,47 @@ export const addSolution = async (newSolution) => {
     throw new Error('Error adding solution: ' + error.message);
   }
 };
+
+// Get What You Get Services Data
+export const fetchWhatYouGetServices = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/services_wyg`);
+    return response.data; // Assuming the response directly contains an array of services
+  } catch (error) {
+    throw new Error('Error fetching services: ' + error.message);
+  }
+};
+
+
+// Put What You Get Services Data
+export const updateWhatYouGetService = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/services_wyg/${id}`, updatedData);
+    return response.data; // Assuming the API returns updated data
+  } catch (error) {
+    throw new Error('Error updating service: ' + error.message);
+  }
+};
+
+
+
+// Add What You Get Services Data
+export const addWhatYouGetService = async (newService) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/services_wyg`, newService);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding service:', error);
+    throw error;
+  }
+};
+
+// Delete What You Get Services Data
+export const deleteWhatYouGetService = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/services_wyg/${id}`);
+    return response.data; // Assuming the API returns a success message upon deletion
+  } catch (error) {
+    throw new Error('Error deleting service: ' + error.message);
+  }
+};

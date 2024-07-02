@@ -135,10 +135,13 @@ function Sidebar({ isOpen }) {
                 <Link to="/admin/editservicesolution" onClick={handleLinkClick}>
                 Edit Services Solution
                 </Link>
+                <Link to="/admin/editwhatyouget" onClick={handleLinkClick}>
+                Edit What You'll Get
+                </Link>
               
               </div>
 
-              <button className="dropdown-btn" onClick={handleNriDropdown}>
+              {/* <button className="dropdown-btn" onClick={handleNriDropdown}>
                 NRI Corner
                 <span className="custom-btn">
                   {nriDropdownOpen ? "-" : "+"}
@@ -156,11 +159,11 @@ function Sidebar({ isOpen }) {
                 <Link to="/adminpanel/contactdetails" onClick={handleLinkClick}>
                   <a>Contact Details</a>
                 </Link>
-              </div>
+              </div> */}
 
               {/* --------------------------------------------------------------------------- */}
               <button className="dropdown-btn" onClick={handleContactDropdown}>
-                Contact Page
+                Contact us
                 <span className="custom-btn">
                   {contactDropdownOpen ? "-" : "+"}
                 </span>
@@ -173,16 +176,16 @@ function Sidebar({ isOpen }) {
               >
                 <Link
                   className="dropdown-btn"
-                  to="/adminpanel/editcontactus"
+                  to="/admin/editcontactus"
                   onClick={handleLinkClick}
                 >
-                  <a>Edit Contact Page</a>
+                  <a>Edit Contact us</a>
                 </Link>
-                <Link to="/adminpanel/contactform" onClick={handleLinkClick}>
-                  <a>Contact Form Data</a>
+                <Link to="/admin/editcontactform" onClick={handleLinkClick}>
+                  <a>Edit Contact Form </a>
                 </Link>
               </div>
-              <button className="dropdown-btn" onClick={handleDropdown}>
+              {/* <button className="dropdown-btn" onClick={handleDropdown}>
                 Upcoming Projects
                 <span className="custom-btn">{dropdownOpen ? "-" : "+"}</span>
               </button>
@@ -204,8 +207,8 @@ function Sidebar({ isOpen }) {
                 <Link to="/adminpanel/projectslider" onClick={handleLinkClick}>
                   <a href="#">Project Images</a>
                 </Link>
-              </div>
-              <button className="dropdown-btn" onClick={handleFooterDropdown}>
+              </div> */}
+              {/* <button className="dropdown-btn" onClick={handleFooterDropdown}>
                 Footer
                 <span className="custom-btn">
                   {footerDropdownOpen ? "-" : "+"}
@@ -223,7 +226,7 @@ function Sidebar({ isOpen }) {
                 <Link to="/adminpanel/editfooter" onClick={handleLinkClick}>
                   <a>Edit Footer</a>
                 </Link>
-              </div>
+              </div> */}
             </ul>
           </div>
         </div>
