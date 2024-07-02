@@ -1,0 +1,292 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.about-page-heading {
+  text-align: center;
+  font-size: 90px;
+  text-transform: uppercase;
+  color: var(--heading-color);
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  line-height: 1;
+  margin-block: 10%;
+  -webkit-animation: 0.5s slide-top ease-in-out;
+  animation: 0.5s slide-top ease-in-out;
+}
+
+.about-us-cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 10px;
+}
+.about-us-card:nth-child(1),
+.about-us-card:nth-child(3) {
+  width: 416px;
+}
+.about-us-card:nth-child(2) {
+  width: 514px;
+  background: #f3f9f9;
+  -webkit-animation: 0.5s slide-top ease-in-out;
+  animation: 0.5s slide-top ease-in-out;
+}
+.about-us-card:nth-child(1) {
+  -webkit-animation: 0.5s slide-right ease-in-out;
+  animation: 0.5s slide-right ease-in-out;
+}
+.about-us-card:nth-child(3) {
+  -webkit-animation: 0.5s slide-left ease-in-out;
+  animation: 0.5s slide-left ease-in-out;
+}
+.about-us-card {
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px;
+}
+.about-us-card p:nth-child(1) {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+}
+.about-us-card p {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+.our-values,
+.about-us {
+  margin-top: 10%;
+}
+.our-values-heading p {
+  font-size: 72px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  color: var(--sub-heading);
+  font-weight: 700;
+}
+.our-values-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 10px;
+}
+.our-values-cards {
+  background-color: #d9edeb;
+  border-radius: 25px;
+  width: 700px;
+  height: 270px;
+  overflow: hidden;
+  -webkit-animation: popup linear;
+  animation: popup linear;
+  animation-timeline: view();
+}
+@-webkit-keyframes popup {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  20% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes popup {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  20% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.sub-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  gap: 10px;
+}
+.sub-card div:nth-child(2) {
+  width: 286px;
+}
+.value-numberings p {
+  font-family: "Playfair Display", serif;
+  font-size: 250px;
+  color: #e8aa93;
+  font-weight: bold;
+}
+
+.value-content {
+  color: #375350;
+  margin-top: 50px;
+}
+.value-content p:nth-child(1) {
+  font-size: 36px;
+  font-family: "Playfair Display", serif;
+}
+
+.value-content p:nth-child(2) {
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+}
+.join-us-btn {
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.join-us-btn button {
+  background-color: #d9edeb;
+  border: none;
+  width: 257px;
+  border-radius: 15px;
+  padding: 16px 80px 16px 80px;
+}
+.join-us-btn button a {
+  text-decoration: none;
+  font-size: 30px;
+  color: #375350;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+}
+
+@media screen and (max-width: 320px) {
+  .value-numberings p {
+    font-family: "Playfair Display", serif;
+    font-size: 100px;
+  }
+  .our-values-cards {
+    height: auto;
+  }
+  .value-content {
+    margin-top: 10px;
+  }
+  .about-page-heading,
+  .our-values-heading p {
+    font-size: 30px;
+  }
+  .our-values,
+  .about-us {
+    padding-inline: 15px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Styles for larger smartphones */
+  .value-numberings p {
+    font-family: "Playfair Display", serif;
+    font-size: 100px;
+  }
+  .our-values-cards {
+    height: auto;
+  }
+  .value-content {
+    margin-top: 10px;
+  }
+  .about-page-heading,
+  .our-values-heading p {
+    font-size: 30px;
+  }
+  .our-values,
+  .about-us {
+    padding-inline: 15px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  /* Styles for small desktops and tablets in landscape */
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Styles for larger desktops and laptops */
+}
+
+@-webkit-keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(-0px);
+  }
+}
+
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(-0px);
+  }
+}
+@-webkit-keyframes slide-right {
+  0% {
+    -webkit-transform: translatex(-200px);
+    transform: translatex(-200px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-right {
+  0% {
+    -webkit-transform: translatex(-200px);
+    transform: translatex(-200px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@-webkit-keyframes slide-left {
+  0% {
+    -webkit-transform: translatex(200px);
+    transform: translatex(200px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-left {
+  0% {
+    -webkit-transform: translatex(200px);
+    transform: translatex(200px);
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}

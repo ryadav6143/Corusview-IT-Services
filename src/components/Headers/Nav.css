@@ -1,0 +1,131 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.header-body {
+  background-color: var(--header-bg-color);
+  height: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.header-child {
+  background-color: #f3f9e9;
+  height: 70px;
+  width: 884px;
+  max-width: 884px;
+  margin: auto;
+  border-radius: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.header-logo {
+  height: 30px;
+  width: 200px;
+  margin: 20px;
+}
+summary {
+  float: right;
+}
+details div {
+  background-color: green;
+}
+.hamburger {
+  width: 18px;
+  height: 15px;
+  margin-top: 22px;
+}
+
+.dropdown button {
+  background-color: transparent !important;
+  border: none;
+  color: transparent !important;
+}
+.dropdown-menu {
+  width: 100vw;
+  max-width: 884px;
+  background-color: #f3f9e9;
+  border: none !important;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 30px !important;
+}
+.dropdown-menu li {
+  display: inline;
+  margin: 30px;
+}
+
+.navigations {
+  color: grey;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
+@media screen and (max-width: 320px) {
+  /* Styles for smaller smartphones */
+  .header-child {
+    margin-inline: 10px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Styles for larger smartphones */
+  .dropdown-menu {
+    width: 100vw;
+    padding: 20px;
+  }
+  .dropdown-menu li {
+    display: block;
+    margin: 10px;
+  }
+  .header-child {
+    margin-inline: 10px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* Styles for tablets */
+  .dropdown-menu li {
+    display: inline;
+    margin: 20px;
+  }
+  .header-child {
+    margin-inline: 10px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .dropdown-menu {
+    width: 97.9vw;
+    padding: 20px;
+  }
+  .dropdown-menu li {
+    display: inline;
+    margin: 20px;
+  }
+  .header-child {
+    margin-inline: 10px;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Styles for larger desktops and laptops */
+}
+@media screen and (min-width: 2500px) {
+  .dropdown-menu {
+    margin-left: -690% !important;
+  }
+}

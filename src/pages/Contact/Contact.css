@@ -1,0 +1,208 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.contact-flex-box {
+  margin-top: 10%;
+  margin-bottom: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 30px;
+  margin-inline: 15px;
+}
+.contact-card {
+  width: 700px;
+  max-width: 700px;
+}
+.contact-card:last-child {
+  background-color: #eeeeee;
+  border-radius: 24px;
+}
+.contact-card-1 div:first-child {
+  font-size: 72px;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+  color: #999999;
+  line-height: 90px;
+  -webkit-animation: slide-right-new 0.8s ease-in-out;
+  animation: slide-right-new 0.8s ease-in-out;
+}
+@-webkit-keyframes slide-right-new {
+  0% {
+    -webkit-transform: translatex(-100%);
+    transform: translatex(-100%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-right-new {
+  0% {
+    -webkit-transform: translatex(-100%);
+    transform: translatex(-100%);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+  }
+}
+.contact-card-1 div:first-child span {
+  color: #375350;
+}
+.contact-card-1 div:last-child img {
+  width: 25px;
+  height: 25px;
+  margin-right: 20px;
+}
+.contact-card-1 div:last-child p {
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  padding: 24px;
+}
+.contact-card-1 div:last-child p:nth-child(2) {
+  border: 3px solid var(--sub-heading);
+  border-radius: 16px;
+  background-color: #d9edeb;
+  max-width: 484px;
+}
+.contact-card-1 div:last-child {
+  margin-top: 50px;
+}
+.contact-card-2 {
+  padding: 40px;
+}
+.contact-card-2 p:nth-child(1) {
+  color: var(--form-color);
+  font-weight: 400;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+.contact-form input {
+  width: 100%;
+  background-color: transparent;
+  margin-block: 30px;
+  border: none;
+  border-bottom: 3px solid var(--header-bg-color);
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+.contact-form input:focus {
+  outline: none;
+  border-bottom: 3px solid var(--sub-heading);
+  color: var(--sub-heading);
+}
+.contact-form input::-webkit-input-placeholder {
+  color: var(--sub-heading);
+}
+.contact-form input::-moz-placeholder {
+  color: var(--sub-heading);
+}
+.contact-form input:-ms-input-placeholder {
+  color: var(--sub-heading);
+}
+.contact-form input::-ms-input-placeholder {
+  color: var(--sub-heading);
+}
+.contact-form input::placeholder {
+  color: var(--sub-heading);
+}
+.contact-card-2 button img {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+.contact-card-2 button {
+  margin-top: 100px;
+  background-color: var(--sub-heading);
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 400px;
+  font-family: "Poppins", sans-serif;
+  border-radius: 16px;
+  padding: 24px 64px 24px 64px;
+}
+.vacancy-btns button {
+  background-color: transparent;
+  color: #83c5be;
+  border: 1px solid #83c5be;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 10px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+.bnt-clicked {
+  background-color: var(--sub-heading) !important;
+  color: #eeeeee !important ;
+}
+.vacancy-btns {
+  margin-bottom: 30px;
+}
+.social-btns img {
+  width: 40px;
+  height: 40px;
+
+  cursor: pointer;
+}
+.social-btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 30px;
+
+  margin-left: 50px;
+}
+
+.insta img:hover {
+  content: url(../../assets/logos/color-logo/insta-filled.png);
+}
+.linkedin img:hover {
+  content: url(../../assets/logos/color-logo/linkedinfilled.png);
+}
+.twitter img:hover {
+  content: url(../../assets/logos/color-logo/twitter-filled.png);
+}
+
+.hidden-select-options {
+  display: none;
+}
+@media screen and (max-width: 320px) {
+  /* Styles for smaller smartphones */
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  /* Styles for larger smartphones */
+  .contact-card-2 button {
+    padding: 20px 30px 20px 30px;
+  }
+  .contact-card-1 div:first-child {
+    font-size: 40px;
+    line-height: normal;
+    /* text-align: center; */
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* Styles for tablets */
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  /* Styles for small desktops and tablets in landscape */
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  /* Styles for larger desktops and laptops */
+}
