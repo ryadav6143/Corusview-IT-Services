@@ -12,16 +12,70 @@ import Techno from "./pages/Softwaredev/Techno";
 import Test from "./pages/Test/Test";
 import Products from "./pages/Products/Products";
 import AdminPanel from "./admin/AdminPanel/AdminPanel";
-import EditHome from "./admin/AdminPages/EditHome/EditHome";
-import EditAbout from "./admin/AdminPages/EditAbout/EditAbout";
+
+import EditServices from "./admin/AdminPages/EditHome/EditServices";
+import EditSlider from "./admin/AdminPages/EditHome/EditSlider";
+import EditRecentWork from "./admin/AdminPages/EditHome/EditRecentWork";
+import EditAboutUs from "./admin/AdminPages/EditHome/EditAboutUs";
+import EditHeading from "./admin/AdminPages/EditHome/EditHeading";
+import EditAboutPage from "./admin/AdminPages/EditAbout/EditAboutPage";
+import EditAboutValue from "./admin/AdminPages/EditAbout/EditAboutValue";
+import EditServicesHead from "./admin/AdminPages/EditServices/EditServicesHead";
+import EditServiceProblem from "./admin/AdminPages/EditServices/EditServiceProblem";
+import EditServiceSolution from "./admin/AdminPages/EditServices/EditServiceSolution";
+import EditProblemHead from "./admin/AdminPages/EditServices/EditProblemHead";
+import EditSolutionHead from "./admin/AdminPages/EditServices/EditSolutionHead";
 function App() {
   return (
     <Main>
       {/* <Nav></Nav> */}
       <Routes>
         <Route path="admin" element={<AdminPanel />}>
-          <Route exact path="edithome" element={<EditHome />}></Route>
-          <Route exact path="editabout" element={<EditAbout />}></Route>
+          {/* // Home page routing  */}
+          <Route exact path="editheading" element={<EditHeading />}></Route>
+          <Route exact path="editaboutus" element={<EditAboutUs />}></Route>
+          <Route exact path="editservices" element={<EditServices />}></Route>
+          <Route exact path="editslider" element={<EditSlider />}></Route>
+          <Route
+            exact
+            path="editrecentwork"
+            element={<EditRecentWork />}
+          ></Route>
+
+          {/* // About us page Routing */}
+          <Route exact path="editaboutpage" element={<EditAboutPage />}></Route>
+          <Route
+            exact
+            path="editaboutvalue"
+            element={<EditAboutValue />}
+          ></Route>
+
+          {/* // Services Page Routing  */}
+          <Route
+            exact
+            path="editservicehead"
+            element={<EditServicesHead />}
+          ></Route>
+          <Route
+            exact
+            path="editproblemhead"
+            element={<EditProblemHead />}
+          ></Route>
+          <Route
+            exact
+            path="editserviceproblems"
+            element={<EditServiceProblem />}
+          ></Route>
+          <Route
+            exact
+            path="editservicesolution"
+            element={<EditServiceSolution />}
+          ></Route>
+          <Route
+            exact
+            path="editsolutionhead"
+            element={<EditSolutionHead />}
+          ></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>
