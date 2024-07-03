@@ -128,3 +128,50 @@ export const getProducts = async () => {
     throw error; // Propagate the error back to the caller
   }
 };
+export const getContactInfo = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/contactUs`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching contact information:", error);
+    throw error;
+  }
+};
+export const getRoles = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/jobRoles`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching contact information:", error);
+    throw error;
+  }
+};
+export const currentJobOpenings = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/jobOpenings`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching job openings:", error);
+    throw error; // Rethrow the error so it can be caught where this function is called
+  }
+};
+export const getRecentWorks = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/recent_work`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching recent works:", error);
+    throw error; // Rethrow the error so it can be handled where the function is called
+  }
+};
+export const submitContactForm = async (formData, selectedOption) => {
+  try {
+    const response = await axios.post(`${API_URL}/contactForm`, {
+      ...formData,
+      role: selectedOption,
+    });
+    return response.data; // Assuming your API returns some data upon success
+  } catch (error) {
+    throw error; // Propagate the error to handle it in your component
+  }
+};

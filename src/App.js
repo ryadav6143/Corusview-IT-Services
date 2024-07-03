@@ -14,7 +14,7 @@ import Products from "./pages/Products/Products";
 import AdminPanel from "./admin/AdminPanel/AdminPanel";
 import EditHome from "./admin/AdminPages/EditHome/EditHome";
 import EditAbout from "./admin/AdminPages/EditAbout/EditAbout";
-import Solutions from "./pages/Softwaredev/Solutions";
+import RecentWork from "./pages/Home/RecentWork";
 function App() {
   return (
     <Main>
@@ -32,7 +32,7 @@ function App() {
         <Route path="test" element={<Test />}></Route>
         <Route path="our-products" element={<Products />}></Route>
         <Route path="test" element={<Test />}></Route>
-        <Route path="solutions" element={<Solutions />}></Route>
+        <Route path="recentwork" element={<RecentWork />}></Route>
       </Routes>
     </Main>
   );

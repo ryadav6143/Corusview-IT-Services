@@ -10,6 +10,7 @@ import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
 import uipos from "../../assets/images/projects/uipos.png";
 import cview from "../../assets/images/projects/cview.png";
+import RecentWork from "./RecentWork";
 
 function Home() {
   const [mainTableData, setMainTableData] = useState(null);
@@ -73,18 +74,7 @@ function Home() {
           <p>Recent work</p>
           <p>{mainTableData.recent_work_heading}</p>
         </div>
-
-        <div className="recent-flex">
-          <div className="small-box">
-            <img src={uipos} alt="" />
-          </div>
-          <div className="center-box">
-            <img src={cview} alt="" />
-          </div>
-          <div className="small-box">
-            <img src={uipos} alt="" />
-          </div>
-        </div>
+        <RecentWork></RecentWork>
       </div>
       <Footers></Footers>
     </>

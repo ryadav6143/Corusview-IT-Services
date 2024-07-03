@@ -5,6 +5,7 @@ import "./Carrer.css";
 import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
 import CarrerGallery from "./CarrerGallery";
+import JobOpenings from "./JobOpenings";
 
 function Carrer() {
   const [careerData, setCareerData] = useState(null);
@@ -125,6 +126,9 @@ function Carrer() {
               ))}
         </div>
       </div>
+
+      <JobOpenings></JobOpenings>
+
       {careerData ? (
         <div className="join-us">
           <p>{careerData.ryh_heading}</p>
