@@ -30,6 +30,10 @@ import EditContactUs from "./admin/AdminPages/EditContact/EditContactUs";
 import EditContactForm from "./admin/AdminPages/EditContact/EditContactForm";
 import EditCarrerHead from "./admin/AdminPages/EditCarrer/EditCarrerHead";
 import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
+import EditCarrerWYS from "./admin/AdminPages/EditCarrer/EditCarrerWYS";
+import EditCarrerRYS from "./admin/AdminPages/EditCarrer/EditCarrerRYS";
+
+
 function App() {
   return (
     <Main>
@@ -105,6 +109,16 @@ function App() {
             exact
             path="editcarrerimages"
             element={<EditCarrerImages />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerwys"
+            element={<EditCarrerWYS />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerrys"
+            element={<EditCarrerRYS />}
           ></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>

@@ -17,8 +17,12 @@ import {
   Input,
   TextField,
   Box,
+  IconButton,
 } from '@mui/material';
-import { fetchCareerImages, updateCareerImage , uploadCareerImages } from '../../AdminServices';
+import { fetchCareerImages, updateCareerImage, uploadCareerImages, deleteCareerImage } from '../../AdminServices';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
 
 function EditCarrerImages() {
   const [careerImages, setCareerImages] = useState([]);
@@ -27,6 +31,8 @@ function EditCarrerImages() {
   const [selectedOption, setSelectedOption] = useState('');
   const [selectedFiles, setSelectedFiles] = useState({});
   const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [imageToDelete, setImageToDelete] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -37,6 +43,7 @@ function EditCarrerImages() {
       // Handle errors as needed
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -85,6 +92,7 @@ function EditCarrerImages() {
   const handleAddDialogClose = () => {
     setOpenAddDialog(false);
   };
+
   const handleAddOpen = () => {
     setOpenAddDialog(true);
   };
@@ -106,6 +114,29 @@ function EditCarrerImages() {
 
     fetchData();
     setOpenAddDialog(false);
+  };
+
+  const handleDeleteOpen = (id) => {
+    setImageToDelete(id);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleDeleteClose = () => {
+    setOpenDeleteDialog(false);
+    setImageToDelete(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteCareerImage(imageToDelete);
+      console.log('Career image deleted successfully');
+      // Optionally, update state or display a success message
+    } catch (error) {
+      console.error('Error deleting career image:', error);
+      // Handle error as needed
+    }
+    fetchData();
+    handleDeleteClose();
   };
 
   return (
@@ -130,6 +161,8 @@ function EditCarrerImages() {
               <TableCell>Image 6</TableCell>
               <TableCell>Image 7</TableCell>
               <TableCell>Image 8</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -165,6 +198,11 @@ function EditCarrerImages() {
                     Edit
                   </Button>
                 </TableCell>
+                <TableCell>
+                  <IconButton color="secondary" onClick={() => handleDeleteOpen(item.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -196,59 +234,108 @@ function EditCarrerImages() {
             <MenuItem value="img_8">Image 8</MenuItem>
           </Select>
           {selectedOption && (
-            <Input type="file" onChange={(e) => handleFileChange(e, selectedOption)} />
+            <TextField margin='dense' fullWidth type="file" onChange={(event) => handleFileChange(event, selectedOption)} />
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleSaveChanges} variant="contained" color="primary">Save Changes</Button>
+          <Button onClick={handleDialogClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSaveChanges} color="primary">
+            Save Changes
+          </Button>
         </DialogActions>
       </Dialog>
 
       {/* Dialog for adding */}
       <Dialog open={openAddDialog} onClose={handleAddDialogClose}>
-        <DialogTitle>Add Career Image</DialogTitle>
+        <DialogTitle>Add Career Images</DialogTitle>
         <DialogContent>
           <Box>
-            <label>Image 1:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_1')} />
-          </Box>
-          <Box>
-            <label>Image 2:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_2')} />
-          </Box>
-          <Box>
-            <label>Image 3:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_3')} />
-          </Box>
-          <Box>
-            <label>Image 4:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_4')} />
-          </Box>
-          <Box>
-            <label>Image 5:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_5')} />
-          </Box>
-          <Box>
-            <label>Image 6:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_6')} />
-          </Box>
-          <Box>
-            <label>Image 7:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_7')} />
-          </Box>
-          <Box>
-            <label>Image 8:</label>
-            <TextField type="file" onChange={(e) => handleFileChange(e, 'img_8')} />
+            <p>Select images to add:</p>
+            <TextField
+              type="file"
+             
+              onChange={(event) => handleFileChange(event, 'img_1')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+             
+              onChange={(event) => handleFileChange(event, 'img_2')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+             
+              onChange={(event) => handleFileChange(event, 'img_3')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+             
+              onChange={(event) => handleFileChange(event, 'img_4')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+           
+              onChange={(event) => handleFileChange(event, 'img_5')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+         
+              onChange={(event) => handleFileChange(event, 'img_6')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+              
+              onChange={(event) => handleFileChange(event, 'img_7')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="file"
+             
+              onChange={(event) => handleFileChange(event, 'img_8')}
+              fullWidth
+              margin="normal"
+            />
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddDialogClose}>Cancel</Button>
-          <Button onClick={handleAddImages} variant="contained" color="primary">Add Images</Button>
+          <Button onClick={handleAddDialogClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleAddImages} color="primary">
+            Add Images
+          </Button>
         </DialogActions>
       </Dialog>
 
-      
+      {/* Dialog for deletion confirmation */}
+      <Dialog open={openDeleteDialog} onClose={handleDeleteClose}>
+        <DialogTitle>Delete Career Image</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this image?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

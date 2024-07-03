@@ -459,8 +459,107 @@ export const uploadCareerImages = async (formData) => {
   }
 };
 
+
+
 //delete carrer images
 export const deleteCareerImage = async (id) => {
-  const response = await axios.delete(`${BASE_URL}/career_images/${id}`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${BASE_URL}/career_images/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting career image:', error);
+    throw error;
+  }
+};
+
+
+// Get Carrer WYS data 
+
+export const fetchCareerWYS = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/carrer_see_and_get`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching career data:', error);
+    throw error;
+  }
+};
+
+// Put Carrer WYS data 
+export const updateCareerWYS = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/carrer_see_and_get/${id}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating career data:', error);
+    throw error;
+  }
+};
+
+// Delete Carrer WYS data 
+export const deleteCareerWYS = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/carrer_see_and_get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting career data:', error);
+    throw error;
+  }
+};
+
+// add Carrer WYS data 
+export const createCareerWYS = async (data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/carrer_see_and_get`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+// get contact us api 
+export const fetchContactUsInfo = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/contactUs`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching contact us info:', error);
+    throw error;
+  }
+};
+
+// Put contact us api 
+export const updateContactUsInfo = async (updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/contactUs`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating contact us info:', error);
+    throw error;
+  }
+};
+
+
+// Get COntact form data 
+export const fetchContactForm = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/contactForm`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching contact form data:', error);
+    throw error;
+  }
+};
+
+// Delete COntact form data 
+export const deleteContactFormEntry = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/contactForm/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting contact form entry with ID ${id}:`, error);
+    throw error;
+  }
 };

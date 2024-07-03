@@ -159,6 +159,12 @@ function Sidebar({ isOpen }) {
                 <Link to="/admin/editcarrerimages" onClick={handleLinkClick}>
                   <a>Edit Carrer Images</a>
                 </Link>
+                <Link to="/admin/editcarrerwys" onClick={handleLinkClick}>
+                  <a>Edit Carrer What you see</a>
+                </Link>
+                <Link to="/admin/editcarrerrys" onClick={handleLinkClick}>
+                  <a>Edit Carrer Raise  your Hand</a>
+                </Link>
               </div>
 
               {/* --------------------------------------------------------------------------- */}
