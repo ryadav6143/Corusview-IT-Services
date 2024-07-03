@@ -175,3 +175,12 @@ export const submitContactForm = async (formData, selectedOption) => {
     throw error; // Propagate the error to handle it in your component
   }
 };
+export const getFooterData = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/footer`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching footer data:", error);
+    throw error; // Optionally handle or rethrow the error
+  }
+};

@@ -102,6 +102,8 @@
   color: white;
   padding-block: 50px;
   position: relative;
+  max-height: 430px;
+  overflow-y: hidden;
 }
 .services p {
   font-size: 48px;
@@ -121,12 +123,15 @@
   font-family: "Poppins", sans-serif;
 }
 .services-vector {
+  height: 100%;
+  max-height: 430px;
   position: absolute;
   right: 0;
   top: 0;
 }
 .services-vector img {
-  height: 392px;
+  height: 100%;
+  max-height: 430px;
 }
 .dev-process img {
   width: 100%;

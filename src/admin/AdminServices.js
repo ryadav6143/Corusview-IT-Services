@@ -1,690 +1,565 @@
 import axios from "axios";
-import { API_URL } from "../Config/config";
+import { API_URL } from "../config/config";
 const BASE_URL = API_URL;
 
-//get upcoming project heading
-export const getAllSectionFirst = async () => {
+
+// Get Home Heading data 
+export const fetchMainTableData = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/getSectionFirstContent`);
+    const response = await axios.get(`${BASE_URL}/main_table`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error);
     throw error;
   }
 };
 
-// put upcoming project heading
-export const updateSectionFirstContent = async (id, newData) => {
+// put Home Heading data 
+export const updateMainTableData = async (id, newData) => {
   try {
-    const response = await axios.put(
-      `${BASE_URL}/updateOnlyContent/${id}`,
-      newData
-    );
+    const response = await axios.put(`${BASE_URL}/main_table`, newData);
     return response.data;
   } catch (error) {
-    console.error("Error updating data:", error);
     throw error;
   }
 };
 
-// Get all banner images
-export const getAllBannerImages = async () => {
+// Get Services data 
+export const fetchOurServicesData = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/getAllSectionFirst`);
-    return response.data;
+    const response = await axios.get(`${BASE_URL}/our_services`);
+    return response.data; // Assuming the API returns an array of services as described
   } catch (error) {
-    console.error("Error fetching banner images:", error);
     throw error;
   }
 };
 
-export const updateBannerImage = async (imageId, file) => {
+// put service data 
+export const updateServiceData = async (id, newData) => {
   try {
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const response = await axios.put(
-      `${BASE_URL}/updateBannerImages/${imageId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.put(`${BASE_URL}/our_services/${id}`, newData);
     return response.data;
   } catch (error) {
-    console.error("Error updating banner image:", error);
     throw error;
   }
 };
 
-// Add a banner image
-export const addBannerImage = async (file) => {
+// add Service Data
+export const addServiceData = async (formData) => {
   try {
-    const formData = new FormData();
-    formData.append("banner_img", file);
-
-    const response = await axios.put(
-      `${BASE_URL}/addSectionFirstImages/1`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error adding banner image:", error);
-    throw error;
-  }
-};
-
-// delete a banner image
-export const deleteBannerImage = async (imageId) => {
-  try {
-    const response = await axios.delete(
-      `${BASE_URL}/deleteBannerImage/${imageId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting banner image:", error);
-    throw error;
-  }
-};
-
-// Get all slider images
-export const getAllSliderImages = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAllSliderImages`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching slider images:", error);
-    throw error;
-  }
-};
-
-// Update a slider image
-export const updateSliderImage = async (sliderImgId, file) => {
-  try {
-    const formData = new FormData();
-    formData.append("slider_img", file);
-
-    const response = await axios.put(
-      `${BASE_URL}/updateSliderImages/${sliderImgId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error updating slider image:", error);
-    throw error;
-  }
-};
-
-// Delete a slider image
-export const deleteSliderImage = async (sliderImgId) => {
-  try {
-    const response = await axios.delete(
-      `${BASE_URL}/deleteSliderImage/${sliderImgId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting slider image:", error);
-    throw error;
-  }
-};
-
-// get all data api
-export const fetchContentWithSliderImages = async () => {
-  try {
-    const response = await axios.get(
-      `${BASE_URL}/getAllContentWithSliderImages`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
-};
-
-// add slider images
-export const addSliderImage = async (formData) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/addSliderImage`, formData, {
+    const response = await axios.post(`${BASE_URL}/our_services`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
     return response.data;
   } catch (error) {
-    console.error("Error adding slider image:", error);
-    throw error;
+    throw new Error(`Failed to add service: ${error.message}`);
   }
 };
 
-// update content and vedio
-export const updateContentWithVideo = async (contentId, formData) => {
+// Delete Services data 
+export const deleteServiceData = async (id) => {
   try {
-    const response = await axios.put(
-      `${BASE_URL}/updateContentWithVideo/${contentId}`,
-      formData
-    );
+    const response = await axios.delete(`${BASE_URL}/our_services/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error updating data:", error);
-    throw error;
+    throw new Error(`Failed to delete service: ${error.message}`);
   }
 };
 
-// add new project api
-export const addContentWithVideo = async (formData) => {
+
+// Get Slider data
+export const fetchTestimonials = async () => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/addContentWithVideo`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    const response = await axios.get(`${BASE_URL}/testimonials`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch testimonials');
+  }
+};
+
+
+// Put Slider Data 
+export const updateTestimonialById = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/testimonials/${id}`, updatedData);
+    return response.data; // Return updated data if needed
+  } catch (error) {
+    throw new Error(`Failed to update testimonial with ID ${id}`);
+  }
+};
+
+// Add Slider Data 
+export const addTestimonial = async (formData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/testimonials`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data; // Assuming your API returns the added testimonial
+  } catch (error) {
+    throw new Error(`Failed to add testimonial: ${error.message}`);
+  }
+};
+
+// Delete Slider Data
+export const deleteTestimonialById = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/testimonials/${id}`);
+    return response.data; // Optionally return data if needed
+  } catch (error) {
+    throw new Error(error.response.data.message || error.message);
+  }
+};
+
+// Get Recent Work data 
+export const fetchRecentWorks = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/recent_work`);
+    return response.data; // Assuming your API returns an array of recent works
+  } catch (error) {
+    throw new Error(`Failed to fetch recent works: ${error.message}`);
+  }
+};
+
+
+// Put Recent Work Data 
+export const updateRecentWorkById = async (id, formData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/recent_work/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
       }
-    );
+    });
     return response.data;
   } catch (error) {
-    console.error("Error adding slider image:", error);
-    throw error;
+    throw new Error(`Failed to update recent work: ${error.message}`);
   }
 };
 
-//delete new project data
-
-export const deleteContainerData = async (deleteContentId) => {
+// Add Recent Work data
+export const addRecentWork = async (formData) => {
   try {
-    const response = await axios.delete(
-      `${BASE_URL}/deleteContainerData/${deleteContentId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting container data:", error);
-    throw error;
-  }
-};
-
-// Get Home Logo and Banner Image
-export const getHomeData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getHome`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching home data:", error);
-    throw error;
-  }
-};
-
-// PUT Home Logo and banner image
-export const updateHomeData = async (id, newData) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/updateHome`, newData);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating home data:", error);
-    throw error;
-  }
-};
-
-// Get home section first data
-export const getHomeSectionFirst = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getHomeSectionFirst`);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
-};
-
-// Update Home Section First Data
-export const updateHomeSectionFirst = async (id, newData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/updateHomeSectionFirst`,
-      newData
-    );
-    return response.data; // Assuming your API returns data upon successful update
-  } catch (error) {
-    throw new Error("Error updating home section first data:", error);
-  }
-};
-
-// Get home section second data
-export const getHomeSectionSecond = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/homeSectionSecond`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching HomeSectionSecond data:", error);
-    return null;
-  }
-};
-
-// Update Home Section Second Data
-export const updateHomeSectionSecond = async (id, updatedData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/homeSectionSecond/${id}`,
-      updatedData
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error updating HomeSectionSecond data:", error);
-    return null;
-  }
-};
-
-// ADD Home Section Second Data
-
-export const addHomeSectionSecond = async (formData) => {
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/homeSectionSecond`,
-      formData
-    );
-    return response;
-  } catch (error) {
-    console.error("Error adding Home Section Second image:", error);
-    return null;
-  }
-};
-
-// Delete Home Section Second Data
-
-export const deleteHomeSectionSecond = async (id) => {
-  try {
-    const response = await axios.delete(`${BASE_URL}/homeSectionSecond/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting Home Section Second data:", error);
-    return null;
-  }
-};
-
-// Get Home Section Third  Data
-export const fetchHomeSectionThird = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getHomeSectionThird`);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-};
-
-// Update Home Section Third Data
-export const updateHomeSectionThird = async (id, newData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/updateHomeSectionThird`,
-      newData
-    );
-    return response.data; // Assuming your API returns data upon successful update
-  } catch (error) {
-    throw new Error("Error updating home section first data:", error);
-  }
-};
-
-// Get About US Banner Data
-
-export const fetchAboutUsBanner = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/aboutus_banner`);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching about us banner data:", error);
-    throw error;
-  }
-};
-
-// update ABout Us Banner data
-
-export const updateAboutUsBanner = async (id, updatedData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/aboutus_banner/${id}`,
-      updatedData
-    );
-    return response.data; // Optionally, you can return the updated data or a success message
-  } catch (error) {
-    console.error("Error updating About Us Banner data:", error);
-    throw error; // Throw the error to handle it in the component
-  }
-};
-
-// ADD ABout Us Banner Data
-export const addAboutUsBanner = async (formData) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/aboutus_banner`, formData);
-    return response.data;
-  } catch (error) {
-    throw new Error("Error adding about us banner:", error);
-  }
-};
-
-// Delete ABout Us Banner Data
-export const deleteAboutUsBanner = async (id) => {
-  try {
-    const response = await axios.delete(`${BASE_URL}/aboutus_banner/${id}`);
-    return response.data;
-  } catch (error) {
-    throw new Error("Error deleting about us banner:", error);
-  }
-};
-
-// Get About us Section First Data
-export const fetchAboutUsSectionFirst = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAboutUsSectionFirst`);
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching about us section first:", error);
-  }
-};
-
-// Update About Us Section First Data
-export const updateAboutUsSectionFirst = async (newData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/updateAboutUsSectionFirst`,
-      newData
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error updating About Us Section First data:", error);
-    throw error;
-  }
-};
-
-// Get About Us Section Second Data
-export const getAboutUsSectionSecond = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAboutUsSectionSecond`);
-    return response.data.data; // Returning just the data object
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null; // Return null on error
-  }
-};
-
-// Update About Us Section Second Data
-export const updateAboutUsSectionSecond = async (formData) => {
-  try {
-    const response = await axios.put(
-      `${BASE_URL}/updateAboutUsSectionSecond`,
-      formData
-    );
-    return response.data; // Returning the response data
-  } catch (error) {
-    console.error("Error updating data:", error);
-    throw error; // Throw error for handling in the component
-  }
-};
-
-//Get NRI Corner Data
-export const getNriPageData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getNriPage`);
-    return response.data.data; // Returning just the data object
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null; // Return null on error
-  }
-};
-
-//Update NRI Corner Data
-export const updateNriPageData = async (formData) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/updateNriPage`, formData);
-    return response.data; // Returning the response data
-  } catch (error) {
-    console.error("Error updating data:", error);
-    throw error; // Throw error for handling in the component
-  }
-};
-
-// Get NRI Contact Details
-export const getNriPageFormData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getNriPageForm`);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-};
-
-// Get Contact Us Data
-export const getContactPageData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getContactPage`);
-    return response.data.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-};
-
-// Update Contact Us Data
-export const updateContactPageData = async (id, formData) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/updateContactPage`, formData);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating data:", error);
-    return null;
-  }
-};
-
-//Get Footer Data
-export const getAllFooterData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/getAllFooterData`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching footer data:", error);
-    return null;
-  }
-};
-
-// Update Footer Data
-
-export const updateFooterData = async (id, data) => {
-  try {
-    const response = await axios.put(`${BASE_URL}/updateFooter`, data);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating footer data", error);
-    throw error;
-  }
-};
-
-// Get All gallery data
-export const getAllGalleryImages = async () => {
-  const response = await axios.get(`${BASE_URL}/getAllGalleryImages`);
-  return response.data;
-};
-
-// update main heading
-
-export const updateMainHeading = async (id, main_heading) => {
-  const response = await axios.put(`${BASE_URL}/updateMainHeading/${id}`, {
-    main_heading,
-  });
-  return response.data;
-};
-
-// Update Container 1 image
-export const updateContainer1Image = async (id, imageFile, main_table_id) => {
-  const formData = new FormData();
-  formData.append("image1", imageFile);
-  formData.append("main_table_id", main_table_id);
-
-  const response = await axios.put(
-    `${BASE_URL}/galleryImages/container1_image/${id}`,
-    formData,
-    {
+    const response = await axios.post(`${BASE_URL}/recent_work`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
-    }
-  );
-  return response.data;
-};
-
-// Update Container 2 Image
-export const updateContainer2Image = async (id, imageFile, main_table_id) => {
-  const formData = new FormData();
-  formData.append("image2", imageFile);
-  formData.append("main_table_id", main_table_id);
-
-  const response = await axios.put(
-    `${BASE_URL}/galleryImages/container2_image/${id}`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
-};
-
-// Deleye Container 1 Image
-export const deleteContainer1Image = async (
-  main_table_id,
-  container1_image_id
-) => {
-  const response = await axios.delete(
-    `${BASE_URL}/galleryImages/container1_image/${main_table_id}/${container1_image_id}`
-  );
-  return response.data;
-};
-
-// Delete Container 2 Image
-export const deleteContainer2Image = async (
-  main_table_id,
-  container2_image_id
-) => {
-  const response = await axios.delete(
-    `${BASE_URL}/galleryImages/container2_image/${main_table_id}/${container2_image_id}`
-  );
-  return response;
-};
-
-// Add Container 1 Image
-export const addContainer1Image = async (image1, main_table_id) => {
-  const formData = new FormData();
-  formData.append("image1", image1);
-  formData.append("main_table_id", main_table_id);
-
-  const response = await axios.post(
-    `${BASE_URL}/galleryImages/container1_image`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
-};
-
-// Add Container 2 Image
-export const addContainer2Image = async (image2, main_table_id) => {
-  const formData = new FormData();
-  formData.append("image2", image2);
-  formData.append("main_table_id", main_table_id);
-
-  const response = await axios.post(
-    `${BASE_URL}/galleryImages/container2_image`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
-};
-
-// Get all Gallery Data
-
-export const addGalleryImages = async (data) => {
-  const response = await axios.post(
-    `${BASE_URL}/addAllHeadingWithImages`,
-    data
-  );
-  return response.data;
-};
-
-// Delete Gallery Data
-export const deleteGalleryImage = async (mainTableId) => {
-  const response = await axios.delete(
-    `${BASE_URL}/deleteMainData/${mainTableId}`
-  );
-  return response.data;
-};
-
-// Get Gallery Banner
-export const getGalleryBanner = async () => {
-  const response = await axios.get(`${BASE_URL}/galleryBanner`);
-  return response.data;
-};
-
-// Update Gallery Banner
-export const updateGalleryBanner = async (id, formData) => {
-  const response = await axios.put(`${BASE_URL}/galleryBanner/`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  return response.data;
-};
-// Delete NRI contact data
-export const deleteNriPageFormData = async (id) => {
-  try {
-    await axios.delete(`${BASE_URL}/deleteNriPageForm/${id}`);
+    });
+    return response.data; // Assuming your API returns the added recent work
   } catch (error) {
-    console.error(`Error deleting NRI page form data with id ${id}:`, error);
+    throw new Error(`Failed to add recent work: ${error.message}`);
+  }
+};
+
+// Delete Recent Work data
+export const deleteRecentWorkById = async (id) => {
+  try {
+    await axios.delete(`${BASE_URL}/recent_work/${id}`);
+  } catch (error) {
+    throw new Error(`Failed to delete recent work: ${error.message}`);
+  }
+};
+
+// Get About Us Page Data 
+export const fetchAboutUsCompany = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/aboutUsCompany`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch about us company data: ${error.message}`);
+  }
+};
+
+// Put About Us Page Data
+export const updateAboutUsCompany = async (formData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/aboutUsCompany`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update about us company: ${error.message}`);
+  }
+}
+
+// Get About Our Values Data
+export const fetchOurValues = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/OurValues`);
+    return response.data; // Assuming API returns an array of objects
+  } catch (error) {
+    throw new Error(`Failed to fetch Our Values: ${error.message}`);
+  }
+};
+
+// Put About Our Values Data
+export const updateOurValuesById = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/OurValues/${id}`, updatedData);
+    return response.data; // Assuming API returns updated data
+  } catch (error) {
+    throw new Error(`Failed to update Our Values: ${error.message}`);
+  }
+};
+
+// Get Service Head Data 
+export const fetchServicesHead = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/servicesHead`);
+    return response.data; // Assuming API returns an object with services_heading and services_content
+  } catch (error) {
+    throw new Error(`Failed to fetch Services Head data: ${error.message}`);
+  }
+};
+
+// Put  Service Head Data 
+export const updateServicesHead = async ( updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/servicesHead`, updatedData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update services head data: ${error.message}`);
+  }
+};
+
+// Get Service Problem Head Data 
+export const fetchProblemHead = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/problems`);
+    return response.data.heading; // Return only the heading field
+  } catch (error) {
+    throw new Error(`Failed to fetch problem heading data: ${error.message}`);
+  }
+};
+
+// Put Service Problem Head Data 
+export const updateProblemHead = async (updatedHeading) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/problems/1`, updatedHeading); // Assuming you are updating the first problem
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update problem heading: ${error.message}`);
+  }
+};
+
+// Get Service  all Problem Data
+
+export const fetchProblems = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/problems`);
+    return response.data.problems; // Assuming problems array is directly under 'problems' key in API response
+  } catch (error) {
+    console.error('Error fetching problems:', error);
+    throw error; // You can handle errors as needed in your application
+  }
+};
+
+
+// put Service  all Problem Data
+export const updateProblem = async (id, newData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/problems/${id}`, newData);
+    return response.data; // Assuming API returns updated data
+  } catch (error) {
+    console.error(`Error updating problem with ID ${id}:`, error);
+    throw error; // You can handle errors as needed in your application
+  }
+};
+
+// Delete Service  all Problem Data
+export const deleteProblem = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/problems/${id}`);
+    return response.data; // Assuming API returns a success message or updated list of problems
+  } catch (error) {
+    console.error(`Error deleting problem with ID ${id}:`, error);
+    throw error; // You can handle errors as needed in your application
+  }
+};
+
+// Add Service  all Problem Data
+export const addProblem = async (newProblem) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/problems`, newProblem);
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };
-// Delete Footer contact data
-export const deleteFooterEmail = async (id) => {
+
+// Get service solution head 
+export const fetchSolutions = async () => {
   try {
-    await axios.delete(`${BASE_URL}/deleteFooterEmail/${id}`);
+    const response = await axios.get(`${BASE_URL}/solutions`);
+    return response.data; // Return the entire response data
   } catch (error) {
-    console.error(`Error deleting footer email with id ${id}:`, error);
+    console.error('Error fetching solutions:', error);
+    throw error; // Propagate the error up to the caller
+  }
+};
+
+
+// put service solution head
+export const updateSolutionHeading = async (newHeading) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/solutions/1`, { heading: newHeading });
+    return response.data;
+  } catch (error) {
+    throw Error('Error updating solution heading: ' + error.message);
+  }
+};
+
+
+// get all solution data
+export const fetchAllSolutions = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/solutions`);
+    return response.data.solutions; // Return only the 'solutions' array from the response
+  } catch (error) {
+    throw new Error('Error fetching solutions: ' + error.message);
+  }
+};
+
+// put all solution data
+export const updateSolution = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL  }/solutions/${id}`, updatedData);
+    return response.data; // Return the updated solution data
+  } catch (error) {
+    throw new Error('Error updating solution: ' + error.message);
+  }
+};
+
+// Delete all solution data
+export const deleteSolution = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/solutions/${id}`);
+    return response.data; // Return any response data if needed
+  } catch (error) {
+    throw new Error('Error deleting solution: ' + error.message);
+  }
+};
+
+// Add all solution data
+export const addSolution = async (newSolution) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/solutions`, newSolution);
+    return response.data; // Return the newly added solution data
+  } catch (error) {
+    throw new Error('Error adding solution: ' + error.message);
+  }
+};
+
+// Get What You Get Services Data
+export const fetchWhatYouGetServices = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/services_wyg`);
+    return response.data; // Assuming the response directly contains an array of services
+  } catch (error) {
+    throw new Error('Error fetching services: ' + error.message);
+  }
+};
+
+
+// Put What You Get Services Data
+export const updateWhatYouGetService = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/services_wyg/${id}`, updatedData);
+    return response.data; // Assuming the API returns updated data
+  } catch (error) {
+    throw new Error('Error updating service: ' + error.message);
+  }
+};
+
+
+
+// Add What You Get Services Data
+export const addWhatYouGetService = async (newService) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/services_wyg`, newService);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding service:', error);
     throw error;
   }
 };
-export const getContactFormData = async () => {
+
+// Delete What You Get Services Data
+export const deleteWhatYouGetService = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/getAllContactUsForms`);
-    return response.data.data;
+    const response = await axios.delete(`${BASE_URL}/services_wyg/${id}`);
+    return response.data; // Assuming the API returns a success message upon deletion
   } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
+    throw new Error('Error deleting service: ' + error.message);
   }
 };
-export const deleteContactFormData = async (id) => {
+
+// Get Carrer Data
+export const fetchCareerHead = async () => {
   try {
-    await axios.delete(`${BASE_URL}/deleteContactUsForm/${id}`);
+    const response = await axios.get(`${BASE_URL}/carrerHead`);
+    return response.data;
   } catch (error) {
-    console.error(`Error deleting Contact form data with id ${id}:`, error);
+    console.error('Error fetching career head data:', error);
+    throw error; // Re-throw the error to be handled where this function is called
+  }
+};
+
+// Put Carrer Data
+export const updateCareerHead = async (updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/carrerHead`, updatedData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error updating career head data: ${error.message}`);
+  }
+};
+
+// Get career images data
+export const fetchCareerImages = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/career_images`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error fetching career images data: ${error.message}`);
+  }
+};
+
+
+// put career images data
+export const updateCareerImage = async (id, formData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/career_images/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating career image:', error);
+    throw error; // Re-throw the error to handle it in the component
+  }
+};
+
+// add carrer images
+export const uploadCareerImages = async (formData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/career_images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+//delete carrer images
+export const deleteCareerImage = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/career_images/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting career image:', error);
+    throw error;
+  }
+};
+
+
+// Get Carrer WYS data 
+
+export const fetchCareerWYS = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/carrer_see_and_get`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching career data:', error);
+    throw error;
+  }
+};
+
+// Put Carrer WYS data 
+export const updateCareerWYS = async (id, updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/carrer_see_and_get/${id}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating career data:', error);
+    throw error;
+  }
+};
+
+// Delete Carrer WYS data 
+export const deleteCareerWYS = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/carrer_see_and_get/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting career data:', error);
+    throw error;
+  }
+};
+
+// add Carrer WYS data 
+export const createCareerWYS = async (data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/carrer_see_and_get`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+// get contact us api 
+export const fetchContactUsInfo = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/contactUs`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching contact us info:', error);
+    throw error;
+  }
+};
+
+// Put contact us api 
+export const updateContactUsInfo = async (updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/contactUs`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating contact us info:', error);
+    throw error;
+  }
+};
+
+
+// Get COntact form data 
+export const fetchContactForm = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/contactForm`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching contact form data:', error);
+    throw error;
+  }
+};
+
+// Delete COntact form data 
+export const deleteContactFormEntry = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/contactForm/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting contact form entry with ID ${id}:`, error);
     throw error;
   }
 };

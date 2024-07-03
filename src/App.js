@@ -4,25 +4,108 @@ import React from "react";
 import { BrowserRouter as Main, Route, Routes } from "react-router-dom";
 import About from "./pages/About/About";
 import Home from "./pages/Home/Home";
-import Footers from "./components/Footers/Footers";
 import Carrer from "./pages/Carrer/Carrer";
 import Contact from "./pages/Contact/Contact";
-import Nav from "./components/Headers/Nav";
+
 import Techno from "./pages/Softwaredev/Techno";
 import Test from "./pages/Test/Test";
 import Products from "./pages/Products/Products";
 import AdminPanel from "./admin/AdminPanel/AdminPanel";
-import EditHome from "./admin/AdminPages/EditHome/EditHome";
-import EditAbout from "./admin/AdminPages/EditAbout/EditAbout";
-import RecentWork from "./pages/Home/RecentWork";
+
+import EditServices from "./admin/AdminPages/EditHome/EditServices";
+import EditSlider from "./admin/AdminPages/EditHome/EditSlider";
+import EditRecentWork from "./admin/AdminPages/EditHome/EditRecentWork";
+import EditAboutUs from "./admin/AdminPages/EditHome/EditAboutUs";
+import EditHeading from "./admin/AdminPages/EditHome/EditHeading";
+import EditAboutPage from "./admin/AdminPages/EditAbout/EditAboutPage";
+import EditAboutValue from "./admin/AdminPages/EditAbout/EditAboutValue";
+import EditServicesHead from "./admin/AdminPages/EditServices/EditServicesHead";
+import EditServiceProblem from "./admin/AdminPages/EditServices/EditServiceProblem";
+import EditServiceSolution from "./admin/AdminPages/EditServices/EditServiceSolution";
+import EditProblemHead from "./admin/AdminPages/EditServices/EditProblemHead";
+import EditSolutionHead from "./admin/AdminPages/EditServices/EditSolutionHead";
+import EditWhatYouGet from "./admin/AdminPages/EditServices/EditWhatYouGet";
+import EditContactUs from "./admin/AdminPages/EditContact/EditContactUs";
+import EditContactForm from "./admin/AdminPages/EditContact/EditContactForm";
+import EditCarrerHead from "./admin/AdminPages/EditCarrer/EditCarrerHead";
+import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
+import EditCarrerWYS from "./admin/AdminPages/EditCarrer/EditCarrerWYS";
+import EditCarrerRYS from "./admin/AdminPages/EditCarrer/EditCarrerRYS";
+
 function App() {
   return (
     <Main>
       {/* <Nav></Nav> */}
       <Routes>
         <Route path="admin" element={<AdminPanel />}>
-          <Route exact path="edithome" element={<EditHome />}></Route>
-          <Route exact path="editabout" element={<EditAbout />}></Route>
+          {/* // Home page routing  */}
+          <Route exact path="editheading" element={<EditHeading />}></Route>
+          <Route exact path="editaboutus" element={<EditAboutUs />}></Route>
+          <Route exact path="editservices" element={<EditServices />}></Route>
+          <Route exact path="editslider" element={<EditSlider />}></Route>
+          <Route
+            exact
+            path="editrecentwork"
+            element={<EditRecentWork />}
+          ></Route>
+
+          {/* // About us page Routing */}
+          <Route exact path="editaboutpage" element={<EditAboutPage />}></Route>
+          <Route
+            exact
+            path="editaboutvalue"
+            element={<EditAboutValue />}
+          ></Route>
+
+          {/* // Services Page Routing  */}
+          <Route
+            exact
+            path="editservicehead"
+            element={<EditServicesHead />}
+          ></Route>
+          <Route
+            exact
+            path="editproblemhead"
+            element={<EditProblemHead />}
+          ></Route>
+          <Route
+            exact
+            path="editserviceproblems"
+            element={<EditServiceProblem />}
+          ></Route>
+          <Route
+            exact
+            path="editservicesolution"
+            element={<EditServiceSolution />}
+          ></Route>
+          <Route
+            exact
+            path="editsolutionhead"
+            element={<EditSolutionHead />}
+          ></Route>
+          <Route
+            exact
+            path="editwhatyouget"
+            element={<EditWhatYouGet />}
+          ></Route>
+          <Route exact path="editcontactus" element={<EditContactUs />}></Route>
+          <Route
+            exact
+            path="editcontactform"
+            element={<EditContactForm />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerhead"
+            element={<EditCarrerHead />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerimages"
+            element={<EditCarrerImages />}
+          ></Route>
+          <Route exact path="editcarrerwys" element={<EditCarrerWYS />}></Route>
+          <Route exact path="editcarrerrys" element={<EditCarrerRYS />}></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>
@@ -32,7 +115,6 @@ function App() {
         <Route path="test" element={<Test />}></Route>
         <Route path="our-products" element={<Products />}></Route>
         <Route path="test" element={<Test />}></Route>
-        <Route path="recentwork" element={<RecentWork />}></Route>
       </Routes>
     </Main>
   );
