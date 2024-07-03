@@ -101,15 +101,14 @@ function Sidebar({ isOpen }) {
                 style={{ display: aboutDropdownOpen ? "block" : "none" }}
               >
                 <Link to="/admin/editaboutpage" onClick={handleLinkClick}>
-                  <a>Edit About  Page</a>
+                  <a>Edit About Page</a>
                 </Link>
                 <Link to="/admin/editaboutvalue" onClick={handleLinkClick}>
                   <a>Edit About Value</a>
                 </Link>
-              
               </div>
               <button className="dropdown-btn" onClick={handleGalleryDropdown}>
-               Services
+                Services
                 <span className="custom-btn">
                   {galleryDropdownOpen ? "-" : "+"}
                 </span>
@@ -127,22 +126,21 @@ function Sidebar({ isOpen }) {
                   Edit Problem Head
                 </Link>
                 <Link to="/admin/editserviceproblems" onClick={handleLinkClick}>
-                Edit Services Problems
+                  Edit Services Problems
                 </Link>
                 <Link to="/admin/editsolutionhead" onClick={handleLinkClick}>
-                Edit Solution Head
+                  Edit Solution Head
                 </Link>
                 <Link to="/admin/editservicesolution" onClick={handleLinkClick}>
-                Edit Services Solution
+                  Edit Services Solution
                 </Link>
                 <Link to="/admin/editwhatyouget" onClick={handleLinkClick}>
-                Edit What You'll Get
+                  Edit What You'll Get
                 </Link>
-              
               </div>
 
               <button className="dropdown-btn" onClick={handleNriDropdown}>
-               Carrer
+                Carrer
                 <span className="custom-btn">
                   {nriDropdownOpen ? "-" : "+"}
                 </span>
@@ -163,7 +161,7 @@ function Sidebar({ isOpen }) {
                   <a>Edit Carrer What you see</a>
                 </Link>
                 <Link to="/admin/editcarrerrys" onClick={handleLinkClick}>
-                  <a>Edit Carrer Raise  your Hand</a>
+                  <a>Edit Carrer Raise your Hand</a>
                 </Link>
                 <Link to="/admin/editjobopening" onClick={handleLinkClick}>
                   <a>Edit Job Opening</a>
@@ -194,48 +192,16 @@ function Sidebar({ isOpen }) {
                   <a>Edit Contact Form </a>
                 </Link>
               </div>
-              {/* <button className="dropdown-btn" onClick={handleDropdown}>
-                Upcoming Projects
-                <span className="custom-btn">{dropdownOpen ? "-" : "+"}</span>
+              <button className="dropdown-btn" style={{ marginLeft: "-10px" }}>
+                <Link to="/admin/editheader" onClick={handleLinkClick}>
+                  <a>Edit Header</a>
+                </Link>
               </button>
-              <div
-                className={`dropdown-container  ${
-                  dropdownOpen ? "active" : ""
-                }`}
-                style={{ display: dropdownOpen ? "block" : "none" }}
-              >
-                <Link to="/adminpanel/pageheading" onClick={handleLinkClick}>
-                  <a href="#">Edit Heading</a>
-                </Link>
-                <Link to="/adminpanel/bannerimages" onClick={handleLinkClick}>
-                  <a href="#">Edit Banner</a>
-                </Link>
-                <Link to="/adminpanel/slidercontent" onClick={handleLinkClick}>
-                  <a href="#">Create Project</a>
-                </Link>
-                <Link to="/adminpanel/projectslider" onClick={handleLinkClick}>
-                  <a href="#">Project Images</a>
-                </Link>
-              </div> */}
-              {/* <button className="dropdown-btn" onClick={handleFooterDropdown}>
-                Footer
-                <span className="custom-btn">
-                  {footerDropdownOpen ? "-" : "+"}
-                </span>
-              </button>
-              <div
-                className={`dropdown-container  ${
-                  footerDropdownOpen ? "active" : ""
-                }`}
-                style={{ display: footerDropdownOpen ? "block" : "none" }}
-              >
-                <Link to="/adminpanel/footerdata" onClick={handleLinkClick}>
-                  <a>Footer Data</a>
-                </Link>
-                <Link to="/adminpanel/editfooter" onClick={handleLinkClick}>
+              <button className="dropdown-btn" style={{ marginLeft: "-10px" }}>
+                <Link to="/admin/editfooter" onClick={handleLinkClick}>
                   <a>Edit Footer</a>
                 </Link>
-              </div> */}
+              </button>
             </ul>
           </div>
         </div>

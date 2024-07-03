@@ -184,3 +184,12 @@ export const getFooterData = async () => {
     throw error; // Optionally handle or rethrow the error
   }
 };
+export const getHeaderData = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/header`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching header data:", error);
+    throw error;
+  }
+};

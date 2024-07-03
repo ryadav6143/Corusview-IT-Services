@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
+import { getHeaderData } from "../../pages/FrontendServices/Services";
 import "./Nav.css";
 import logo from "../../assets/logos/corusview-logo (1).png";
 import hamburger from "../../assets/logos/hamburger.png";
 
 function Nav() {
+  const [headerData, setHeaderData] = useState({
+    header_color1: "#ffff",
+    header_color2: "#ffff",
+  });
+
+  useEffect(() => {
+    const fetchHeaderData = async () => {
+      try {
+        const data = await getHeaderData();
+        setHeaderData(data);
+      } catch (error) {
+        console.error("Error fetching header data:", error);
+      }
+    };
+
+    fetchHeaderData();
+  }, []);
   return (
     <>
       <div>
-        <div className="header-body">
-          <div className="header-child">
+        <div
+          className="header-body"
+          style={{ backgroundColor: headerData.header_color1 }}
+        >
+          <div
+            className="header-child"
+            style={{ backgroundColor: headerData.header_color2 }}
+          >
             <a href="/">
               <img className="header-logo" src={logo} />
             </a>
@@ -24,7 +48,10 @@ function Nav() {
                 >
                   <img className="hamburger" src={hamburger} />
                 </button>
-                <ul className="dropdown-menu ">
+                <ul
+                  className="dropdown-menu"
+                  style={{ backgroundColor: headerData.header_color2 }}
+                >
                   <li>
                     <Link to="/" className="navigations">
                       Home

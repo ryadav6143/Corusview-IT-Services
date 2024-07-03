@@ -28,7 +28,12 @@ function Footers() {
   return (
     <>
       <div>
-        <div className="footer-1 set-footer">
+        <div
+          className="footer-1 set-footer"
+          style={{
+            backgroundColor: footerData ? footerData.footer_color : "#ffff",
+          }}
+        >
           <div className="flex-footer">
             <div className="logo">
               <img src={ourlogo} alt="Corusview" />
@@ -80,7 +85,7 @@ function Footers() {
           </div>
         </div>
         <div className="footer-2 set-footer">
-          <p>@Corusview 2023 All rights reserved </p>
+          <p>&#169;Corusview 2023 All rights reserved </p>
           <p>Terms & Conditions Applied </p>
           <p>Privacy policy</p>
         </div>
