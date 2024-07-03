@@ -397,3 +397,70 @@ export const deleteWhatYouGetService = async (id) => {
     throw new Error('Error deleting service: ' + error.message);
   }
 };
+
+// Get Carrer Data
+export const fetchCareerHead = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/carrerHead`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching career head data:', error);
+    throw error; // Re-throw the error to be handled where this function is called
+  }
+};
+
+// Put Carrer Data
+export const updateCareerHead = async (updatedData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/carrerHead`, updatedData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error updating career head data: ${error.message}`);
+  }
+};
+
+// Get career images data
+export const fetchCareerImages = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/career_images`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error fetching career images data: ${error.message}`);
+  }
+};
+
+
+// put career images data
+export const updateCareerImage = async (id, formData) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/career_images/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating career image:', error);
+    throw error; // Re-throw the error to handle it in the component
+  }
+};
+
+// add carrer images
+export const uploadCareerImages = async (formData) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/career_images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//delete carrer images
+export const deleteCareerImage = async (id) => {
+  const response = await axios.delete(`${BASE_URL}/career_images/${id}`);
+  return response.data;
+};

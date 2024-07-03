@@ -141,8 +141,8 @@ function Sidebar({ isOpen }) {
               
               </div>
 
-              {/* <button className="dropdown-btn" onClick={handleNriDropdown}>
-                NRI Corner
+              <button className="dropdown-btn" onClick={handleNriDropdown}>
+               Carrer
                 <span className="custom-btn">
                   {nriDropdownOpen ? "-" : "+"}
                 </span>
@@ -153,13 +153,13 @@ function Sidebar({ isOpen }) {
                 }`}
                 style={{ display: nriDropdownOpen ? "block" : "none" }}
               >
-                <Link to="/adminpanel/nribanner" onClick={handleLinkClick}>
-                  <a>Edit Banner & Content</a>
+                <Link to="/admin/editcarrerhead" onClick={handleLinkClick}>
+                  <a>Edit Carrer Head</a>
                 </Link>
-                <Link to="/adminpanel/contactdetails" onClick={handleLinkClick}>
-                  <a>Contact Details</a>
+                <Link to="/admin/editcarrerimages" onClick={handleLinkClick}>
+                  <a>Edit Carrer Images</a>
                 </Link>
-              </div> */}
+              </div>
 
               {/* --------------------------------------------------------------------------- */}
               <button className="dropdown-btn" onClick={handleContactDropdown}>

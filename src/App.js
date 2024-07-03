@@ -28,6 +28,8 @@ import EditSolutionHead from "./admin/AdminPages/EditServices/EditSolutionHead";
 import EditWhatYouGet from "./admin/AdminPages/EditServices/EditWhatYouGet";
 import EditContactUs from "./admin/AdminPages/EditContact/EditContactUs";
 import EditContactForm from "./admin/AdminPages/EditContact/EditContactForm";
+import EditCarrerHead from "./admin/AdminPages/EditCarrer/EditCarrerHead";
+import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
 function App() {
   return (
     <Main>
@@ -93,6 +95,16 @@ function App() {
             exact
             path="editcontactform"
             element={<EditContactForm />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerhead"
+            element={<EditCarrerHead />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerimages"
+            element={<EditCarrerImages />}
           ></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>
