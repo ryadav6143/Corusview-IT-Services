@@ -606,3 +606,42 @@ export const deleteJobOpening = async (jobId) => {
     throw new Error('Error deleting job opening:', error);
   }
 };
+
+// get Products data
+export const fetchProducts = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/products`);
+    return response.data; // Assuming API returns an array of objects
+  } catch (error) {
+    throw new Error(`Failed to fetch Our Values: ${error.message}`);
+  }
+};
+// edit Products data
+export const updateProducts = async (id, updatedProducts) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/products/${id}`, updatedProducts);
+    return response.data; // Return the updated job data if needed
+  } catch (error) {
+    console.error(`Error updating job opening with ID ${id}:`, error);
+    throw error; // Optional: propagate the error to handle it in the component
+  }
+};
+// delete Products data
+export const deleteProducts = async (ProductsId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/products/${ProductsId}`);
+    return response.data; // Assuming the API returns data upon successful deletion
+  } catch (error) {
+    throw new Error('Error deleting job opening:', error);
+  }
+};
+
+// add Products data 
+export const createProducts = async (data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/products`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

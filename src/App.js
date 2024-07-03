@@ -32,6 +32,7 @@ import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
 import EditCarrerWYS from "./admin/AdminPages/EditCarrer/EditCarrerWYS";
 import EditCarrerRYS from "./admin/AdminPages/EditCarrer/EditCarrerRYS";
 import EditJobOpening from "./admin/AdminPages/EditCarrer/EditJobOpenings/EditJobOpening";
+import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       {/* <Nav></Nav> */}
       <Routes>
         <Route path="admin" element={<AdminPanel />}>
+    
           {/* // Home page routing  */}
           <Route exact path="editheading" element={<EditHeading />}></Route>
           <Route exact path="editaboutus" element={<EditAboutUs />}></Route>
@@ -112,6 +114,8 @@ function App() {
             path="editjobopening"
             element={<EditJobOpening />}
           ></Route>
+
+<Route exact path="editProducts" element={<EditProductsForm />}></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>

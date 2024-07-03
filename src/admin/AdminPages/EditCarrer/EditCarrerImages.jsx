@@ -20,7 +20,8 @@ import {
   IconButton,
 } from '@mui/material';
 import { fetchCareerImages, updateCareerImage, uploadCareerImages, deleteCareerImage } from '../../AdminServices';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 
 

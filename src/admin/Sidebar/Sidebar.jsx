@@ -11,6 +11,7 @@ function Sidebar({ isOpen }) {
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [footerDropdownOpen, setFooterDropdownOpen] = useState(false);
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [nriDropdownOpen, setNriDropdownOpen] = useState(false);
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
 
@@ -43,6 +44,9 @@ function Sidebar({ isOpen }) {
   const handleContactDropdown = () => {
     setContactDropdownOpen(!contactDropdownOpen);
   };
+  const handleProductsDropdown = () => {
+    setProductsDropdownOpen(!productsDropdownOpen);
+  };
 
   const handleLinkClick = () => {
     setDropdownOpen(false);
@@ -53,6 +57,7 @@ function Sidebar({ isOpen }) {
     setFooterDropdownOpen(false);
     setGalleryDropdownOpen(false);
     setContactDropdownOpen(false);
+    setProductsDropdownOpen(false);
   };
 
   return (
@@ -61,6 +66,12 @@ function Sidebar({ isOpen }) {
         <div className="side-bar">
           <div className={`custom-sidebar ${isOpen ? "open" : ""}`}>
             <ul>
+
+
+      
+
+
+              
               <button className="dropdown-btn" onClick={handleHomeDropdown}>
                 Home
                 <span className="custom-btn">
@@ -190,52 +201,36 @@ function Sidebar({ isOpen }) {
                 >
                   <a>Edit Contact us</a>
                 </Link>
-                <Link to="/admin/editcontactform" onClick={handleLinkClick}>
+                <Link to="/admin/editProducts" onClick={handleLinkClick}>
                   <a>Edit Contact Form </a>
                 </Link>
               </div>
-              {/* <button className="dropdown-btn" onClick={handleDropdown}>
-                Upcoming Projects
-                <span className="custom-btn">{dropdownOpen ? "-" : "+"}</span>
-              </button>
-              <div
-                className={`dropdown-container  ${
-                  dropdownOpen ? "active" : ""
-                }`}
-                style={{ display: dropdownOpen ? "block" : "none" }}
-              >
-                <Link to="/adminpanel/pageheading" onClick={handleLinkClick}>
-                  <a href="#">Edit Heading</a>
-                </Link>
-                <Link to="/adminpanel/bannerimages" onClick={handleLinkClick}>
-                  <a href="#">Edit Banner</a>
-                </Link>
-                <Link to="/adminpanel/slidercontent" onClick={handleLinkClick}>
-                  <a href="#">Create Project</a>
-                </Link>
-                <Link to="/adminpanel/projectslider" onClick={handleLinkClick}>
-                  <a href="#">Project Images</a>
-                </Link>
-              </div> */}
-              {/* <button className="dropdown-btn" onClick={handleFooterDropdown}>
-                Footer
+{/* =========================== */}
+              <button className="dropdown-btn" onClick={handleProductsDropdown}>
+              Products
                 <span className="custom-btn">
-                  {footerDropdownOpen ? "-" : "+"}
+                  {productsDropdownOpen ? "-" : "+"}
                 </span>
               </button>
               <div
                 className={`dropdown-container  ${
-                  footerDropdownOpen ? "active" : ""
+                  productsDropdownOpen ? "active" : ""
                 }`}
-                style={{ display: footerDropdownOpen ? "block" : "none" }}
+                style={{ display: productsDropdownOpen ? "block" : "none" }}
               >
-                <Link to="/adminpanel/footerdata" onClick={handleLinkClick}>
-                  <a>Footer Data</a>
+                <Link
+                  className="dropdown-btn"
+                  to="/admin/editproducts"
+                  onClick={handleLinkClick}
+                >
+                  <a>Edit products </a>
                 </Link>
-                <Link to="/adminpanel/editfooter" onClick={handleLinkClick}>
-                  <a>Edit Footer</a>
-                </Link>
-              </div> */}
+                {/* <Link to="/admin/editproductsform" onClick={handleLinkClick}>
+                  <a>Edit products Form </a>
+                </Link> */}
+              </div>
+
+           
             </ul>
           </div>
         </div>
