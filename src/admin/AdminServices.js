@@ -563,3 +563,46 @@ export const deleteContactFormEntry = async (id) => {
     throw error;
   }
 };
+
+// Get Job Opening data 
+export const fetchJobOpenings = async () => {
+  try {
+    const response = await axios.get('http://192.168.1.5:5000/jobOpenings');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching job openings:', error);
+    throw error; // Re-throw the error so it can be handled by the component
+  }
+};
+
+// Get Job roles data 
+export const fetchJobRoles = async () => {
+  try {
+    const response = await axios.get('http://192.168.1.5:5000/jobRoles');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching job roles:', error);
+    throw error;
+  }
+};
+
+// Put Job Opening data 
+export const updateJobOpening = async (id, updatedJob) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/jobOpenings/${id}`, updatedJob);
+    return response.data; // Return the updated job data if needed
+  } catch (error) {
+    console.error(`Error updating job opening with ID ${id}:`, error);
+    throw error; // Optional: propagate the error to handle it in the component
+  }
+};
+
+// Delete Job Opening data 
+export const deleteJobOpening = async (jobId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/jobOpenings/${jobId}`);
+    return response.data; // Assuming the API returns data upon successful deletion
+  } catch (error) {
+    throw new Error('Error deleting job opening:', error);
+  }
+};
