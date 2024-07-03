@@ -31,6 +31,7 @@ import EditCarrerHead from "./admin/AdminPages/EditCarrer/EditCarrerHead";
 import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
 import EditCarrerWYS from "./admin/AdminPages/EditCarrer/EditCarrerWYS";
 import EditCarrerRYS from "./admin/AdminPages/EditCarrer/EditCarrerRYS";
+import EditJobOpening from "./admin/AdminPages/EditCarrer/EditJobOpenings/EditJobOpening";
 
 function App() {
   return (
@@ -106,6 +107,11 @@ function App() {
           ></Route>
           <Route exact path="editcarrerwys" element={<EditCarrerWYS />}></Route>
           <Route exact path="editcarrerrys" element={<EditCarrerRYS />}></Route>
+          <Route
+            exact
+            path="editjobopening"
+            element={<EditJobOpening />}
+          ></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>
