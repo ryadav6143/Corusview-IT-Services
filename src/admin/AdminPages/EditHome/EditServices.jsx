@@ -277,8 +277,10 @@ function EditServices() {
       }
       formData.append("heading", editedService.heading);
       formData.append("content", editedService.content);
-
-      await updateServiceData(formData);
+  
+      // Call your updateServiceData function here with formData
+      await updateServiceData(editedService.id, formData);
+  
       fetchData(); // Refresh data after update
       handleCloseEditDialog();
       setSuccessMessage("Service updated successfully!"); // Set success message
@@ -286,7 +288,7 @@ function EditServices() {
       setError(error.message);
     }
   };
-
+  
   const handleDelete = async () => {
     try {
       if (serviceToDelete) {

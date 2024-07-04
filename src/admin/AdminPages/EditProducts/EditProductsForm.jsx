@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { fetchProducts, updateProducts, createProducts, deleteProducts } from '../../AdminServices';
 import {
     Table,
@@ -138,7 +137,7 @@ export default function EditProductsForm() {
 
     const handleConfirmDelete = async () => {
         try {
-            await deleteProducts(deleteProductId);
+          const response =  await deleteProducts(deleteProductId);
             setProducts(products.filter(product => product.id !== deleteProductId));
             setDeleteDialogOpen(false);
         } catch (error) {
