@@ -1,5 +1,3 @@
-// EditSolutionHead.js
-
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -16,12 +14,15 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
-import { fetchSolutions, updateSolutionHeading } from "../../AdminServices"; // Adjust path as per your project structure
+import { fetchSolutions, updateSolutionHeading } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust path as per your project structure
 
 function EditSolutionHead() {
   const [mainHeading, setMainHeading] = useState("");
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [editedHeading, setEditedHeading] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -33,7 +34,7 @@ function EditSolutionHead() {
       setMainHeading(data.heading); // Set the 'heading' field from the fetched data
     } catch (error) {
       console.error("Error fetching solutions:", error);
-      // Handle errors as needed
+      setError("Failed to fetch solutions.");
     }
   };
 
@@ -49,13 +50,19 @@ function EditSolutionHead() {
 
   const handleSaveChanges = async () => {
     try {
-      await updateSolutionHeading(editedHeading); // Call API to update heading
+      const response = await updateSolutionHeading(editedHeading); // Call API to update heading
       setMainHeading(editedHeading); // Update mainHeading in the component state
+      setSuccessMessage(response.message);
       handleCloseEditDialog();
     } catch (error) {
       console.error("Error updating solution heading:", error);
-      // Handle error as needed
+      setError("Failed to update solution heading.");
+      setSuccessMessage(error.message, "error");
     }
+  };
+
+  const handleSuccessNotificationClose = () => {
+    setSuccessMessage(null);
   };
 
   return (
@@ -109,6 +116,26 @@ function EditSolutionHead() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification for Success */}
+      {successMessage && (
+        <Notification
+          open={true}
+          handleClose={handleSuccessNotificationClose}
+          alertMessage={successMessage}
+          alertSeverity="success"
+        />
+      )}
+
+      {/* Notification for Error */}
+      {error && (
+        <Notification
+          open={true}
+          handleClose={() => setError(null)}
+          alertMessage={error}
+          alertSeverity="error"
+        />
+      )}
     </div>
   );
 }

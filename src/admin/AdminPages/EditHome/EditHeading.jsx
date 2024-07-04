@@ -71,7 +71,7 @@ function EditHeading() {
 
   const handleSubmit = async () => {
     try {
-      await updateMainTableData(editedData.id, {
+      const response = await updateMainTableData(editedData.id, {
         heading_1: editedData.heading_1,
         heading_2: editedData.heading_2,
       });
@@ -83,7 +83,7 @@ function EditHeading() {
         heading_2: editedData.heading_2,
       });
       setShowSuccessNotification(true);
-      setSuccessNotificationMessage("Data updated successfully!");
+      setSuccessNotificationMessage(response.message);
     } catch (error) {
       setError(error.message);
     }

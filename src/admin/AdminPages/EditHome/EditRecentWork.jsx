@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Notification from "../../../Notification/Notification"; // Adjust the import path as per your folder structure
 
 function EditRecentWork() {
   const [recentWorks, setRecentWorks] = useState([]);
@@ -29,19 +30,24 @@ function EditRecentWork() {
   const [editedWork, setEditedWork] = useState({ id: null, img: "" });
   const [workToDelete, setWorkToDelete] = useState(null);
   const [newWork, setNewWork] = useState({ img: "" });
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("error");
+  const [addSaveDisabled, setAddSaveDisabled] = useState(true);
+  const [editSaveDisabled, setEditSaveDisabled] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchRecentWorks();
-        setRecentWorks(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetchRecentWorks();
+      setRecentWorks(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   const handleEditOpen = (work) => {
     setEditedWork(work);
@@ -49,13 +55,34 @@ function EditRecentWork() {
   };
 
   const handleEditClose = () => {
+    setEditedWork({ id: null, img: "" });
     setEditOpen(false);
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Validate file type
+      const isValidType =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isValidType) {
+        showNotification(
+          "Invalid file type. Please upload a JPEG or PNG image."
+        );
+        setEditSaveDisabled(true);
+        return;
+      }
+
+      // Validate file size (20 MB limit)
+      const maxSize = 20 * 1024 * 1024; // 20 MB in bytes
+      if (file.size > maxSize) {
+        showNotification("File size exceeds 20 MB limit.");
+        setEditSaveDisabled(true);
+        return;
+      }
+
       setEditedWork({ ...editedWork, img: file });
+      setEditSaveDisabled(false);
     }
   };
 
@@ -67,9 +94,9 @@ function EditRecentWork() {
       await updateRecentWorkById(editedWork.id, formData);
 
       setEditOpen(false);
+      showNotification("File updated successfully!", "success");
 
-      const updatedWorks = await fetchRecentWorks();
-      setRecentWorks(updatedWorks);
+      fetchData(); // Refresh the data after update
     } catch (error) {
       setError(error.message);
     }
@@ -92,8 +119,9 @@ function EditRecentWork() {
       setDeleteOpen(false);
       setWorkToDelete(null);
 
-      const updatedWorks = await fetchRecentWorks();
-      setRecentWorks(updatedWorks);
+      showNotification("File deleted successfully!", "success");
+
+      fetchData(); // Refresh the data after deletion
     } catch (error) {
       setError(error.message);
     }
@@ -105,12 +133,34 @@ function EditRecentWork() {
 
   const handleAddClose = () => {
     setAddOpen(false);
+    setNewWork({ img: "" });
+    setAddSaveDisabled(true);
   };
 
   const handleAddFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Validate file type
+      const isValidType =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isValidType) {
+        showNotification(
+          "Invalid file type. Please upload a JPEG or PNG image."
+        );
+        setAddSaveDisabled(true);
+        return;
+      }
+
+      // Validate file size (20 MB limit)
+      const maxSize = 20 * 1024 * 1024; // 20 MB in bytes
+      if (file.size > maxSize) {
+        showNotification("File size exceeds 20 MB limit.");
+        setAddSaveDisabled(true);
+        return;
+      }
+
       setNewWork({ img: file });
+      setAddSaveDisabled(false);
     }
   };
 
@@ -122,12 +172,23 @@ function EditRecentWork() {
       await addRecentWork(formData);
 
       setAddOpen(false);
+      showNotification("File added successfully!", "success");
 
-      const updatedWorks = await fetchRecentWorks();
-      setRecentWorks(updatedWorks);
+      fetchData(); // Refresh the data after addition
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const showNotification = (message, severity = "error") => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setNotificationOpen(true);
+  };
+
+  const closeNotification = () => {
+    setNotificationOpen(false);
+    setNotificationMessage("");
   };
 
   if (error) {
@@ -200,7 +261,11 @@ function EditRecentWork() {
           <Button onClick={handleAddClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleAddSave} color="primary">
+          <Button
+            onClick={handleAddSave}
+            color="primary"
+            disabled={!newWork.img || addSaveDisabled}
+          >
             Save
           </Button>
         </DialogActions>
@@ -222,7 +287,11 @@ function EditRecentWork() {
           <Button onClick={handleEditClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button
+            onClick={handleSave}
+            color="primary"
+            disabled={!editedWork.img || editSaveDisabled}
+          >
             Save
           </Button>
         </DialogActions>
@@ -243,6 +312,14 @@ function EditRecentWork() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={notificationOpen}
+        handleClose={closeNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </>
   );
 }

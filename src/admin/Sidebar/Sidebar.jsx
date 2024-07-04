@@ -156,6 +156,9 @@ function Sidebar({ isOpen }) {
                 }`}
                 style={{ display: nriDropdownOpen ? "block" : "none" }}
               >
+                <Link to="/admin/createjobroles" onClick={handleLinkClick}>
+                  <a>Create Job Role</a>
+                </Link>
                 <Link to="/admin/editcarrerhead" onClick={handleLinkClick}>
                   <a>Edit Carrer Head</a>
                 </Link>

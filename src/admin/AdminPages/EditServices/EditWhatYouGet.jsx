@@ -20,6 +20,7 @@ import {
   deleteWhatYouGetService,
   addWhatYouGetService,
 } from "../../AdminServices"; // Adjust the import path as per your project structure
+import Notification from "../../../Notification/Notification"; // Adjust the import path as per your project structure
 
 function EditWhatYouGet() {
   const [services, setServices] = useState([]);
@@ -30,6 +31,11 @@ function EditWhatYouGet() {
   const [newHeading, setNewHeading] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false); // State for delete confirmation dialog
   const [deleteServiceId, setDeleteServiceId] = useState(null); // State to hold the service ID to delete
+
+  // Notification state
+  const [openNotification, setOpenNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("success");
 
   useEffect(() => {
     const getServices = async () => {
@@ -62,13 +68,19 @@ function EditWhatYouGet() {
       const updatedData = {
         heading: editedHeading,
       };
-      await updateWhatYouGetService(selectedService.id, updatedData);
+      const response = await updateWhatYouGetService(
+        selectedService.id,
+        updatedData
+      );
       // Refresh the services list after successful update
       await fetchAndSetServices();
       handleCloseEditDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error updating service:", error);
       // Handle error as needed
+      handleNotification("Error updating service", "error");
     }
   };
 
@@ -79,13 +91,16 @@ function EditWhatYouGet() {
 
   const handleConfirmDelete = async () => {
     try {
-      await deleteWhatYouGetService(deleteServiceId);
+      const response = await deleteWhatYouGetService(deleteServiceId);
       // Refresh the services list after successful deletion
       await fetchAndSetServices();
       handleCloseDeleteDialog(); // Close the delete confirmation dialog
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error deleting service:", error);
       // Handle error as needed
+      handleNotification("Error deleting service", "error");
     }
   };
 
@@ -118,13 +133,42 @@ function EditWhatYouGet() {
       const newService = {
         heading: newHeading,
       };
-      await addWhatYouGetService(newService);
+      const response = await addWhatYouGetService(newService);
       // Refresh the services list after successful addition
       await fetchAndSetServices();
       handleCloseAddDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error adding service:", error);
       // Handle error as needed
+      handleNotification("Error adding service", "error");
+    }
+  };
+
+  const handleNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setOpenNotification(true);
+  };
+
+  const handleCloseNotification = () => {
+    setOpenNotification(false);
+  };
+
+  const handleEditedHeadingChange = (e) => {
+    if (e.target.value.length >= 30) {
+      handleNotification("Cannot update with more than 30 characters", "error");
+    } else {
+      setEditedHeading(e.target.value);
+    }
+  };
+
+  const handleNewHeadingChange = (e) => {
+    if (e.target.value.length >= 30) {
+      handleNotification("Cannot insert more than 30 characters", "error");
+    } else {
+      setNewHeading(e.target.value);
     }
   };
 
@@ -178,7 +222,12 @@ function EditWhatYouGet() {
             label="Heading"
             fullWidth
             value={editedHeading}
-            onChange={(e) => setEditedHeading(e.target.value)}
+            onChange={handleEditedHeadingChange}
+            inputProps={{ maxLength: 30 }}
+            error={editedHeading.length > 30}
+            helperText={
+              editedHeading.length > 30 ? "Cannot exceed 30 characters" : ""
+            }
           />
         </DialogContent>
         <DialogActions>
@@ -187,8 +236,9 @@ function EditWhatYouGet() {
             onClick={handleSaveChanges}
             variant="contained"
             color="primary"
+            disabled={editedHeading.length > 30}
           >
-            Save{" "}
+            Save
           </Button>
         </DialogActions>
       </Dialog>
@@ -203,7 +253,12 @@ function EditWhatYouGet() {
             label="Heading"
             fullWidth
             value={newHeading}
-            onChange={(e) => setNewHeading(e.target.value)}
+            onChange={handleNewHeadingChange}
+            inputProps={{ maxLength: 30 }}
+            error={newHeading.length > 30}
+            helperText={
+              newHeading.length > 30 ? "Cannot exceed 30 characters" : ""
+            }
           />
         </DialogContent>
         <DialogActions>
@@ -212,8 +267,9 @@ function EditWhatYouGet() {
             onClick={handleAddService}
             variant="contained"
             color="primary"
+            disabled={newHeading.length > 30}
           >
-            Add{" "}
+            Add
           </Button>
         </DialogActions>
       </Dialog>
@@ -237,6 +293,14 @@ function EditWhatYouGet() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={openNotification}
+        handleClose={handleCloseNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

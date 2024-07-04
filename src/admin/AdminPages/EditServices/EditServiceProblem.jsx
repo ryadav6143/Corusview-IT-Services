@@ -21,6 +21,7 @@ import {
   deleteProblem,
   addProblem,
 } from "../../AdminServices"; // Adjust path as per your project structure
+import Notification from "../../../Notification/Notification"; // Adjust path as per your project structure
 
 function EditServiceProblem() {
   const [problems, setProblems] = useState([]);
@@ -32,6 +33,11 @@ function EditServiceProblem() {
   const [editedContent, setEditedContent] = useState("");
   const [newHeading, setNewHeading] = useState(""); // State for new problem heading
   const [newContent, setNewContent] = useState(""); // State for new problem content
+
+  // Notification state
+  const [openNotification, setOpenNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("success");
 
   useEffect(() => {
     fetchData();
@@ -87,25 +93,31 @@ function EditServiceProblem() {
         inner_heading: editedHeading,
         inner_content: editedContent,
       };
-      await updateProblem(selectedProblem.id, updatedData);
+      const response = await updateProblem(selectedProblem.id, updatedData);
       // Refresh the problems list after successful update
       await fetchData();
       handleCloseEditDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error updating problem:", error);
       // Handle error as needed
+      handleNotification(error.message, "error");
     }
   };
 
   const handleConfirmDelete = async () => {
     try {
-      await deleteProblem(selectedProblem.id);
+      const response = await deleteProblem(selectedProblem.id);
       // Refresh the problems list after successful deletion
       await fetchData();
       handleCloseDeleteDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error deleting problem:", error);
       // Handle error as needed
+      handleNotification("Error deleting problem", "error");
     }
   };
 
@@ -115,14 +127,27 @@ function EditServiceProblem() {
         inner_heading: newHeading,
         inner_content: newContent,
       };
-      await addProblem(newProblem);
+      const response = await addProblem(newProblem);
       // Refresh the problems list after successful addition
       await fetchData();
       handleCloseAddDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error adding problem:", error);
       // Handle error as needed
+      handleNotification(error.message, "error");
     }
+  };
+
+  const handleNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setOpenNotification(true);
+  };
+
+  const handleCloseNotification = () => {
+    setOpenNotification(false);
   };
 
   return (
@@ -200,7 +225,7 @@ function EditServiceProblem() {
             variant="contained"
             color="primary"
           >
-            Save{" "}
+            Save
           </Button>
         </DialogActions>
       </Dialog>
@@ -255,6 +280,14 @@ function EditServiceProblem() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={openNotification}
+        handleClose={handleCloseNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </Box>
   );
 }

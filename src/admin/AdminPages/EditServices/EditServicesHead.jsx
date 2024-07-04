@@ -14,6 +14,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Notification from "../../../Notification/Notification"; // Adjust the path as per your project structure
 
 function EditServicesHead() {
   const [servicesHead, setServicesHead] = useState(null);
@@ -24,19 +25,20 @@ function EditServicesHead() {
     services_heading: "",
     services_content: "",
   });
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchServicesHead();
-        setServicesHead(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetchServicesHead();
+      setServicesHead(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   const handleEditOpen = (data) => {
     setEditedData(data);
@@ -56,13 +58,17 @@ function EditServicesHead() {
 
   const handleSave = async () => {
     try {
-      await updateServicesHead(editedData); // Call updateServicesHead with editedData
+      const response = await updateServicesHead(editedData);
       setEditOpen(false);
-      const updatedData = await fetchServicesHead(); // Refresh data after update
-      setServicesHead(updatedData);
+      setSuccessMessage(response.message);
+      fetchData(); // Refresh data after update
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const handleSuccessNotificationClose = () => {
+    setSuccessMessage(null);
   };
 
   if (error) {
@@ -146,6 +152,24 @@ function EditServicesHead() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification for Success */}
+      {successMessage && (
+        <Notification
+          open={true}
+          handleClose={handleSuccessNotificationClose}
+          alertMessage={successMessage}
+          alertSeverity="success"
+        />
+      )}
+
+      {/* Notification for Error (if needed) */}
+      {/* <Notification
+        open={error !== null}
+        handleClose={() => setError(null)}
+        alertMessage={error}
+        alertSeverity="error"
+      /> */}
     </>
   );
 }

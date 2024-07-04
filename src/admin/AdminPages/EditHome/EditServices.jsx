@@ -259,10 +259,10 @@ function EditServices() {
       formData.append("heading", newService.heading);
       formData.append("content", newService.content);
 
-      await addServiceData(formData);
+     const response = await addServiceData(formData);
       fetchData(); // Refresh data after addition
       handleCloseAddDialog();
-      setSuccessMessage("Service added successfully!"); // Set success message
+      setSuccessMessage(response.message); // Set success message
     } catch (error) {
       setError(error.message);
     }
@@ -270,32 +270,55 @@ function EditServices() {
 
   const handleSubmitEdit = async () => {
     try {
+      // Validate if any field is empty or exceeds limits
+      if (!editedService.heading) {
+        setEditHeadingError("Heading is required.");
+        return;
+      } else if (editedService.heading.length > MAX_HEADING_LENGTH) {
+        setEditHeadingError(
+          `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
+        );
+        return;
+      }
+
+      if (!editedService.content) {
+        setEditContentError("Content is required.");
+        return;
+      } else if (editedService.content.length > MAX_CONTENT_LENGTH) {
+        setEditContentError(
+          `Content cannot exceed ${MAX_CONTENT_LENGTH} characters.`
+        );
+        return;
+      }
+
+      // Prepare FormData
       const formData = new FormData();
       formData.append("id", editedService.id);
+      formData.append("heading", editedService.heading);
+      formData.append("content", editedService.content);
+
+      // Add icon_img if it exists
       if (editedService.icon_img) {
         formData.append("icon_img", editedService.icon_img);
       }
-      formData.append("heading", editedService.heading);
-      formData.append("content", editedService.content);
-  
-      // Call your updateServiceData function here with formData
-      await updateServiceData(editedService.id, formData);
-  
+
+      // Call updateServiceData function
+      const response = await updateServiceData(editedService.id, formData);
+      setSuccessMessage(response.message); // Assuming your response structure has a 'message' field
       fetchData(); // Refresh data after update
       handleCloseEditDialog();
-      setSuccessMessage("Service updated successfully!"); // Set success message
     } catch (error) {
       setError(error.message);
     }
   };
-  
+
   const handleDelete = async () => {
     try {
       if (serviceToDelete) {
-        await deleteServiceData(serviceToDelete.id);
+       const response = await deleteServiceData(serviceToDelete.id);
         fetchData(); // Refresh data after deletion
         setOpenDeleteDialog(false);
-        setSuccessMessage("Service deleted successfully!"); // Set success message
+        setSuccessMessage(response.message); // Set success message
       }
     } catch (error) {
       setError(error.message);
@@ -433,8 +456,8 @@ function EditServices() {
               name="heading"
               value={newService.heading}
               onChange={handleAddChange}
-              error={!!headingError}
-              helperText={headingError}
+              // error={!!headingError}
+              // helperText={headingError}
             />
             <TextField
               margin="dense"
@@ -444,8 +467,8 @@ function EditServices() {
               name="content"
               value={newService.content}
               onChange={handleAddChange}
-              error={!!contentError}
-              helperText={contentError}
+              // error={!!contentError}
+              // helperText={contentError}
             />
           </DialogContent>
           <DialogActions>
@@ -510,8 +533,8 @@ function EditServices() {
               name="heading"
               value={editedService.heading}
               onChange={handleEditChange}
-              error={!!editHeadingError}
-              helperText={editHeadingError}
+              // error={!!editHeadingError}
+              // helperText={editHeadingError}
             />
             <TextField
               margin="dense"
@@ -521,8 +544,8 @@ function EditServices() {
               name="content"
               value={editedService.content}
               onChange={handleEditChange}
-              error={!!editContentError}
-              helperText={editContentError}
+              // error={!!editContentError}
+              // helperText={editContentError}
             />
           </DialogContent>
           <DialogActions>
