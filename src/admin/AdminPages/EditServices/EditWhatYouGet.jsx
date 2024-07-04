@@ -1,14 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import { fetchWhatYouGetServices, updateWhatYouGetService, deleteWhatYouGetService, addWhatYouGetService } from '../../AdminServices'; // Adjust the import path as per your project structure
+import React, { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
+import {
+  fetchWhatYouGetServices,
+  updateWhatYouGetService,
+  deleteWhatYouGetService,
+  addWhatYouGetService,
+} from "../../AdminServices"; // Adjust the import path as per your project structure
 
 function EditWhatYouGet() {
   const [services, setServices] = useState([]);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-  const [editedHeading, setEditedHeading] = useState('');
-  const [newHeading, setNewHeading] = useState('');
+  const [editedHeading, setEditedHeading] = useState("");
+  const [newHeading, setNewHeading] = useState("");
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false); // State for delete confirmation dialog
   const [deleteServiceId, setDeleteServiceId] = useState(null); // State to hold the service ID to delete
 
@@ -18,7 +37,7 @@ function EditWhatYouGet() {
         const data = await fetchWhatYouGetServices();
         setServices(data);
       } catch (error) {
-        console.error('Error fetching services:', error);
+        console.error("Error fetching services:", error);
         // Handle errors as needed
       }
     };
@@ -35,7 +54,7 @@ function EditWhatYouGet() {
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false);
     setSelectedService(null);
-    setEditedHeading('');
+    setEditedHeading("");
   };
 
   const handleSaveChanges = async () => {
@@ -48,7 +67,7 @@ function EditWhatYouGet() {
       await fetchAndSetServices();
       handleCloseEditDialog();
     } catch (error) {
-      console.error('Error updating service:', error);
+      console.error("Error updating service:", error);
       // Handle error as needed
     }
   };
@@ -65,7 +84,7 @@ function EditWhatYouGet() {
       await fetchAndSetServices();
       handleCloseDeleteDialog(); // Close the delete confirmation dialog
     } catch (error) {
-      console.error('Error deleting service:', error);
+      console.error("Error deleting service:", error);
       // Handle error as needed
     }
   };
@@ -80,7 +99,7 @@ function EditWhatYouGet() {
       const data = await fetchWhatYouGetServices();
       setServices(data);
     } catch (error) {
-      console.error('Error fetching services:', error);
+      console.error("Error fetching services:", error);
       // Handle errors as needed
     }
   };
@@ -91,7 +110,7 @@ function EditWhatYouGet() {
 
   const handleCloseAddDialog = () => {
     setOpenAddDialog(false);
-    setNewHeading('');
+    setNewHeading("");
   };
 
   const handleAddService = async () => {
@@ -104,7 +123,7 @@ function EditWhatYouGet() {
       await fetchAndSetServices();
       handleCloseAddDialog();
     } catch (error) {
-      console.error('Error adding service:', error);
+      console.error("Error adding service:", error);
       // Handle error as needed
     }
   };
@@ -112,7 +131,14 @@ function EditWhatYouGet() {
   return (
     <div>
       <h2>Services What You Get</h2>
-      <Button onClick={handleAddClick} variant="contained" color="primary" style={{ marginBottom: '1rem' }}>Add Service</Button>
+      <Button
+        onClick={handleAddClick}
+        variant="contained"
+        color="primary"
+        style={{ marginBottom: "1rem" }}
+      >
+        Add Service
+      </Button>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -124,15 +150,17 @@ function EditWhatYouGet() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {services.map((service) => (
+            {services.map((service, index) => (
               <TableRow key={service.id}>
-                <TableCell>{service.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{service.heading}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEditClick(service)}>Edit</Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDeleteClick(service.id)}>Delete</Button>
+                  <Button onClick={() => handleDeleteClick(service.id)}>
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -155,7 +183,13 @@ function EditWhatYouGet() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
-          <Button onClick={handleSaveChanges} variant="contained" color="primary">Save </Button>
+          <Button
+            onClick={handleSaveChanges}
+            variant="contained"
+            color="primary"
+          >
+            Save{" "}
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -174,7 +208,13 @@ function EditWhatYouGet() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddDialog}>Cancel</Button>
-          <Button onClick={handleAddService} variant="contained" color="primary">Add </Button>
+          <Button
+            onClick={handleAddService}
+            variant="contained"
+            color="primary"
+          >
+            Add{" "}
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -182,11 +222,19 @@ function EditWhatYouGet() {
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          <DialogContent>Are you sure you want to delete this service?</DialogContent>
+          <DialogContent>
+            Are you sure you want to delete this service?
+          </DialogContent>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
-          <Button onClick={handleConfirmDelete} variant="contained" color="secondary">Delete</Button>
+          <Button
+            onClick={handleConfirmDelete}
+            variant="contained"
+            color="secondary"
+          >
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

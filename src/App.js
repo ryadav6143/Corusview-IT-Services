@@ -4,10 +4,9 @@ import React from "react";
 import { BrowserRouter as Main, Route, Routes } from "react-router-dom";
 import About from "./pages/About/About";
 import Home from "./pages/Home/Home";
-import Footers from "./components/Footers/Footers";
 import Carrer from "./pages/Carrer/Carrer";
 import Contact from "./pages/Contact/Contact";
-import Nav from "./components/Headers/Nav";
+
 import Techno from "./pages/Softwaredev/Techno";
 import Test from "./pages/Test/Test";
 import Products from "./pages/Products/Products";
@@ -33,7 +32,9 @@ import EditCarrerImages from "./admin/AdminPages/EditCarrer/EditCarrerImages";
 import EditCarrerWYS from "./admin/AdminPages/EditCarrer/EditCarrerWYS";
 import EditCarrerRYS from "./admin/AdminPages/EditCarrer/EditCarrerRYS";
 import EditJobOpening from "./admin/AdminPages/EditCarrer/EditJobOpenings/EditJobOpening";
-
+import EditHeader from "./admin/AdminPages/EditHeader/EditHeader";
+import EditFooter from "./admin/AdminPages/EditFooter/EditFooter";
+import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
 
 function App() {
   return (
@@ -91,11 +92,7 @@ function App() {
             path="editwhatyouget"
             element={<EditWhatYouGet />}
           ></Route>
-          <Route
-            exact
-            path="editcontactus"
-            element={<EditContactUs />}
-          ></Route>
+          <Route exact path="editcontactus" element={<EditContactUs />}></Route>
           <Route
             exact
             path="editcontactform"
@@ -111,20 +108,20 @@ function App() {
             path="editcarrerimages"
             element={<EditCarrerImages />}
           ></Route>
-          <Route
-            exact
-            path="editcarrerwys"
-            element={<EditCarrerWYS />}
-          ></Route>
-          <Route
-            exact
-            path="editcarrerrys"
-            element={<EditCarrerRYS />}
-          ></Route>
+          <Route exact path="editcarrerwys" element={<EditCarrerWYS />}></Route>
+          <Route exact path="editcarrerrys" element={<EditCarrerRYS />}></Route>
           <Route
             exact
             path="editjobopening"
             element={<EditJobOpening />}
+          ></Route>
+          <Route exact path="editheader" element={<EditHeader />}></Route>
+          <Route exact path="editfooter" element={<EditFooter />}></Route>
+
+          <Route
+            exact
+            path="editProducts"
+            element={<EditProductsForm />}
           ></Route>
         </Route>
         <Route exact path="/" element={<Home />}></Route>

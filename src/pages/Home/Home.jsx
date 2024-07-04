@@ -10,12 +10,10 @@ import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
 import uipos from "../../assets/images/projects/uipos.png";
 import cview from "../../assets/images/projects/cview.png";
+import RecentWork from "./RecentWork";
 
 function Home() {
-  const [headingData, setHeadingData] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [mainTableData, setMainTableData] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const controls = useAnimation();
@@ -25,13 +23,25 @@ function Home() {
     }
   }, [isInView]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getHomeHeading();
+      setMainTableData(data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (!mainTableData) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <Nav></Nav>
       <div className="home-heading">
         <p>
-          <span>5+ Years of Experience in IT Field</span> Where Innovation Meets
-          Excellence
+          <span>{mainTableData.heading_1}</span> {mainTableData.heading_2}
         </p>
       </div>
 
@@ -51,13 +61,7 @@ function Home() {
           </div>
 
           <div>
-            <p>
-              Corusview IT Services is a top rated web development company which
-              offers high quality reliable web, software and Mobile development
-              services that help us to serve our clients globally and giving
-              them value for their money through are unique offerings models
-              depending on the nature of the projects and their preferences.
-            </p>
+            <p>{mainTableData.about_us}</p>
           </div>
         </motion.div>
       </div>
@@ -65,46 +69,12 @@ function Home() {
         <Customer></Customer>
       </div>
 
-      <div className="recent-works" ref={ref}>
-        <motion.div
-          className="recent-works-heading"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 1, delay: 0.25 }}
-        >
+      <div className="recent-works">
+        <div className="recent-works-heading">
           <p>Recent work</p>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="recent-flex"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <div className="small-box">
-            <img src={uipos} alt="" />
-          </div>
-          <div className="center-box">
-            <img src={cview} alt="" />
-          </div>
-          <div className="small-box">
-            <img src={uipos} alt="" />
-          </div>
-        </motion.div>
+          <p>{mainTableData.recent_work_heading}</p>
+        </div>
+        <RecentWork></RecentWork>
       </div>
       <Footers></Footers>
     </>

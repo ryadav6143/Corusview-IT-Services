@@ -1,27 +1,27 @@
 // EditProblemHead.js
 
-import React, { useEffect, useState } from 'react';
-import { fetchProblemHead, updateProblemHead } from '../../AdminServices';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from "react";
+import { fetchProblemHead, updateProblemHead } from "../../AdminServices";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
 
 function EditProblemHead() {
-  const [problemHeading, setProblemHeading] = useState('');
+  const [problemHeading, setProblemHeading] = useState("");
   const [error, setError] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
-  const [editedHeading, setEditedHeading] = useState('');
+  const [editedHeading, setEditedHeading] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,17 +83,17 @@ function EditProblemHead() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Heading</TableCell>
               <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{problemHeading}</TableCell>
               <TableCell>
-                <Button  onClick={handleEditOpen}>
-                  Edit
-                </Button>
+                <Button onClick={handleEditOpen}>Edit</Button>
               </TableCell>
             </TableRow>
           </TableBody>

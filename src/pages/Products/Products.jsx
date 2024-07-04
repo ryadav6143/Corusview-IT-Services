@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getProducts } from "../FrontendServices/Services";
+import { Link } from "react-router-dom";
 import "./Products.css";
 import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
@@ -6,48 +8,60 @@ import productvector from "../../assets/images/productpage-vector.png";
 import productvideo from "../../assets/images/productvideo.mp4";
 
 function Products() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsData = await getProducts();
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <Nav></Nav>
-      <div className="product-container">
-        <div className="wrapped-content">
-          <div className="productpage-heading">
-            <p>OUR PRODUCT</p>
-          </div>
-          <div className="product-content">
-            <p>
-              At CorusView,works on a proven C.A.A.G. model which allows you to
-              collect actionable data, and helps you analyze it in a meaningful
-              way. It lets you view your responses graphically and in real time
-              ensuring 360° assessment and swift action delivery.works on a
-              proven C.A.A.G. model which allows you to collect actionable data,
-              and helps you analyze it in a meaningful way. It lets you view
-              your responses graphically and in real time ensuring 360°
-              assessment and swift action delivery
-            </p>
-          </div>
-        </div>
-        <div className="prod-vector">
-          <div className="vector-imgs"></div>
-          <div className="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/O5rgp4xbB88?si=S5poWKezr71WpPCU"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
 
-        <div className="product-btns">
-          <button>
-            <a href="">Know More</a>
-          </button>
-          <button>
-            <a href="">How it works</a>
-          </button>
+      {products.map((product) => (
+        <div key={product.id} className="product-container">
+          <div className="wrapped-content">
+            <div className="productpage-heading">
+              <p>{product.heading}</p>
+            </div>
+            <div className="product-content">
+              <p>{product.content}</p>
+            </div>
+          </div>
+          <div className="prod-vector">
+            <div className="vector-imgs"></div>
+            <div className="video-container">
+              <iframe
+                src={product.video_link}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="product-btns">
+            <button>
+              <a href={product.link1} target="_blank">
+                Know More
+              </a>
+            </button>
+            <button>
+              <a href={product.link2} target="_blank">
+                How it works
+              </a>
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
       <Footers></Footers>
     </>
   );

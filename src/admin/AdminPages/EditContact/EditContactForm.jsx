@@ -13,11 +13,17 @@ import {
   DialogActions,
 } from "@mui/material";
 import { fetchContactForm, deleteContactFormEntry } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
 
 function EditContactForm() {
   const [contactFormData, setContactFormData] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteEntryId, setDeleteEntryId] = useState(null);
+
+  // Notification state
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("error"); // Default severity is error
 
   useEffect(() => {
     fetchData();
@@ -46,17 +52,32 @@ function EditContactForm() {
   const handleDelete = async () => {
     if (deleteEntryId) {
       try {
-        await deleteContactFormEntry(deleteEntryId);
+        const response = await deleteContactFormEntry(deleteEntryId);
         setDeleteDialogOpen(false);
         fetchData(); // Refetch data after deletion
+
+        // Show success message from API response
+        setNotificationMessage(response.message); // Assuming your API response has a 'message' field
+        setNotificationSeverity("success");
+        setNotificationOpen(true);
       } catch (error) {
         console.error(
           `Error deleting contact form entry with ID ${deleteEntryId}:`,
           error
         );
         // Handle errors as needed
+        setNotificationMessage("Failed to delete contact form entry.");
+        setNotificationSeverity("error");
+        setNotificationOpen(true);
       }
     }
+  };
+
+  const handleNotificationClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setNotificationOpen(false);
   };
 
   return (
@@ -103,6 +124,14 @@ function EditContactForm() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={notificationOpen}
+        handleClose={handleNotificationClose}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

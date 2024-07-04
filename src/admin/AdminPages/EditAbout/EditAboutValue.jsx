@@ -1,21 +1,21 @@
 // EditAboutValue.js
 
-import React, { useEffect, useState } from 'react';
-import { fetchOurValues, updateOurValuesById } from '../../AdminServices';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from "react";
+import { fetchOurValues, updateOurValuesById } from "../../AdminServices";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
 
 function EditAboutValue() {
   const [ourValues, setOurValues] = useState([]);
@@ -23,8 +23,8 @@ function EditAboutValue() {
   const [editOpen, setEditOpen] = useState(false);
   const [editedData, setEditedData] = useState({
     id: null,
-    heading: '',
-    content: '',
+    heading: "",
+    content: "",
   });
 
   useEffect(() => {
@@ -90,13 +90,16 @@ function EditAboutValue() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ourValues.map((value) => (
+            {ourValues.map((value, index) => (
               <TableRow key={value.id}>
-                <TableCell>{value.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{value.heading}</TableCell>
                 <TableCell>{value.content}</TableCell>
                 <TableCell>
-                  <Button variant="outlined" onClick={() => handleEditOpen(value)}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleEditOpen(value)}
+                  >
                     Edit
                   </Button>
                 </TableCell>

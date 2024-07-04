@@ -1,13 +1,27 @@
 // EditSolutionHead.js
 
-import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
-import { fetchSolutions, updateSolutionHeading } from '../../AdminServices'; // Adjust path as per your project structure
+import React, { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
+import { fetchSolutions, updateSolutionHeading } from "../../AdminServices"; // Adjust path as per your project structure
 
 function EditSolutionHead() {
-  const [mainHeading, setMainHeading] = useState('');
+  const [mainHeading, setMainHeading] = useState("");
   const [openEditDialog, setOpenEditDialog] = useState(false);
-  const [editedHeading, setEditedHeading] = useState('');
+  const [editedHeading, setEditedHeading] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -18,7 +32,7 @@ function EditSolutionHead() {
       const data = await fetchSolutions();
       setMainHeading(data.heading); // Set the 'heading' field from the fetched data
     } catch (error) {
-      console.error('Error fetching solutions:', error);
+      console.error("Error fetching solutions:", error);
       // Handle errors as needed
     }
   };
@@ -30,7 +44,7 @@ function EditSolutionHead() {
 
   const handleCloseEditDialog = () => {
     setOpenEditDialog(false);
-    setEditedHeading(''); // Clear edited heading state
+    setEditedHeading(""); // Clear edited heading state
   };
 
   const handleSaveChanges = async () => {
@@ -39,7 +53,7 @@ function EditSolutionHead() {
       setMainHeading(editedHeading); // Update mainHeading in the component state
       handleCloseEditDialog();
     } catch (error) {
-      console.error('Error updating solution heading:', error);
+      console.error("Error updating solution heading:", error);
       // Handle error as needed
     }
   };
@@ -52,15 +66,19 @@ function EditSolutionHead() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Main Heading</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{mainHeading}</TableCell>
               <TableCell>
-                <Button variant="outlined" onClick={handleEditClick}>Edit</Button>
+                <Button variant="outlined" onClick={handleEditClick}>
+                  Edit
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -82,7 +100,13 @@ function EditSolutionHead() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
-          <Button onClick={handleSaveChanges} variant="contained" color="primary">Save</Button>
+          <Button
+            onClick={handleSaveChanges}
+            variant="contained"
+            color="primary"
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

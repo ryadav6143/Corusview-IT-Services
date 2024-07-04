@@ -1,104 +1,68 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
+import { getProblems } from "../FrontendServices/Services";
 import closebtn from "../../assets/logos/close.png";
 
 function Problems() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [problemsData, setProblemsData] = useState([]);
+  const [heading, setHeading] = useState("");
+  const ref = useInView({ triggerOnce: true });
   const controls = useAnimation();
+
   useEffect(() => {
-    if (isInView) {
+    const fetchProblems = async () => {
+      try {
+        const data = await getProblems();
+        setProblemsData(data);
+        setHeading(data.heading);
+      } catch (error) {
+        console.error("Error fetching problems data:", error);
+      }
+    };
+    fetchProblems();
+  }, []);
+
+  useEffect(() => {
+    if (ref.inView && problemsData) {
+      // Ensure problemsData is not null before accessing problems
       controls.start("visible");
     }
-  }, [isInView]);
+  }, [ref.inView, controls, problemsData]);
+
   return (
     <>
-      <motion.div className="problem-body">
+      <div className="problem-body">
         <div>
-          <p>Mistakes which make minor bugs to major issues</p>
+          <p>{heading}</p>
         </div>
 
-        <motion.div
-          className="proble-cards"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="cross-btn">
-            <img src={closebtn} alt="" />
-          </div>
-          <div className="probs">
-            <p>Dealing with coding errors </p>
-            <p>
-              Developers often encounter coding errors while writing or
-              modifying code. These errors, also known as "bugs," can range from
-              syntax errors, logical errors, to runtime errors. Syntax errors
-              occur when code violates the rules of the programming language,
-              making it unable to compile or execute.
-            </p>
-          </div>
-          <div></div>
-        </motion.div>
-
-        <motion.div
-          className="proble-cards"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 0.5, delay: "0.25" }}
-        >
-          <div className="cross-btn">
-            <img src={closebtn} alt="" />
-          </div>
-          <div className="probs">
-            <p>Dealing with coding errors </p>
-            <p>
-              Developers often encounter coding errors while writing or
-              modifying code. These errors, also known as "bugs," can range from
-              syntax errors, logical errors, to runtime errors. Syntax errors
-              occur when code violates the rules of the programming language,
-              making it unable to compile or execute.
-            </p>
-          </div>
-          <div></div>
-        </motion.div>
-
-        <motion.div
-          className="proble-cards"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, scale: 0 },
-            visible: { opacity: 1, scale: 1 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 0.5, delay: "0.5" }}
-        >
-          <div className="cross-btn">
-            <img src={closebtn} alt="" />
-          </div>
-          <div className="probs">
-            <p>Dealing with coding errors </p>
-            <p>
-              Developers often encounter coding errors while writing or
-              modifying code. These errors, also known as "bugs," can range from
-              syntax errors, logical errors, to runtime errors. Syntax errors
-              occur when code violates the rules of the programming language,
-              making it unable to compile or execute.
-            </p>
-          </div>
-          <div></div>
-        </motion.div>
-      </motion.div>
+        {problemsData && problemsData.problems ? (
+          problemsData.problems.map((problem) => (
+            <div
+              className="proble-cards"
+              key={problem.id}
+              variants={{
+                hidden: { opacity: 0, scale: 0 },
+                visible: { opacity: 1, scale: 1 },
+              }}
+              initial="hidden"
+              animate={controls}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="cross-btn">
+                <img src={closebtn} alt="" />
+              </div>
+              <div className="probs">
+                <p>{problem.inner_heading}</p>
+                <p>{problem.inner_content}</p>
+              </div>
+              <div></div>
+            </div>
+          ))
+        ) : (
+          <p>Loading...</p> // Render a loading indicator or handle empty state as needed
+        )}
+      </div>
     </>
   );
 }

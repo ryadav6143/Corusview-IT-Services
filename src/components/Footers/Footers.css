@@ -1,22 +1,4 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
 .footer-1 {
-  background: -o-radial-gradient(
-    50% 50%,
-    256.29% 256.29%,
-    #83c5be 0%,
-    #006d77 100%
-  );
-  background: radial-gradient(
-    256.29% 256.29% at 50% 50%,
-    #83c5be 0%,
-    #006d77 100%
-  );
   padding-block: 30px;
 }
 .flex-footer {

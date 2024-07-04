@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { fetchServicesHead, updateServicesHead } from '../../AdminServices';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from "react";
+import { fetchServicesHead, updateServicesHead } from "../../AdminServices";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
 
 function EditServicesHead() {
   const [servicesHead, setServicesHead] = useState(null);
@@ -21,8 +21,8 @@ function EditServicesHead() {
   const [editOpen, setEditOpen] = useState(false);
   const [editedData, setEditedData] = useState({
     id: null,
-    services_heading: '',
-    services_content: '',
+    services_heading: "",
+    services_content: "",
   });
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function EditServicesHead() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>S No.</TableCell>
+              <TableCell>ID</TableCell>
               <TableCell>Services Heading</TableCell>
               <TableCell>Services Content</TableCell>
               <TableCell>Edit</TableCell>

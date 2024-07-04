@@ -15,6 +15,7 @@ import {
   TextField,
 } from '@mui/material';
 import { fetchContactUsInfo, updateContactUsInfo } from '../../AdminServices';
+import Notification from '../../../Notification/Notification'; // Adjust the path as per your file structure
 
 function EditContactUs() {
   const [contactInfo, setContactInfo] = useState(null);
@@ -27,17 +28,12 @@ function EditContactUs() {
     address: '',
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchContactUsInfo();
-        setContactInfo(data);
-      } catch (error) {
-        console.error('Error fetching contact us info:', error);
-        // Handle errors as needed
-      }
-    };
+  // Notification state
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [notificationSeverity, setNotificationSeverity] = useState('error'); // Default severity is error
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -65,15 +61,40 @@ function EditContactUs() {
     setEditedData({ ...editedData, [name]: value });
   };
 
-  const handleUpdate = async () => {
-    try {
-      await updateContactUsInfo(editedData); // Pass editedData directly
-      setEditDialogOpen(false);
-      fetchData(); // Fetch updated data
-    } catch (error) {
-      console.error('Error updating contact us info:', error);
-      // Handle errors as needed
+const handleUpdate = async () => {
+  try {
+    // Validate fields before updating
+    if (!editedData.heading || !editedData.email || !editedData.phone || !editedData.address) {
+      setNotificationMessage('All fields are required.');
+      setNotificationSeverity('error');
+      setNotificationOpen(true);
+      return;
     }
+
+    // Call update API
+    const response = await updateContactUsInfo(editedData); // Pass editedData directly
+    setEditDialogOpen(false);
+    fetchData(); // Fetch updated data
+
+    // Show success message from API response
+    setNotificationMessage(response.message); // Assuming your API response has a 'message' field
+    setNotificationSeverity('success');
+    setNotificationOpen(true);
+  } catch (error) {
+    console.error('Error updating contact us info:', error);
+    // Handle errors as needed
+    setNotificationMessage('Failed to update contact information.');
+    setNotificationSeverity('error');
+    setNotificationOpen(true);
+  }
+};
+
+
+  const handleNotificationClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotificationOpen(false);
   };
 
   return (
@@ -157,6 +178,14 @@ function EditContactUs() {
               <Button onClick={handleUpdate}>Update</Button>
             </DialogActions>
           </Dialog>
+
+          {/* Notification */}
+          <Notification
+            open={notificationOpen}
+            handleClose={handleNotificationClose}
+            alertMessage={notificationMessage}
+            alertSeverity={notificationSeverity}
+          />
         </>
       )}
     </div>

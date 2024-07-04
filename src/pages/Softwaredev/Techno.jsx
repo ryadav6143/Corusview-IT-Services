@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
+import {
+  getServicePageHeading,
+  getServicesWYG,
+} from "../FrontendServices/Services";
 import "./Techno.css";
 import Problems from "./Problems";
 import Solutions from "./Solutions";
@@ -10,6 +14,8 @@ import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
 
 function Techno() {
+  const [servicesData, setServicesData] = useState([]);
+  const [listData, setListData] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState();
   const showComponent = (componentName) => {
     setSelectedComponent(componentName);
@@ -30,22 +36,44 @@ function Techno() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const controls = useAnimation();
+
+  const getHeading = async () => {
+    try {
+      const data = await getServicePageHeading();
+      setServicesData(data);
+    } catch (error) {
+      console.error("Error fetching services head data:", error);
+    }
+  };
+  const getList = async () => {
+    try {
+      const data = await getServicesWYG();
+      console.log("Fetched data:", data);
+      setListData(data);
+    } catch (error) {
+      console.error("Error fetching services data:", error);
+    }
+  };
+  useEffect(() => {
+    getHeading();
+    getList();
+  }, []);
+
   useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
   }, [isInView]);
+  if (!servicesData) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <Nav></Nav>
       <div>
         <div className="page-heading">
-          <p>Unlock software magic with us</p>
-          <p>
-            Are you ready to experience seamless code and unparalleled support?
-            Because with our IT services, your software development journey is
-            about to reach new heights
-          </p>
+          <p>{servicesData.services_heading}</p>
+          <p>{servicesData.services_content}</p>
         </div>
 
         <div className="sub-header flex-header">
@@ -62,26 +90,14 @@ function Techno() {
       </div>
 
       <div className="services">
-        <motion.div
-          className="sub-services"
-          ref={ref}
-          variants={{
-            hidden: { opacity: 0, x: 400 },
-            visible: { opacity: 1, x: 0 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="sub-services">
           <p>What You'll Get</p>
           <ul>
-            <li>Custom Software Development</li>
-            <li>System Migration</li>
-            <li>IT Infrastructure Design</li>
-            <li>Full Development lifecycle</li>
-            <li>Quality Assurance</li>
+            {listData.map((myList) => (
+              <li key={myList.id}>{myList.heading}</li>
+            ))}
           </ul>
-        </motion.div>
+        </div>
         <div className="services-vector">
           <img src={vectorgrp1} alt="" />
         </div>
@@ -89,7 +105,7 @@ function Techno() {
 
       <div className="dev-process">
         <p>Our Software Development Process</p>
-        <motion.div
+        <div
           ref={ref}
           variants={{
             hidden: { opacity: 0, x: 1000 },
@@ -100,7 +116,7 @@ function Techno() {
           transition={{ duration: 0.5, delay: "0.5" }}
         >
           <img src={devprocess} />
-        </motion.div>
+        </div>
       </div>
       <Tools></Tools>
 

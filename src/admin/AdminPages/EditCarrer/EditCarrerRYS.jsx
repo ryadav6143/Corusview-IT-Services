@@ -1,21 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField
-} from '@mui/material';
-import { fetchCareerHead, updateCareerHead } from '../../AdminServices';
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust the path as per your file structure
 
 function EditCarrerRYS() {
   const [careerHead, setCareerHead] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
-  const [updatedHeading, setUpdatedHeading] = useState('');
-  const [updatedContent, setUpdatedContent] = useState('');
+  const [updatedHeading, setUpdatedHeading] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
+
+  // Notification state variables
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("info");
+
+  // Function to show notifications
+  const showNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setNotificationOpen(true);
+  };
 
   const fetchData = async () => {
     try {
       const data = await fetchCareerHead();
       setCareerHead(data);
     } catch (error) {
-      console.error('Error fetching career head data:', error);
+      console.error("Error fetching career head data:", error);
       // Handle errors as needed
     }
   };
@@ -36,15 +62,24 @@ function EditCarrerRYS() {
 
   const handleUpdate = async () => {
     try {
-      await updateCareerHead({
+      // Check for empty fields
+      if (!updatedHeading.trim() || !updatedContent.trim()) {
+        showNotification("All fields are required", "error");
+        return;
+      }
+
+      const response = await updateCareerHead({
         ryh_heading: updatedHeading,
         ryh_content: updatedContent,
       });
+      
       fetchData(); // Refresh data after update
       handleCloseEdit();
+      showNotification(response.message, "success"); // Show success notification
     } catch (error) {
-      console.error('Error updating career head data:', error);
+      console.error("Error updating career head data:", error);
       // Handle errors as needed
+      showNotification("Error updating career head information", "error");
     }
   };
 
@@ -55,6 +90,7 @@ function EditCarrerRYS() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Heading</TableCell>
               <TableCell>Content</TableCell>
               <TableCell>Edit</TableCell>
@@ -62,10 +98,15 @@ function EditCarrerRYS() {
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{careerHead.ryh_heading}</TableCell>
               <TableCell>{careerHead.ryh_content}</TableCell>
               <TableCell>
-                <Button variant="outlined" color="primary" onClick={handleEditClick}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleEditClick}
+                >
                   Edit
                 </Button>
               </TableCell>
@@ -78,7 +119,9 @@ function EditCarrerRYS() {
       <Dialog open={openEdit} onClose={handleCloseEdit}>
         <DialogTitle>Edit Career Head Information</DialogTitle>
         <DialogContent>
-          <DialogContentText>Edit the career head information:</DialogContentText>
+          <DialogContentText>
+            Edit the career head information:
+          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -108,6 +151,14 @@ function EditCarrerRYS() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification Component */}
+      <Notification
+        open={notificationOpen}
+        handleClose={() => setNotificationOpen(false)}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

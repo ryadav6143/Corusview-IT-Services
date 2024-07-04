@@ -1,8 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField
-} from '@mui/material';
-import { fetchCareerWYS, updateCareerWYS, deleteCareerWYS, createCareerWYS } from '../../AdminServices';
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import {
+  fetchCareerWYS,
+  updateCareerWYS,
+  deleteCareerWYS,
+  createCareerWYS,
+} from "../../AdminServices";
+import Notification from "../../../Notification/Notification";
 
 function EditCarrerWYS() {
   const [careerData, setCareerData] = useState([]);
@@ -10,17 +29,32 @@ function EditCarrerWYS() {
   const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [selectedCareer, setSelectedCareer] = useState(null);
-  const [updatedHeading, setUpdatedHeading] = useState('');
-  const [updatedContent, setUpdatedContent] = useState('');
-  const [newHeading, setNewHeading] = useState('');
-  const [newContent, setNewContent] = useState('');
+  const [updatedHeading, setUpdatedHeading] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
+  const [newHeading, setNewHeading] = useState("");
+  const [newContent, setNewContent] = useState("");
+
+
+
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("info");
+
+
+  const showNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setNotificationOpen(true);
+  };
+
 
   const fetchData = async () => {
     try {
       const data = await fetchCareerWYS();
       setCareerData(data);
     } catch (error) {
-      console.error('Error fetching career data:', error);
+      console.error("Error fetching career data:", error);
       // Handle errors as needed
     }
   };
@@ -51,49 +85,71 @@ function EditCarrerWYS() {
 
   const handleCloseAdd = () => {
     setOpenAdd(false);
-    setNewHeading('');
-    setNewContent('');
+    setNewHeading("");
+    setNewContent("");
   };
 
   const handleUpdate = async () => {
+
+    if (!updatedHeading || !updatedContent) {
+      showNotification("This feild is required", "error");
+      return;
+    }
     try {
-      await updateCareerWYS(selectedCareer.id, {
+      const response = await updateCareerWYS(selectedCareer.id, {
         heading: updatedHeading,
         content: updatedContent,
       });
       fetchData(); // Refresh data after update
       handleCloseEdit();
+      // Show success notification
+      showNotification(response.message, "success");
     } catch (error) {
-      console.error('Error updating career data:', error);
+      console.error("Error updating career data:", error);
       // Handle errors as needed
+      showNotification("Error updating career information", "error");
     }
   };
 
+
   const handleDelete = async () => {
     try {
-      await deleteCareerWYS(selectedCareer.id);
+      const response = await deleteCareerWYS(selectedCareer.id);
       fetchData(); // Refresh data after delete
       handleCloseDelete();
+      // Show success notification
+      showNotification(response.message, "success");
     } catch (error) {
-      console.error('Error deleting career data:', error);
+      console.error("Error deleting career data:", error);
       // Handle errors as needed
+      showNotification("Error deleting career information", "error");
     }
   };
 
   const handleAdd = async () => {
+
+    if (!newHeading || !newContent) {
+      showNotification("This feild is required", "error");
+      return;
+    }
     try {
       const newCareerData = {
         heading: newHeading,
         content: newContent,
       };
-      await createCareerWYS(newCareerData);
+      const response = await createCareerWYS(newCareerData);
       fetchData(); // Refresh data after add
       handleCloseAdd();
+      // Show success notification
+      showNotification(response.message, "success");
     } catch (error) {
-      console.error('Error adding career data:', error);
+      console.error("Error adding career data:", error);
       // Handle errors as needed
+      showNotification("Error adding career information", "error");
     }
   };
+
+
 
   useEffect(() => {
     fetchData();
@@ -117,9 +173,9 @@ function EditCarrerWYS() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {careerData.map((item) => (
+            {careerData.map((item, index) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.heading}</TableCell>
                 <TableCell>{item.content}</TableCell>
                 <TableCell>
@@ -223,6 +279,12 @@ function EditCarrerWYS() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Notification
+        open={notificationOpen}
+        handleClose={() => setNotificationOpen(false)}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

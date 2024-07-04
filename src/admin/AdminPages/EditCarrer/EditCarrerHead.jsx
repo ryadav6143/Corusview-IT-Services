@@ -1,5 +1,3 @@
-// EditCarrerHead.js
-
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -17,6 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
 
 function EditCarrerHead() {
   const [careerHead, setCareerHead] = useState(null);
@@ -25,6 +24,11 @@ function EditCarrerHead() {
     carrer_heading: "",
     carrer_content: "",
   });
+
+  // Notification state
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("error"); // Default severity is error
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,16 +64,39 @@ function EditCarrerHead() {
   };
 
   const handleSave = async () => {
+    // Validate fields
+    if (!editedData.carrer_heading.trim() || !editedData.carrer_content.trim()) {
+      setNotificationMessage("All fields are required.");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
+
     try {
-      await updateCareerHead(editedData);
+      const response = await updateCareerHead(editedData);
       setEditOpen(false);
       // Refresh career head data after update
       const updatedData = await fetchCareerHead();
       setCareerHead(updatedData);
+
+      // Show success message from API response
+      setNotificationMessage(response.message); // Assuming your API response has a 'message' field
+      setNotificationSeverity("success");
+      setNotificationOpen(true);
     } catch (error) {
       console.error("Error updating career head data:", error);
       // Handle error
+      setNotificationMessage("Failed to update career head.");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
     }
+  };
+
+  const handleNotificationClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setNotificationOpen(false);
   };
 
   if (!careerHead) {
@@ -83,6 +110,7 @@ function EditCarrerHead() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Heading</TableCell>
               <TableCell>Content</TableCell>
               <TableCell>Edit</TableCell>
@@ -90,6 +118,7 @@ function EditCarrerHead() {
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{careerHead.carrer_heading}</TableCell>
               <TableCell>{careerHead.carrer_content}</TableCell>
               <TableCell>
@@ -135,6 +164,14 @@ function EditCarrerHead() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={notificationOpen}
+        handleClose={handleNotificationClose}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }
