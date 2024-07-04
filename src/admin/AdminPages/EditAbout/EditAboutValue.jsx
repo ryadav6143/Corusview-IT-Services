@@ -1,5 +1,3 @@
-// EditAboutValue.js
-
 import React, { useEffect, useState } from "react";
 import { fetchOurValues, updateOurValuesById } from "../../AdminServices";
 import TableContainer from "@mui/material/TableContainer";
@@ -16,16 +14,23 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Notification from "../../../Notification/Notification"; // Adjust the path as per your file structure
 
 function EditAboutValue() {
   const [ourValues, setOurValues] = useState([]);
   const [error, setError] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
+  const [fieldError, setFieldError] = useState(false);
   const [editedData, setEditedData] = useState({
     id: null,
     heading: "",
     content: "",
   });
+
+  // Notification state
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState("success");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,15 +55,45 @@ function EditAboutValue() {
   };
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Character limit validations
+    if (name === "heading" && value.length > 15) {
+      setAlertMessage("Heading should not exceed 15 characters.");
+      setAlertSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
+
+    if (name === "content" && value.length > 300) {
+      setAlertMessage("Content should not exceed 300 characters.");
+      setAlertSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
+
     setEditedData({
       ...editedData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const handleSave = async () => {
+    if (!editedData.heading || !editedData.content) {
+      // Show notification for required fields
+      setAlertMessage("This feild is required.");
+      setAlertSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
     try {
-      await updateOurValuesById(editedData.id, editedData);
+      const response = await updateOurValuesById(editedData.id, editedData);
+
+      // Show success notification
+      setAlertMessage(response.message);
+      setAlertSeverity("success");
+      setNotificationOpen(true);
+
       setEditOpen(false);
 
       // Refresh the data
@@ -66,7 +101,15 @@ function EditAboutValue() {
       setOurValues(updatedData);
     } catch (error) {
       setError(error.message);
+      // Show error notification
+      setAlertMessage("Failed to update data");
+      setAlertSeverity("error");
+      setNotificationOpen(true);
     }
+  };
+
+  const handleNotificationClose = () => {
+    setNotificationOpen(false);
   };
 
   if (error) {
@@ -157,6 +200,14 @@ function EditAboutValue() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={notificationOpen}
+        handleClose={handleNotificationClose}
+        alertMessage={alertMessage}
+        alertSeverity={alertSeverity}
+      />
     </>
   );
 }
