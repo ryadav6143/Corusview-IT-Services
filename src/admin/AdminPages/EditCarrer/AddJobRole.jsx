@@ -1,5 +1,3 @@
-// JobRolesManagement.js
-
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -15,41 +13,48 @@ import {
   TableHead,
   TableRow,
   Paper,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import { fetchJobRoles, addJobRole } from "../../AdminServices"; // Adjust path based on your project structure
+import axios from "axios"; // Import Axios for API calls
+import { fetchJobRoles, addJobRole, deleteJobRole } from "../../AdminServices"; // Adjust path based on your project structure
 
 const AddJobRole = () => {
   const [jobRoles, setJobRoles] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [newRoleName, setNewRoleName] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const roles = await fetchJobRoles();
-        setJobRoles(roles);
-      } catch (error) {
-        console.error("Error fetching job roles:", error);
-      }
-    };
+ // Fetch data on component mount
 
+  const fetchData = async () => {
+    try {
+      const roles = await fetchJobRoles();
+      setJobRoles(roles);
+    } catch (error) {
+      console.error("Error fetching job roles:", error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
-
   const handleAddRole = async () => {
     try {
-      const newRole = { role: newRoleName }; // Structure according to your API
+      const newRole = { role: newRoleName };
       const addedRole = await addJobRole(newRole);
       setJobRoles([...jobRoles, addedRole]);
       setNewRoleName(""); // Clear input field
+      fetchData();
       setOpenDialog(false);
     } catch (error) {
       console.error("Error adding job role:", error);
-      // Handle error (show notification, etc.)
+    }
+  };
+
+  const handleDeleteRole = async (role_id) => {
+    try {
+      const response = await deleteJobRole(role_id);
+console.log(response,"???");
+fetchData();
+    } catch (error) {
+      console.error("Error deleting job role:", error);
     }
   };
 
@@ -99,6 +104,7 @@ const AddJobRole = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Role Name</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,6 +112,15 @@ const AddJobRole = () => {
               <TableRow key={role.role_id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{role.role}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleDeleteRole(role.role_id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

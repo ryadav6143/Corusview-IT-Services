@@ -56,20 +56,17 @@ function EditJobOpening() {
 
     fetchRoles();
   }, []);
-
   const fetchData = async () => {
     try {
-      const openings = await fetchJobOpenings();
+      const openings = await fetchJobOpenings(selectedRole); // Pass selectedRole to filter job openings
       setJobOpenings(openings);
     } catch (error) {
       console.error("Error in fetching data:", error);
     }
   };
-
   useEffect(() => {
     fetchData();
-  }, []);
-
+  }, [selectedRole]);
   // Function to handle role selection change
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
@@ -102,9 +99,9 @@ function EditJobOpening() {
 
       // Assuming your backend returns the newly added job with an ID
       const addedJob = response.data; // Adjust this based on your actual response structure
-
+      console.log(addedJob);
       // Update jobOpenings state with the added job
-      setJobOpenings([...jobOpenings, addedJob]);
+      // setJobOpenings([...jobOpenings, addedJob]);
 
       setOpenAddDialog(false);
       setEditedJob(null);
@@ -166,7 +163,7 @@ function EditJobOpening() {
       setNotificationMessage("Job opening updated successfully.");
       setNotificationSeverity("success");
       setNotificationOpen(true);
-
+      fetchData();
       console.log("Job opening updated successfully.");
     } catch (error) {
       console.error("Error updating job opening:", error);
@@ -195,7 +192,7 @@ function EditJobOpening() {
       setNotificationMessage("Job opening deleted successfully.");
       setNotificationSeverity("success");
       setNotificationOpen(true);
-
+      fetchData();
       console.log("Job opening deleted successfully.");
     } catch (error) {
       console.error("Error deleting job opening:", error);
@@ -229,24 +226,20 @@ function EditJobOpening() {
       </Button>
       <FormControl sx={{ m: 2, minWidth: 120 }}>
         <InputLabel id="role-select-label">Select Role</InputLabel>
-        {jobRoles && (
-          <Select
-            labelId="role-select-label"
-            id="role-select"
-            value={selectedRole}
-            onChange={handleRoleChange}
-            label="Select Role"
-          >
-            <MenuItem value="">
-              <em>All Roles</em>
+
+        <Select
+          labelId="role-select-label"
+          id="role-select"
+          value={selectedRole}
+          onChange={handleRoleChange}
+          label="Select Role"
+        >
+          {jobRoles.map((role) => (
+            <MenuItem key={role.role_id} value={role.role}>
+              {role.role}
             </MenuItem>
-            {jobRoles.map((role) => (
-              <MenuItem key={role.role_id} value={role.role}>
-                {role.role}
-              </MenuItem>
-            ))}
-          </Select>
-        )}
+          ))}
+        </Select>
       </FormControl>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table">
@@ -359,10 +352,28 @@ function EditJobOpening() {
         <DialogTitle>Edit Job Opening</DialogTitle>
         <DialogContent>
           <form>
+            <FormControl fullWidth>
+              <InputLabel id="edit-role-select-label">Select Role</InputLabel>
+              <Select
+                labelId="edit-role-select-label"
+                id="edit-role-select"
+                value={editedJob ? editedJob.role : ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, role: e.target.value })
+                }
+                fullWidth
+              >
+                {jobRoles.map((role) => (
+                  <MenuItem key={role.role_id} value={role.role}>
+                    {role.role}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               autoFocus
               margin="dense"
-              id="position"
+              id="edit-position"
               label="Position"
               type="text"
               fullWidth
@@ -373,7 +384,7 @@ function EditJobOpening() {
             />
             <TextField
               margin="dense"
-              id="location"
+              id="edit-location"
               label="Location"
               type="text"
               fullWidth
@@ -384,7 +395,7 @@ function EditJobOpening() {
             />
             <TextField
               margin="dense"
-              id="level"
+              id="edit-level"
               label="Level"
               type="text"
               fullWidth
