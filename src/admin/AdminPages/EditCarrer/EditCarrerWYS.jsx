@@ -1,8 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField
-} from '@mui/material';
-import { fetchCareerWYS, updateCareerWYS, deleteCareerWYS, createCareerWYS } from '../../AdminServices';
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import {
+  fetchCareerWYS,
+  updateCareerWYS,
+  deleteCareerWYS,
+  createCareerWYS,
+} from "../../AdminServices";
 
 function EditCarrerWYS() {
   const [careerData, setCareerData] = useState([]);
@@ -10,17 +28,17 @@ function EditCarrerWYS() {
   const [openDelete, setOpenDelete] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
   const [selectedCareer, setSelectedCareer] = useState(null);
-  const [updatedHeading, setUpdatedHeading] = useState('');
-  const [updatedContent, setUpdatedContent] = useState('');
-  const [newHeading, setNewHeading] = useState('');
-  const [newContent, setNewContent] = useState('');
+  const [updatedHeading, setUpdatedHeading] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
+  const [newHeading, setNewHeading] = useState("");
+  const [newContent, setNewContent] = useState("");
 
   const fetchData = async () => {
     try {
       const data = await fetchCareerWYS();
       setCareerData(data);
     } catch (error) {
-      console.error('Error fetching career data:', error);
+      console.error("Error fetching career data:", error);
       // Handle errors as needed
     }
   };
@@ -51,8 +69,8 @@ function EditCarrerWYS() {
 
   const handleCloseAdd = () => {
     setOpenAdd(false);
-    setNewHeading('');
-    setNewContent('');
+    setNewHeading("");
+    setNewContent("");
   };
 
   const handleUpdate = async () => {
@@ -64,7 +82,7 @@ function EditCarrerWYS() {
       fetchData(); // Refresh data after update
       handleCloseEdit();
     } catch (error) {
-      console.error('Error updating career data:', error);
+      console.error("Error updating career data:", error);
       // Handle errors as needed
     }
   };
@@ -75,7 +93,7 @@ function EditCarrerWYS() {
       fetchData(); // Refresh data after delete
       handleCloseDelete();
     } catch (error) {
-      console.error('Error deleting career data:', error);
+      console.error("Error deleting career data:", error);
       // Handle errors as needed
     }
   };
@@ -90,7 +108,7 @@ function EditCarrerWYS() {
       fetchData(); // Refresh data after add
       handleCloseAdd();
     } catch (error) {
-      console.error('Error adding career data:', error);
+      console.error("Error adding career data:", error);
       // Handle errors as needed
     }
   };
@@ -117,9 +135,9 @@ function EditCarrerWYS() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {careerData.map((item) => (
+            {careerData.map((item, index) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.heading}</TableCell>
                 <TableCell>{item.content}</TableCell>
                 <TableCell>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -18,17 +18,21 @@ import {
   TextField,
   Box,
   IconButton,
-} from '@mui/material';
-import { fetchCareerImages, updateCareerImage, uploadCareerImages, deleteCareerImage } from '../../AdminServices';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-
+} from "@mui/material";
+import {
+  fetchCareerImages,
+  updateCareerImage,
+  uploadCareerImages,
+  deleteCareerImage,
+} from "../../AdminServices";
+// import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function EditCarrerImages() {
   const [careerImages, setCareerImages] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const [selectedImageId, setSelectedImageId] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedImageId, setSelectedImageId] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
   const [selectedFiles, setSelectedFiles] = useState({});
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -39,7 +43,7 @@ function EditCarrerImages() {
       const data = await fetchCareerImages();
       setCareerImages(data);
     } catch (error) {
-      console.error('Error fetching career images data:', error);
+      console.error("Error fetching career images data:", error);
       // Handle errors as needed
     }
   };
@@ -70,7 +74,7 @@ function EditCarrerImages() {
 
   const handleSaveChanges = async () => {
     if (!selectedFiles[selectedOption]) {
-      console.error('Please select a file.');
+      console.error("Please select a file.");
       return;
     }
 
@@ -79,10 +83,10 @@ function EditCarrerImages() {
 
     try {
       const response = await updateCareerImage(selectedImageId, formData);
-      console.log('Career image updated successfully:', response);
+      console.log("Career image updated successfully:", response);
       // Optionally, update state or display a success message
     } catch (error) {
-      console.error('Error updating career image:', error);
+      console.error("Error updating career image:", error);
       // Handle error as needed
     }
     fetchData();
@@ -105,10 +109,10 @@ function EditCarrerImages() {
 
     try {
       const response = await uploadCareerImages(formData);
-      console.log('Career image added successfully:', response);
+      console.log("Career image added successfully:", response);
       // Optionally, update state or display a success message
     } catch (error) {
-      console.error('Error adding career image:', error);
+      console.error("Error adding career image:", error);
       // Handle error as needed
     }
 
@@ -129,10 +133,10 @@ function EditCarrerImages() {
   const handleDeleteConfirm = async () => {
     try {
       await deleteCareerImage(imageToDelete);
-      console.log('Career image deleted successfully');
+      console.log("Career image deleted successfully");
       // Optionally, update state or display a success message
     } catch (error) {
-      console.error('Error deleting career image:', error);
+      console.error("Error deleting career image:", error);
       // Handle error as needed
     }
     fetchData();
@@ -166,40 +170,78 @@ function EditCarrerImages() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {careerImages.map((item) => (
+            {careerImages.map((item, index) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>
-                  <img src={item.images[0]?.img_1.url} alt={item.images[0]?.img_1.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[0]?.img_1.url}
+                    alt={item.images[0]?.img_1.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[1]?.img_2.url} alt={item.images[1]?.img_2.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[1]?.img_2.url}
+                    alt={item.images[1]?.img_2.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[2]?.img_3.url} alt={item.images[2]?.img_3.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[2]?.img_3.url}
+                    alt={item.images[2]?.img_3.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[3]?.img_4.url} alt={item.images[3]?.img_4.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[3]?.img_4.url}
+                    alt={item.images[3]?.img_4.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[4]?.img_5.url} alt={item.images[4]?.img_5.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[4]?.img_5.url}
+                    alt={item.images[4]?.img_5.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[5]?.img_6.url} alt={item.images[5]?.img_6.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[5]?.img_6.url}
+                    alt={item.images[5]?.img_6.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[6]?.img_7.url} alt={item.images[6]?.img_7.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[6]?.img_7.url}
+                    alt={item.images[6]?.img_7.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <img src={item.images[7]?.img_8.url} alt={item.images[7]?.img_8.originalname} style={{ maxWidth: '80px' }} />
+                  <img
+                    src={item.images[7]?.img_8.url}
+                    alt={item.images[7]?.img_8.originalname}
+                    style={{ maxWidth: "80px" }}
+                  />
                 </TableCell>
                 <TableCell>
-                  <Button variant="outlined" onClick={() => handleEditOpen(item)}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleEditOpen(item)}
+                  >
                     Edit
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <IconButton color="secondary" onClick={() => handleDeleteOpen(item.id)}>
+                  <IconButton
+                    color="secondary"
+                    onClick={() => handleDeleteOpen(item.id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -215,7 +257,7 @@ function EditCarrerImages() {
         <DialogContent>
           <p>Select an image to edit:</p>
           <Select
-            inputProps={{ 'aria-label': 'Select an image' }}
+            inputProps={{ "aria-label": "Select an image" }}
             displayEmpty
             value={selectedOption}
             onChange={handleOptionChange}
@@ -234,7 +276,12 @@ function EditCarrerImages() {
             <MenuItem value="img_8">Image 8</MenuItem>
           </Select>
           {selectedOption && (
-            <TextField margin='dense' fullWidth type="file" onChange={(event) => handleFileChange(event, selectedOption)} />
+            <TextField
+              margin="dense"
+              fullWidth
+              type="file"
+              onChange={(event) => handleFileChange(event, selectedOption)}
+            />
           )}
         </DialogContent>
         <DialogActions>
@@ -255,57 +302,49 @@ function EditCarrerImages() {
             <p>Select images to add:</p>
             <TextField
               type="file"
-             
-              onChange={(event) => handleFileChange(event, 'img_1')}
+              onChange={(event) => handleFileChange(event, "img_1")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-             
-              onChange={(event) => handleFileChange(event, 'img_2')}
+              onChange={(event) => handleFileChange(event, "img_2")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-             
-              onChange={(event) => handleFileChange(event, 'img_3')}
+              onChange={(event) => handleFileChange(event, "img_3")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-             
-              onChange={(event) => handleFileChange(event, 'img_4')}
+              onChange={(event) => handleFileChange(event, "img_4")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-           
-              onChange={(event) => handleFileChange(event, 'img_5')}
+              onChange={(event) => handleFileChange(event, "img_5")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-         
-              onChange={(event) => handleFileChange(event, 'img_6')}
+              onChange={(event) => handleFileChange(event, "img_6")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-              
-              onChange={(event) => handleFileChange(event, 'img_7')}
+              onChange={(event) => handleFileChange(event, "img_7")}
               fullWidth
               margin="normal"
             />
             <TextField
               type="file"
-             
-              onChange={(event) => handleFileChange(event, 'img_8')}
+              onChange={(event) => handleFileChange(event, "img_8")}
               fullWidth
               margin="normal"
             />

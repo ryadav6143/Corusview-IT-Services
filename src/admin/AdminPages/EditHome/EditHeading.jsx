@@ -1,24 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { fetchMainTableData, updateMainTableData } from '../../AdminServices';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from "react";
+import { fetchMainTableData, updateMainTableData } from "../../AdminServices";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import Notification from "../../../Notification/Notification";
 
 function EditHeading() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
-  const [editedData, setEditedData] = useState({ id: null, heading_1: '', heading_2: '' });
+  const [editedData, setEditedData] = useState({
+    id: null,
+    heading_1: "",
+    heading_2: "",
+  });
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+  const [successNotificationMessage, setSuccessNotificationMessage] =
+    useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -34,7 +44,11 @@ function EditHeading() {
   }, []);
 
   const handleOpen = () => {
-    setEditedData({ id: data.id, heading_1: data.heading_1, heading_2: data.heading_2 });
+    setEditedData({
+      id: data.id,
+      heading_1: data.heading_1,
+      heading_2: data.heading_2,
+    });
     setOpen(true);
   };
 
@@ -44,15 +58,32 @@ function EditHeading() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditedData({ ...editedData, [name]: value });
+    if (value.length > 35) {
+      // Truncate input to 35 characters
+      setEditedData({ ...editedData, [name]: value.slice(0, 35) });
+      setShowNotification(true);
+      setNotificationMessage(`Maximum 35 characters allowed for ${name}`);
+    } else {
+      setShowNotification(false);
+      setEditedData({ ...editedData, [name]: value });
+    }
   };
 
   const handleSubmit = async () => {
     try {
-      await updateMainTableData(editedData.id, { heading_1: editedData.heading_1, heading_2: editedData.heading_2 });
+      await updateMainTableData(editedData.id, {
+        heading_1: editedData.heading_1,
+        heading_2: editedData.heading_2,
+      });
       setOpen(false);
       // Update state directly after successful update
-      setData({ ...data, heading_1: editedData.heading_1, heading_2: editedData.heading_2 });
+      setData({
+        ...data,
+        heading_1: editedData.heading_1,
+        heading_2: editedData.heading_2,
+      });
+      setShowSuccessNotification(true);
+      setSuccessNotificationMessage("Data updated successfully!");
     } catch (error) {
       setError(error.message);
     }
@@ -80,7 +111,7 @@ function EditHeading() {
               <TableCell>{data?.heading_1}</TableCell>
               <TableCell>{data?.heading_2}</TableCell>
               <TableCell>
-                <Button  onClick={handleOpen}>Edit</Button>
+                <Button onClick={handleOpen}>Edit</Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -120,6 +151,26 @@ function EditHeading() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification for character limit */}
+      {showNotification && (
+        <Notification
+          open={showNotification}
+          handleClose={() => setShowNotification(false)}
+          alertMessage={notificationMessage}
+          alertSeverity="error"
+        />
+      )}
+
+      {/* Success Notification */}
+      {showSuccessNotification && (
+        <Notification
+          open={showSuccessNotification}
+          handleClose={() => setShowSuccessNotification(false)}
+          alertMessage={successNotificationMessage}
+          alertSeverity="success"
+        />
+      )}
     </>
   );
 }

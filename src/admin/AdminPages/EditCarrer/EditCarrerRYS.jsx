@@ -1,21 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField
-} from '@mui/material';
-import { fetchCareerHead, updateCareerHead } from '../../AdminServices';
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
 
 function EditCarrerRYS() {
   const [careerHead, setCareerHead] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
-  const [updatedHeading, setUpdatedHeading] = useState('');
-  const [updatedContent, setUpdatedContent] = useState('');
+  const [updatedHeading, setUpdatedHeading] = useState("");
+  const [updatedContent, setUpdatedContent] = useState("");
 
   const fetchData = async () => {
     try {
       const data = await fetchCareerHead();
       setCareerHead(data);
     } catch (error) {
-      console.error('Error fetching career head data:', error);
+      console.error("Error fetching career head data:", error);
       // Handle errors as needed
     }
   };
@@ -43,7 +56,7 @@ function EditCarrerRYS() {
       fetchData(); // Refresh data after update
       handleCloseEdit();
     } catch (error) {
-      console.error('Error updating career head data:', error);
+      console.error("Error updating career head data:", error);
       // Handle errors as needed
     }
   };
@@ -55,6 +68,7 @@ function EditCarrerRYS() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Heading</TableCell>
               <TableCell>Content</TableCell>
               <TableCell>Edit</TableCell>
@@ -62,10 +76,15 @@ function EditCarrerRYS() {
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{careerHead.ryh_heading}</TableCell>
               <TableCell>{careerHead.ryh_content}</TableCell>
               <TableCell>
-                <Button variant="outlined" color="primary" onClick={handleEditClick}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleEditClick}
+                >
                   Edit
                 </Button>
               </TableCell>
@@ -78,7 +97,9 @@ function EditCarrerRYS() {
       <Dialog open={openEdit} onClose={handleCloseEdit}>
         <DialogTitle>Edit Career Head Information</DialogTitle>
         <DialogContent>
-          <DialogContentText>Edit the career head information:</DialogContentText>
+          <DialogContentText>
+            Edit the career head information:
+          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"

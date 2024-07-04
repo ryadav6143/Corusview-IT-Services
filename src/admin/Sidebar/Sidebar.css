@@ -92,18 +92,11 @@
   border: none;
   margin-left: 1px;
   font-family: "Poppins", sans-serif !important;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  /* display: flex; */
-  -ms-flex-wrap: wrap;
+  display: flex;
   flex-wrap: wrap;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+  justify-content: space-between;
+  width: 100%;
   align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  /* justify-content: space-between; */
-  /* width: 100%; */
 }
 .dropdown-btn a {
   font-size: 16px !important;
@@ -211,7 +204,8 @@
   }
 }
 
-.custom-btn {
+.custom-dropdown-btn {
+  /* margin: 0; */
   margin-left: 30px;
   font-size: 24px;
 }

@@ -1,13 +1,36 @@
 // EditJobOpening.js
 
-import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
-import { fetchJobOpenings, fetchJobRoles, updateJobOpening, deleteJobOpening } from '../../../AdminServices'; // Adjust the path based on your project structure
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+} from "@mui/material";
+import {
+  fetchJobOpenings,
+  fetchJobRoles,
+  updateJobOpening,
+  deleteJobOpening,
+} from "../../../AdminServices"; // Adjust the path based on your project structure
 
 function EditJobOpening() {
   const [jobOpenings, setJobOpenings] = useState([]);
   const [jobRoles, setJobRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [editedJob, setEditedJob] = useState(null);
 
@@ -19,7 +42,7 @@ function EditJobOpening() {
         setJobOpenings(openings);
         setJobRoles(roles);
       } catch (error) {
-        console.error('Error in fetching data:', error);
+        console.error("Error in fetching data:", error);
       }
     };
 
@@ -44,18 +67,18 @@ function EditJobOpening() {
     try {
       const updatedJob = { ...editedJob }; // Clone editedJob object
       await updateJobOpening(editedJob.id, updatedJob);
-      
+
       // Update jobOpenings state with the updated job
-      const updatedOpenings = jobOpenings.map(job => 
+      const updatedOpenings = jobOpenings.map((job) =>
         job.id === updatedJob.id ? updatedJob : job
       );
       setJobOpenings(updatedOpenings);
-      
+
       setOpenDialog(false);
       setEditedJob(null);
-      console.log('Job opening updated successfully.');
+      console.log("Job opening updated successfully.");
     } catch (error) {
-      console.error('Error updating job opening:', error);
+      console.error("Error updating job opening:", error);
       // Handle error, show notification, etc.
     }
   };
@@ -63,20 +86,20 @@ function EditJobOpening() {
   const handleDeleteClick = async (jobId) => {
     try {
       await deleteJobOpening(jobId);
-      
+
       // Update jobOpenings state by filtering out the deleted job
-      const updatedOpenings = jobOpenings.filter(job => job.id !== jobId);
+      const updatedOpenings = jobOpenings.filter((job) => job.id !== jobId);
       setJobOpenings(updatedOpenings);
-      
-      console.log('Job opening deleted successfully.');
+
+      console.log("Job opening deleted successfully.");
     } catch (error) {
-      console.error('Error deleting job opening:', error);
+      console.error("Error deleting job opening:", error);
       // Handle error, show notification, etc.
     }
   };
 
   const filteredJobOpenings = selectedRole
-    ? jobOpenings.filter(job => job.role === selectedRole)
+    ? jobOpenings.filter((job) => job.role === selectedRole)
     : jobOpenings;
 
   return (
@@ -93,7 +116,7 @@ function EditJobOpening() {
           <MenuItem value="">
             <em>All Roles</em>
           </MenuItem>
-          {jobRoles.map(role => (
+          {jobRoles.map((role) => (
             <MenuItem key={role.id} value={role.role}>
               {role.role}
             </MenuItem>
@@ -115,20 +138,24 @@ function EditJobOpening() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredJobOpenings.map(job => (
+            {filteredJobOpenings.map((job, index) => (
               <TableRow key={job.id}>
-                <TableCell>{job.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{job.role}</TableCell>
                 <TableCell>{job.position}</TableCell>
                 <TableCell>{job.location}</TableCell>
-                <TableCell>{new Date(job.posted_date).toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {new Date(job.posted_date).toLocaleDateString()}
+                </TableCell>
                 <TableCell>{job.level}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEditClick(job)}>Edit</Button>
-                 
                 </TableCell>
                 <TableCell>
-                <Button onClick={() => handleDeleteClick(job.id)}>Delete</Button> {/* Delete button */}
+                  <Button onClick={() => handleDeleteClick(job.id)}>
+                    Delete
+                  </Button>{" "}
+                  {/* Delete button */}
                 </TableCell>
               </TableRow>
             ))}
@@ -150,7 +177,9 @@ function EditJobOpening() {
                 type="text"
                 fullWidth
                 value={editedJob.role}
-                onChange={(e) => setEditedJob({ ...editedJob, role: e.target.value })}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, role: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -159,7 +188,9 @@ function EditJobOpening() {
                 type="text"
                 fullWidth
                 value={editedJob.position}
-                onChange={(e) => setEditedJob({ ...editedJob, position: e.target.value })}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, position: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -168,7 +199,9 @@ function EditJobOpening() {
                 type="text"
                 fullWidth
                 value={editedJob.location}
-                onChange={(e) => setEditedJob({ ...editedJob, location: e.target.value })}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, location: e.target.value })
+                }
               />
               <TextField
                 margin="dense"
@@ -177,14 +210,22 @@ function EditJobOpening() {
                 type="text"
                 fullWidth
                 value={editedJob.level}
-                onChange={(e) => setEditedJob({ ...editedJob, level: e.target.value })}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, level: e.target.value })
+                }
               />
             </form>
           )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleSaveChanges} variant="contained" color="primary">Save Changes</Button>
+          <Button
+            onClick={handleSaveChanges}
+            variant="contained"
+            color="primary"
+          >
+            Save Changes
+          </Button>
         </DialogActions>
       </Dialog>
     </Paper>

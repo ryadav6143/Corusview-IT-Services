@@ -89,7 +89,9 @@ const HeaderTable = () => {
             <TableRow>
               <TableCell>{headerData.id}</TableCell>
               <TableCell
-                style={{ backgroundColor: headerData.header_color1 }}
+                style={{
+                  backgroundColor: headerData.header_color1,
+                }}
               ></TableCell>
               <TableCell>
                 <Button onClick={() => handleEditClick("header_color1")}>
@@ -100,7 +102,9 @@ const HeaderTable = () => {
             <TableRow>
               <TableCell>{headerData.id}</TableCell>
               <TableCell
-                style={{ backgroundColor: headerData.header_color2 }}
+                style={{
+                  backgroundColor: headerData.header_color2,
+                }}
               ></TableCell>
               <TableCell>
                 <Button onClick={() => handleEditClick("header_color2")}>

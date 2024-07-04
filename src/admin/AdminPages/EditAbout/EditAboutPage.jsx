@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { fetchAboutUsCompany, updateAboutUsCompany } from '../../AdminServices';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import React, { useEffect, useState } from "react";
+import { fetchAboutUsCompany, updateAboutUsCompany } from "../../AdminServices";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 function EditAboutPage() {
   const [aboutUsData, setAboutUsData] = useState([]);
@@ -25,11 +25,11 @@ function EditAboutPage() {
   const [editOpen, setEditOpen] = useState(false);
   const [editedData, setEditedData] = useState({
     id: null,
-    company_content: '',
-    story_content: '',
-    vision_content: '',
+    company_content: "",
+    story_content: "",
+    vision_content: "",
   });
-  const [selectedField, setSelectedField] = useState('');
+  const [selectedField, setSelectedField] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +46,7 @@ function EditAboutPage() {
 
   const handleEditOpen = (data) => {
     setEditedData(data);
-    setSelectedField('');
+    setSelectedField("");
     setEditOpen(true);
   };
 
@@ -95,9 +95,9 @@ function EditAboutPage() {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Company Content</TableCell>
-              <TableCell>Story Content</TableCell>
-              <TableCell>Vision Content</TableCell>
+              <TableCell>Our Company</TableCell>
+              <TableCell>Our Story</TableCell>
+              <TableCell>Our Vision </TableCell>
               <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
@@ -109,7 +109,10 @@ function EditAboutPage() {
                 <TableCell>{data.story_content}</TableCell>
                 <TableCell>{data.vision_content}</TableCell>
                 <TableCell>
-                  <Button variant="outlined" onClick={() => handleEditOpen(data)}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleEditOpen(data)}
+                  >
                     Edit
                   </Button>
                 </TableCell>
@@ -124,17 +127,24 @@ function EditAboutPage() {
         <DialogTitle>Edit Content</DialogTitle>
         <DialogContent>
           <FormControl fullWidth margin="dense">
-            <InputLabel>Select Field to Edit</InputLabel>
-            <Select value={selectedField} onChange={handleFieldChange}>
-              <MenuItem value="company_content">Company Content</MenuItem>
-              <MenuItem value="story_content">Story Content</MenuItem>
-              <MenuItem value="vision_content">Vision Content</MenuItem>
+            <InputLabel fullWidth margin="dense">
+              Select Field to Edit
+            </InputLabel>
+            <Select
+              value={selectedField}
+              onChange={handleFieldChange}
+              fullWidth
+              margin="dense"
+            >
+              <MenuItem value="company_content">Our Company</MenuItem>
+              <MenuItem value="story_content">Our Story</MenuItem>
+              <MenuItem value="vision_content">Our Vision </MenuItem>
             </Select>
           </FormControl>
-          {selectedField === 'company_content' && (
+          {selectedField === "company_content" && (
             <TextField
               name="company_content"
-              label="Company Content"
+              label="Our Company"
               fullWidth
               margin="dense"
               multiline
@@ -143,10 +153,10 @@ function EditAboutPage() {
               onChange={handleChange}
             />
           )}
-          {selectedField === 'story_content' && (
+          {selectedField === "story_content" && (
             <TextField
               name="story_content"
-              label="Story Content"
+              label="Our Story"
               fullWidth
               margin="dense"
               multiline
@@ -155,10 +165,10 @@ function EditAboutPage() {
               onChange={handleChange}
             />
           )}
-          {selectedField === 'vision_content' && (
+          {selectedField === "vision_content" && (
             <TextField
               name="vision_content"
-              label="Vision Content"
+              label="Our Vision "
               fullWidth
               margin="dense"
               multiline

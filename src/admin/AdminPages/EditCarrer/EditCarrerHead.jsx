@@ -83,6 +83,7 @@ function EditCarrerHead() {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Heading</TableCell>
               <TableCell>Content</TableCell>
               <TableCell>Edit</TableCell>
@@ -90,6 +91,7 @@ function EditCarrerHead() {
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>1</TableCell>
               <TableCell>{careerHead.carrer_heading}</TableCell>
               <TableCell>{careerHead.carrer_content}</TableCell>
               <TableCell>

@@ -98,9 +98,21 @@ const EditFooter = () => {
               <TableCell>{footerData.email}</TableCell>
               <TableCell>{footerData.phone}</TableCell>
               <TableCell>{footerData.address}</TableCell>
-              <TableCell>{footerData.link1}</TableCell>
-              <TableCell>{footerData.link2}</TableCell>
-              <TableCell>{footerData.link3}</TableCell>
+              <TableCell>
+                <a href={footerData.link1} target="_blank">
+                  Instagram Link
+                </a>
+              </TableCell>
+              <TableCell>
+                <a href={footerData.link2} target="_blank">
+                  Linkedin Link
+                </a>
+              </TableCell>
+              <TableCell>
+                <a href={footerData.link3} target="_blank">
+                  Youtube Link
+                </a>
+              </TableCell>
               <TableCell
                 style={{ backgroundColor: footerData.footer_color }}
               ></TableCell>

@@ -151,9 +151,9 @@ function EditServiceProblem() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {problems.map((problem) => (
+            {problems.map((problem, index) => (
               <TableRow key={problem.id}>
-                <TableCell>{problem.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{problem.inner_heading}</TableCell>
                 <TableCell>{problem.inner_content}</TableCell>
                 <TableCell>

@@ -11,6 +11,7 @@ function Sidebar({ isOpen }) {
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [footerDropdownOpen, setFooterDropdownOpen] = useState(false);
   const [contactDropdownOpen, setContactDropdownOpen] = useState(false);
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [nriDropdownOpen, setNriDropdownOpen] = useState(false);
   const [galleryDropdownOpen, setGalleryDropdownOpen] = useState(false);
 
@@ -43,6 +44,9 @@ function Sidebar({ isOpen }) {
   const handleContactDropdown = () => {
     setContactDropdownOpen(!contactDropdownOpen);
   };
+  const handleProductsDropdown = () => {
+    setProductsDropdownOpen(!productsDropdownOpen);
+  };
 
   const handleLinkClick = () => {
     setDropdownOpen(false);
@@ -53,6 +57,7 @@ function Sidebar({ isOpen }) {
     setFooterDropdownOpen(false);
     setGalleryDropdownOpen(false);
     setContactDropdownOpen(false);
+    setProductsDropdownOpen(false);
   };
 
   return (
@@ -63,7 +68,7 @@ function Sidebar({ isOpen }) {
             <ul>
               <button className="dropdown-btn" onClick={handleHomeDropdown}>
                 Home
-                <span className="custom-btn">
+                <span className="custom-dropdown-btn">
                   {homeDropdownOpen ? "-" : "+"}
                 </span>
               </button>
@@ -90,7 +95,7 @@ function Sidebar({ isOpen }) {
               </div>
               <button className="dropdown-btn" onClick={handleAboutDropdown}>
                 About Us
-                <span className="custom-btn">
+                <span className="custom-dropdown-btn">
                   {aboutDropdownOpen ? "-" : "+"}
                 </span>
               </button>
@@ -109,7 +114,7 @@ function Sidebar({ isOpen }) {
               </div>
               <button className="dropdown-btn" onClick={handleGalleryDropdown}>
                 Services
-                <span className="custom-btn">
+                <span className="custom-dropdown-btn">
                   {galleryDropdownOpen ? "-" : "+"}
                 </span>
               </button>
@@ -141,7 +146,7 @@ function Sidebar({ isOpen }) {
 
               <button className="dropdown-btn" onClick={handleNriDropdown}>
                 Carrer
-                <span className="custom-btn">
+                <span className="custom-dropdown-btn">
                   {nriDropdownOpen ? "-" : "+"}
                 </span>
               </button>
@@ -171,7 +176,7 @@ function Sidebar({ isOpen }) {
               {/* --------------------------------------------------------------------------- */}
               <button className="dropdown-btn" onClick={handleContactDropdown}>
                 Contact us
-                <span className="custom-btn">
+                <span className="custom-dropdown-btn">
                   {contactDropdownOpen ? "-" : "+"}
                 </span>
               </button>
@@ -188,9 +193,34 @@ function Sidebar({ isOpen }) {
                 >
                   <a>Edit Contact us</a>
                 </Link>
-                <Link to="/admin/editcontactform" onClick={handleLinkClick}>
+                <Link to="/admin/editProducts" onClick={handleLinkClick}>
                   <a>Edit Contact Form </a>
                 </Link>
+              </div>
+
+              {/* =========================== */}
+              <button className="dropdown-btn" onClick={handleProductsDropdown}>
+                Products
+                <span className="custom-dropdown-btn">
+                  {productsDropdownOpen ? "-" : "+"}
+                </span>
+              </button>
+              <div
+                className={`dropdown-container  ${
+                  productsDropdownOpen ? "active" : ""
+                }`}
+                style={{ display: productsDropdownOpen ? "block" : "none" }}
+              >
+                <Link
+                  className="dropdown-btn"
+                  to="/admin/editproducts"
+                  onClick={handleLinkClick}
+                >
+                  <a>Edit products </a>
+                </Link>
+                {/* <Link to="/admin/editproductsform" onClick={handleLinkClick}>
+                  <a>Edit products Form </a>
+                </Link> */}
               </div>
               <button className="dropdown-btn" style={{ marginLeft: "-10px" }}>
                 <Link to="/admin/editheader" onClick={handleLinkClick}>

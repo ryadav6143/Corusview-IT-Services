@@ -90,9 +90,9 @@ function EditAboutValue() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ourValues.map((value) => (
+            {ourValues.map((value, index) => (
               <TableRow key={value.id}>
-                <TableCell>{value.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{value.heading}</TableCell>
                 <TableCell>{value.content}</TableCell>
                 <TableCell>
