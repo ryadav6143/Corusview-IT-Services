@@ -36,6 +36,8 @@ function EditSlider() {
   });
   const [showErrorNotification, setShowErrorNotification] = useState(false);
   const [errorNotificationMessage, setErrorNotificationMessage] = useState("");
+  const [disableAddSave, setDisableAddSave] = useState(false);
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,6 +110,7 @@ function EditSlider() {
       if (!acceptedFileTypes.includes(file.type)) {
         setShowErrorNotification(true);
         setErrorNotificationMessage("Please upload a JPEG or PNG image.");
+        setDisableAddSave(true); // Disable Add/Save button
         return;
       }
 
@@ -116,14 +119,27 @@ function EditSlider() {
       if (file.size > maxFileSize) {
         setShowErrorNotification(true);
         setErrorNotificationMessage("File size exceeds 20MB limit.");
+        setDisableAddSave(true); // Disable Add/Save button
         return;
       }
 
       setEditedTestimonial({ ...editedTestimonial, img: file });
+      setDisableAddSave(false); // Enable Add/Save button if file is valid
     }
   };
 
   const handleSave = async () => {
+    // Check for empty fields
+    if (
+      !editedTestimonial.description ||
+      !editedTestimonial.img ||
+      !editedTestimonial.designation
+    ) {
+      setShowErrorNotification(true);
+      setErrorNotificationMessage("All fields are required.");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("description", editedTestimonial.description);
@@ -138,12 +154,25 @@ function EditSlider() {
 
       const updatedTestimonials = await fetchTestimonials();
       setTestimonials(updatedTestimonials);
+
+      setShowSuccessNotification(true);
     } catch (error) {
       setError(error.message);
     }
   };
 
   const handleAddSave = async () => {
+    // Check for empty fields
+    if (
+      !editedTestimonial.description ||
+      !editedTestimonial.img ||
+      !editedTestimonial.designation
+    ) {
+      setShowErrorNotification(true);
+      setErrorNotificationMessage("All fields are required.");
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("description", editedTestimonial.description);
@@ -156,6 +185,8 @@ function EditSlider() {
 
       const updatedTestimonials = await fetchTestimonials();
       setTestimonials(updatedTestimonials);
+
+      setShowSuccessNotification(true);
     } catch (error) {
       setError(error.message);
     }
@@ -169,6 +200,10 @@ function EditSlider() {
         (testimonial) => testimonial.id !== id
       );
       setTestimonials(updatedTestimonials);
+
+      // Show success notification
+      setShowErrorNotification(true);
+      setErrorNotificationMessage("Data deleted successfully.");
     } catch (error) {
       setError(error.message);
     }
@@ -263,7 +298,11 @@ function EditSlider() {
             <Button onClick={handleCloseEditDialog} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleSave} color="primary">
+            <Button
+              onClick={handleSave}
+              color="primary"
+              disabled={disableAddSave}
+            >
               Save
             </Button>
           </DialogActions>
@@ -303,7 +342,11 @@ function EditSlider() {
             <Button onClick={handleCloseAddDialog} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleAddSave} color="primary">
+            <Button
+              onClick={handleAddSave}
+              color="primary"
+              disabled={disableAddSave}
+            >
               Add
             </Button>
           </DialogActions>
@@ -335,6 +378,15 @@ function EditSlider() {
             handleClose={() => setShowErrorNotification(false)}
             alertMessage={errorNotificationMessage}
             alertSeverity="error"
+          />
+        )}
+
+        {showSuccessNotification && (
+          <Notification
+            open={showSuccessNotification}
+            handleClose={() => setShowSuccessNotification(false)}
+            alertMessage="Data Updated successfully."
+            alertSeverity="success"
           />
         )}
       </Box>

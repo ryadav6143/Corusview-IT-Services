@@ -70,14 +70,15 @@ function EditAboutUs() {
         return;
       }
 
-      await updateMainTableData(editedData.id, {
+      const response = await updateMainTableData(editedData.id, {
         about_us: editedData.about_us,
       });
       setOpen(false);
       setData({ ...data, about_us: editedData.about_us });
-      setSuccessMessage("About Us updated successfully."); // Set success message
+      setSuccessMessage(response.message); // Set success message
     } catch (error) {
       setError(error.message);
+      setSuccessMessage(error.message, "error");
     }
   };
 

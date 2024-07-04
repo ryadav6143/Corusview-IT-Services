@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import Notification from "../../../Notification/Notification"; // Adjust the import path as per your folder structure
 
 function EditAboutPage() {
   const [aboutUsData, setAboutUsData] = useState([]);
@@ -30,6 +31,8 @@ function EditAboutPage() {
     vision_content: "",
   });
   const [selectedField, setSelectedField] = useState("");
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +71,10 @@ function EditAboutPage() {
   const handleSave = async () => {
     try {
       // Call your update API here and pass the editedData
-      await updateAboutUsCompany(editedData);
+      const response = await updateAboutUsCompany(editedData);
 
       setEditOpen(false);
+      showNotification(response.message, "success");
 
       // Refresh the data
       const updatedData = await fetchAboutUsCompany();
@@ -78,6 +82,16 @@ function EditAboutPage() {
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const showNotification = (message, severity = "default") => {
+    setNotificationMessage(message);
+    setNotificationOpen(true);
+  };
+
+  const closeNotification = () => {
+    setNotificationOpen(false);
+    setNotificationMessage("");
   };
 
   if (error) {
@@ -187,6 +201,14 @@ function EditAboutPage() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={notificationOpen}
+        handleClose={closeNotification}
+        alertMessage={notificationMessage}
+        alertSeverity="success"
+      />
     </>
   );
 }

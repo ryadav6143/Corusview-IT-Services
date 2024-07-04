@@ -1,5 +1,3 @@
-// EditProblemHead.js
-
 import React, { useEffect, useState } from "react";
 import { fetchProblemHead, updateProblemHead } from "../../AdminServices";
 import TableContainer from "@mui/material/TableContainer";
@@ -16,25 +14,27 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Notification from "../../../Notification/Notification"; // Adjust the path as per your project structure
 
 function EditProblemHead() {
   const [problemHeading, setProblemHeading] = useState("");
   const [error, setError] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
   const [editedHeading, setEditedHeading] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchProblemHead();
-        setProblemHeading(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const data = await fetchProblemHead();
+      setProblemHeading(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   const handleEditOpen = () => {
     setEditedHeading(problemHeading);
@@ -51,14 +51,19 @@ function EditProblemHead() {
 
   const handleSave = async () => {
     try {
-      await updateProblemHead({ heading: editedHeading });
+      const response = await updateProblemHead({ heading: editedHeading });
       setEditOpen(false);
-      // Refresh the data after update
       const updatedHeading = await fetchProblemHead();
-      setProblemHeading(updatedHeading); // Update state with updated heading
+      setProblemHeading(updatedHeading);
+      setSuccessMessage(response.message);
     } catch (error) {
       setError(error.message);
+      setSuccessMessage(error.message, "error");
     }
+  };
+
+  const handleSuccessNotificationClose = () => {
+    setSuccessMessage(null);
   };
 
   if (error) {
@@ -124,6 +129,24 @@ function EditProblemHead() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification for Success */}
+      {successMessage && (
+        <Notification
+          open={true}
+          handleClose={handleSuccessNotificationClose}
+          alertMessage={successMessage}
+          alertSeverity="success"
+        />
+      )}
+
+      {/* Notification for Error (if needed) */}
+      {/* <Notification
+        open={error !== null}
+        handleClose={() => setError(null)}
+        alertMessage={error}
+        alertSeverity="error"
+      /> */}
     </>
   );
 }

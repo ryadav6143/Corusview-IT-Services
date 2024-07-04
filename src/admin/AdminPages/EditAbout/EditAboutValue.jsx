@@ -72,7 +72,23 @@ function EditAboutValue() {
   if (error) {
     return (
       <Typography variant="h6" color="error">
-        Error: {error}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Heading</TableCell>
+                <TableCell>Content</TableCell>
+                <TableCell>Edit</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <Typography variant="p" color="error">
+                Error: {Error}
+              </Typography>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Typography>
     );
   }

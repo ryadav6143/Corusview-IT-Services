@@ -36,7 +36,7 @@ export const fetchOurServicesData = async () => {
 // put service data
 export const updateServiceData = async (id, newData) => {
   try {
-    const response = await axios.put(`${BASE_URL}/our_services/${id}`, newData);
+    const response = await axios.put(`${BASE_URL}/our_services`, newData);
     return response.data;
   } catch (error) {
     throw error;
@@ -669,7 +669,10 @@ export const fetchProducts = async () => {
 // edit Products data
 export const updateProducts = async (id, updatedProducts) => {
   try {
-    const response = await axios.put(`${BASE_URL}/products/${id}`, updatedProducts);
+    const response = await axios.put(
+      `${BASE_URL}/products/${id}`,
+      updatedProducts
+    );
     return response.data; // Return the updated job data if needed
   } catch (error) {
     console.error(`Error updating job opening with ID ${id}:`, error);
@@ -682,17 +685,16 @@ export const deleteProducts = async (ProductsId) => {
     const response = await axios.delete(`${BASE_URL}/products/${ProductsId}`);
     return response.data; // Assuming the API returns data upon successful deletion
   } catch (error) {
-    throw new Error('Error deleting job opening:', error);
+    throw new Error("Error deleting job opening:", error);
   }
 };
 
-// add Products data 
+// add Products data
 export const createProducts = async (data) => {
   try {
     const response = await axios.post(`${BASE_URL}/products`, data);
     return response.data;
   } catch (error) {
-
     throw error;
   }
 };

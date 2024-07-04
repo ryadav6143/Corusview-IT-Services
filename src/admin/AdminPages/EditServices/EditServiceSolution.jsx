@@ -1,5 +1,3 @@
-// EditServiceSolution.jsx
-
 import React, { useState, useEffect } from "react";
 import {
   TextField,
@@ -23,6 +21,7 @@ import {
   deleteSolution,
   addSolution,
 } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust path as per your project structure
 
 function EditServiceSolution() {
   const [solutions, setSolutions] = useState([]);
@@ -34,6 +33,11 @@ function EditServiceSolution() {
   const [openAddDialog, setOpenAddDialog] = useState(false); // Added state for the add dialog
   const [newHeading, setNewHeading] = useState("");
   const [newContent, setNewContent] = useState("");
+
+  // Notification state
+  const [openNotification, setOpenNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("success");
 
   useEffect(() => {
     fetchData();
@@ -69,12 +73,15 @@ function EditServiceSolution() {
         inner_heading: editedHeading,
         inner_content: editedContent,
       };
-      await updateSolution(selectedSolution.id, updatedData);
+      const response = await updateSolution(selectedSolution.id, updatedData);
       await fetchData(); // Refresh the solutions list after successful update
       handleCloseEditDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error updating solution:", error);
       // Handle error as needed
+      handleNotification("Error updating solution", "error");
     }
   };
 
@@ -85,17 +92,19 @@ function EditServiceSolution() {
 
   const handleConfirmDelete = async () => {
     try {
-      await deleteSolution(selectedSolution.id);
+      const response = await deleteSolution(selectedSolution.id);
       await fetchData(); // Refresh the solutions list after successful deletion
-      handleCloseDeleteDialog(); // Corrected function name here
+      handleCloseDeleteDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error deleting solution:", error);
       // Handle error as needed
+      handleNotification(error.message, "error");
     }
   };
 
   const handleCloseDeleteDialog = () => {
-    // Function definition corrected here
     setOpenDeleteDialog(false);
     setSelectedSolution(null);
   };
@@ -110,12 +119,15 @@ function EditServiceSolution() {
         inner_heading: newHeading,
         inner_content: newContent,
       };
-      await addSolution(newSolution);
+      const response = await addSolution(newSolution);
       await fetchData(); // Refresh the solutions list after successful addition
       handleCloseAddDialog();
+      // Show success notification
+      handleNotification(response.message, "success");
     } catch (error) {
       console.error("Error adding solution:", error);
       // Handle error as needed
+      handleNotification(error.message, "error");
     }
   };
 
@@ -123,6 +135,16 @@ function EditServiceSolution() {
     setOpenAddDialog(false);
     setNewHeading("");
     setNewContent("");
+  };
+
+  const handleNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setOpenNotification(true);
+  };
+
+  const handleCloseNotification = () => {
+    setOpenNotification(false);
   };
 
   return (
@@ -160,11 +182,10 @@ function EditServiceSolution() {
                   </Button>
                 </TableCell>
                 <TableCell>
-                <Button onClick={() => handleDeleteClick(solution)}>
+                  <Button onClick={() => handleDeleteClick(solution)}>
                     Delete
                   </Button>
                 </TableCell>
-               
               </TableRow>
             ))}
           </TableBody>
@@ -256,6 +277,14 @@ function EditServiceSolution() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification */}
+      <Notification
+        open={openNotification}
+        handleClose={handleCloseNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </Box>
   );
 }
