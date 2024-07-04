@@ -10,24 +10,25 @@ function EditJobOpening() {
   const [selectedRole, setSelectedRole] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [editedJob, setEditedJob] = useState(null);
+  const fetchData = async () => {
+    try {
+      const openings = await fetchJobOpenings();
+      const roles = await fetchJobRoles();
+      setJobOpenings(openings);
+      setJobRoles(roles);
+    } catch (error) {
+      console.error('Error in fetching data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const openings = await fetchJobOpenings();
-        const roles = await fetchJobRoles();
-        setJobOpenings(openings);
-        setJobRoles(roles);
-      } catch (error) {
-        console.error('Error in fetching data:', error);
-      }
-    };
-
+   
     fetchData();
   }, []);
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
+    fetchData();
   };
 
   const handleEditClick = (job) => {
