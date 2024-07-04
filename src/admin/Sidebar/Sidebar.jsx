@@ -193,7 +193,7 @@ function Sidebar({ isOpen }) {
                 >
                   <a>Edit Contact us</a>
                 </Link>
-                <Link to="/admin/editProducts" onClick={handleLinkClick}>
+                <Link to="/admin/editcontactform" onClick={handleLinkClick}>
                   <a>Edit Contact Form </a>
                 </Link>
               </div>

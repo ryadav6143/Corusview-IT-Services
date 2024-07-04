@@ -16,12 +16,25 @@ import {
   TextField,
 } from "@mui/material";
 import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Adjust the path as per your file structure
 
 function EditCarrerRYS() {
   const [careerHead, setCareerHead] = useState({});
   const [openEdit, setOpenEdit] = useState(false);
   const [updatedHeading, setUpdatedHeading] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
+
+  // Notification state variables
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("info");
+
+  // Function to show notifications
+  const showNotification = (message, severity) => {
+    setNotificationMessage(message);
+    setNotificationSeverity(severity);
+    setNotificationOpen(true);
+  };
 
   const fetchData = async () => {
     try {
@@ -49,15 +62,24 @@ function EditCarrerRYS() {
 
   const handleUpdate = async () => {
     try {
-      await updateCareerHead({
+      // Check for empty fields
+      if (!updatedHeading.trim() || !updatedContent.trim()) {
+        showNotification("All fields are required", "error");
+        return;
+      }
+
+      const response = await updateCareerHead({
         ryh_heading: updatedHeading,
         ryh_content: updatedContent,
       });
+      
       fetchData(); // Refresh data after update
       handleCloseEdit();
+      showNotification(response.message, "success"); // Show success notification
     } catch (error) {
       console.error("Error updating career head data:", error);
       // Handle errors as needed
+      showNotification("Error updating career head information", "error");
     }
   };
 
@@ -129,6 +151,14 @@ function EditCarrerRYS() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Notification Component */}
+      <Notification
+        open={notificationOpen}
+        handleClose={() => setNotificationOpen(false)}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

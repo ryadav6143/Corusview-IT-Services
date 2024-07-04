@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { fetchFooterData, updateFooterData } from "../../AdminServices";
 import { ChromePicker } from "react-color";
+import Notification from "../../../Notification/Notification"; // Adjust the path as needed
 
 const EditFooter = () => {
   const [footerData, setFooterData] = useState(null);
@@ -24,6 +25,10 @@ const EditFooter = () => {
   const [editItem, setEditItem] = useState({});
   const [selectedColor, setSelectedColor] = useState("#000000"); // Default color
   const [loading, setLoading] = useState(true);
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("default");
 
   useEffect(() => {
     fetchData();
@@ -58,13 +63,30 @@ const EditFooter = () => {
   };
 
   const handleUpdate = async () => {
+    if (!editItem.email || !editItem.phone || !editItem.address || !editItem.link1 || !editItem.link2 || !editItem.link3) {
+      setNotificationMessage("All fields are required");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
+
     try {
-      await updateFooterData(editItem.id, editItem);
+      const response = await updateFooterData(editItem.id, editItem);
+      setNotificationMessage(response.message);
+      setNotificationSeverity("success");
       fetchData();
       setEditDialogOpen(false);
     } catch (error) {
+      setNotificationMessage("Error updating data");
+      setNotificationSeverity("error");
       console.error("Error updating data:", error);
+    } finally {
+      setNotificationOpen(true);
     }
+  };
+
+  const handleCloseNotification = () => {
+    setNotificationOpen(false);
   };
 
   if (loading) {
@@ -99,27 +121,23 @@ const EditFooter = () => {
               <TableCell>{footerData.phone}</TableCell>
               <TableCell>{footerData.address}</TableCell>
               <TableCell>
-                <a href={footerData.link1} target="_blank">
+                <a href={footerData.link1} target="_blank" rel="noopener noreferrer">
                   Instagram Link
                 </a>
               </TableCell>
               <TableCell>
-                <a href={footerData.link2} target="_blank">
+                <a href={footerData.link2} target="_blank" rel="noopener noreferrer">
                   Linkedin Link
                 </a>
               </TableCell>
               <TableCell>
-                <a href={footerData.link3} target="_blank">
+                <a href={footerData.link3} target="_blank" rel="noopener noreferrer">
                   Youtube Link
                 </a>
               </TableCell>
-              <TableCell
-                style={{ backgroundColor: footerData.footer_color }}
-              ></TableCell>
+              <TableCell style={{ backgroundColor: footerData.footer_color, height: 50, width: 50 }}></TableCell>
               <TableCell>
-                <Button onClick={() => handleEditClick(footerData)}>
-                  Edit
-                </Button>
+                <Button onClick={() => handleEditClick(footerData)}>Edit</Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -183,18 +201,20 @@ const EditFooter = () => {
             value={editItem.link3 || ""}
             onChange={handleInputChange}
           />
-          <ChromePicker
-            color={selectedColor}
-            onChangeComplete={handleColorChange}
-          />
+          <ChromePicker color={selectedColor} onChangeComplete={handleColorChange} />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleUpdate} variant="contained" color="primary">
-            Update
-          </Button>
+          <Button onClick={handleUpdate} variant="contained" color="primary">Update</Button>
         </DialogActions>
       </Dialog>
+
+      <Notification
+        open={notificationOpen}
+        handleClose={handleCloseNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 };

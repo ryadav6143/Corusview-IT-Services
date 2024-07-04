@@ -608,6 +608,19 @@ export const updateJobOpening = async (id, updatedJob) => {
   }
 };
 
+// Add Job Opening data
+export const addJobOpening = async () => {
+  try {
+    const response = await axios.post(`${BASE_URL}/jobOpenings`);
+    return response.data;  // Assuming your API returns data in response
+  } catch (error) {
+    console.error('Error fetching job openings:', error);
+    throw error;  // Propagate the error back to the component
+  }
+};
+
+
+
 // Delete Job Opening data
 export const deleteJobOpening = async (jobId) => {
   try {
@@ -649,6 +662,8 @@ export const fetchFooterData = async () => {
   }
 };
 
+
+// put footer data 
 export const updateFooterData = async (id, updatedData) => {
   try {
     const response = await axios.put(`${API_URL}/footer`, updatedData);
@@ -658,6 +673,8 @@ export const updateFooterData = async (id, updatedData) => {
     throw error;
   }
 };
+
+// get products data
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/products`);

@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { ChromePicker } from "react-color";
 import { fetchHeaderData, updateHeaderColor } from "../../AdminServices";
+import Notification from "../../../Notification/Notification"; // Import the Notification component
 
 const HeaderTable = () => {
   const [headerData, setHeaderData] = useState(null);
@@ -23,6 +24,10 @@ const HeaderTable = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [editItemName, setEditItemName] = useState(""); // Use name for editing
   const [loading, setLoading] = useState(true);
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("info");
 
   useEffect(() => {
     fetchData();
@@ -58,11 +63,21 @@ const HeaderTable = () => {
         fieldToUpdate = "header_color2";
       }
 
-      await updateHeaderColor(headerData.id, selectedColor, fieldToUpdate);
+      const response = await updateHeaderColor(headerData.id, selectedColor, fieldToUpdate);
+
+      // Handle successful update
+      setNotificationMessage(response.message || "Update successful");
+      setNotificationSeverity("success");
+      setNotificationOpen(true);
+
       fetchData(); // Refresh data after update
       setEditDialogOpen(false);
     } catch (error) {
+      // Handle error update
       console.error("Error updating color:", error);
+      setNotificationMessage("Failed to update color");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
     }
   };
 
@@ -82,7 +97,7 @@ const HeaderTable = () => {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Header Color</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -90,7 +105,7 @@ const HeaderTable = () => {
               <TableCell>{headerData.id}</TableCell>
               <TableCell
                 style={{
-                  backgroundColor: headerData.header_color1,
+                  backgroundColor: headerData.header_color1, width: 50, height: 50,
                 }}
               ></TableCell>
               <TableCell>
@@ -103,7 +118,7 @@ const HeaderTable = () => {
               <TableCell>{headerData.id}</TableCell>
               <TableCell
                 style={{
-                  backgroundColor: headerData.header_color2,
+                  backgroundColor: headerData.header_color2, width: 50, height: 50,
                 }}
               ></TableCell>
               <TableCell>
@@ -135,6 +150,13 @@ const HeaderTable = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Notification
+        open={notificationOpen}
+        handleClose={() => setNotificationOpen(false)}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 };

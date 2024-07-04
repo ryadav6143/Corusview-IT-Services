@@ -27,6 +27,7 @@ import {
 } from "../../AdminServices";
 // import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteIcon from "@mui/icons-material/Delete";
+import Notification from "../../../Notification/Notification";
 
 function EditCarrerImages() {
   const [careerImages, setCareerImages] = useState([]);
@@ -37,6 +38,10 @@ function EditCarrerImages() {
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [imageToDelete, setImageToDelete] = useState(null);
+
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("success");
 
   const fetchData = async () => {
     try {
@@ -62,9 +67,33 @@ function EditCarrerImages() {
   };
 
   const handleFileChange = (event, fieldName) => {
+    const file = event.target.files[0];
+
+    // Check file size
+    if (file.size > 20 * 1024 * 1024) {
+      setNotificationSeverity("error");
+      setNotificationMessage(
+        "File size exceeds 20 MB. Please choose a smaller file."
+      );
+      setNotificationOpen(true);
+      return;
+    }
+
+    // Check file type
+    const allowedFormats = ["image/jpeg", "image/jpg", "image/png"];
+    if (!allowedFormats.includes(file.type)) {
+      setNotificationSeverity("error");
+      setNotificationMessage(
+        "Unsupported file format. Please choose a JPG, JPEG, or PNG file."
+      );
+      setNotificationOpen(true);
+      return;
+    }
+
+    // Update selectedFiles state
     setSelectedFiles((prevFiles) => ({
       ...prevFiles,
-      [fieldName]: event.target.files[0],
+      [fieldName]: file,
     }));
   };
 
@@ -75,6 +104,9 @@ function EditCarrerImages() {
   const handleSaveChanges = async () => {
     if (!selectedFiles[selectedOption]) {
       console.error("Please select a file.");
+      setNotificationSeverity("error");
+      setNotificationMessage("Please select a file.");
+      setNotificationOpen(true);
       return;
     }
 
@@ -84,9 +116,15 @@ function EditCarrerImages() {
     try {
       const response = await updateCareerImage(selectedImageId, formData);
       console.log("Career image updated successfully:", response);
+      setNotificationSeverity("success");
+      setNotificationMessage(response.message); // Use API response message
+      setNotificationOpen(true);
       // Optionally, update state or display a success message
     } catch (error) {
       console.error("Error updating career image:", error);
+      setNotificationSeverity("error");
+      setNotificationMessage("Error updating career image.");
+      setNotificationOpen(true);
       // Handle error as needed
     }
     fetchData();
@@ -109,10 +147,16 @@ function EditCarrerImages() {
 
     try {
       const response = await uploadCareerImages(formData);
-      console.log("Career image added successfully:", response);
+      console.log("Career images added successfully:", response);
+      setNotificationSeverity("success");
+      setNotificationMessage(response.message); // Use API response message
+      setNotificationOpen(true);
       // Optionally, update state or display a success message
     } catch (error) {
-      console.error("Error adding career image:", error);
+      console.error("Error adding career images:", error);
+      setNotificationSeverity("error");
+      setNotificationMessage("Error adding career images.");
+      setNotificationOpen(true);
       // Handle error as needed
     }
 
@@ -132,17 +176,32 @@ function EditCarrerImages() {
 
   const handleDeleteConfirm = async () => {
     try {
-      await deleteCareerImage(imageToDelete);
-      console.log("Career image deleted successfully");
+      const response = await deleteCareerImage(imageToDelete);
+      console.log("Career image deleted successfully:", response);
+      setNotificationSeverity("success");
+      setNotificationMessage(response.message); // Use API response message
+      setNotificationOpen(true);
       // Optionally, update state or display a success message
     } catch (error) {
       console.error("Error deleting career image:", error);
+      setNotificationSeverity("error");
+      setNotificationMessage("Error deleting career image.");
+      setNotificationOpen(true);
       // Handle error as needed
     }
     fetchData();
     handleDeleteClose();
   };
 
+  const closeNotification = () => {
+    setNotificationOpen(false);
+  };
+
+  const isAddImagesDisabled = Object.values(selectedFiles).some(
+    (file) =>
+      file.size > 20 * 1024 * 1024 ||
+      !["image/jpeg", "image/jpg", "image/png"].includes(file.type)
+  );
   return (
     <div>
       <h2>Career Images</h2>
@@ -289,7 +348,7 @@ function EditCarrerImages() {
             Cancel
           </Button>
           <Button onClick={handleSaveChanges} color="primary">
-            Save Changes
+            Save
           </Button>
         </DialogActions>
       </Dialog>
@@ -354,7 +413,11 @@ function EditCarrerImages() {
           <Button onClick={handleAddDialogClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleAddImages} color="primary">
+          <Button
+            onClick={handleAddImages}
+            color="primary"
+            disabled={isAddImagesDisabled}
+          >
             Add Images
           </Button>
         </DialogActions>
@@ -375,6 +438,13 @@ function EditCarrerImages() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Notification
+        open={notificationOpen}
+        handleClose={closeNotification}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }
