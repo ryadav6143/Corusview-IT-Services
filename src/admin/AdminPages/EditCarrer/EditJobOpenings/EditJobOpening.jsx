@@ -24,6 +24,7 @@ import {
   fetchJobRoles,
   updateJobOpening,
   deleteJobOpening,
+  addJobOpening,
 } from "../../../AdminServices"; // Adjust the path based on your project structure
 import Notification from "../../../../Notification/Notification";
 
@@ -33,6 +34,8 @@ function EditJobOpening() {
   const [selectedRole, setSelectedRole] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [editedJob, setEditedJob] = useState(null);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+
 
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
@@ -69,6 +72,11 @@ function EditJobOpening() {
   const handleDialogClose = () => {
     setOpenDialog(false);
     setEditedJob(null);
+  };
+
+  const handleAddClick = () => {
+    setEditedJob(null); // Clear any previously edited job
+    setOpenAddDialog(true);
   };
 
   const handleSaveChanges = async () => {
@@ -119,6 +127,41 @@ function EditJobOpening() {
     setOpenConfirmationDialog(true);
   };
 
+
+
+  const handleAddNewJob = async () => {
+    if (!editedJob || !editedJob.role || !editedJob.position || !editedJob.location || !editedJob.level) {
+      setNotificationMessage("All fields are required.");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
+      return;
+    }
+
+    try {
+      const newJob = { ...editedJob };
+      const response = await addJobOpening(newJob);
+      
+      newJob.id = response.id;
+      
+      setJobOpenings([...jobOpenings, newJob]);
+      
+      setOpenAddDialog(false);
+      setEditedJob(null);
+      
+      setNotificationMessage("New job opening added successfully.");
+      setNotificationSeverity("success");
+      setNotificationOpen(true);
+      
+      console.log("New job opening added successfully.");
+    } catch (error) {
+      console.error("Error adding new job opening:", error);
+      setNotificationMessage("Error adding new job opening.");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
+    }
+  };
+
+
   const handleConfirmDelete = async () => {
     try {
       await deleteJobOpening(selectedJobId);
@@ -156,6 +199,14 @@ function EditJobOpening() {
 
   return (
     <Paper>
+          <Button
+        variant="contained"
+        color="primary"
+        style={{ marginTop: '10px', marginLeft: '10px' }}
+        onClick={handleAddClick}
+      >
+        Add Job Opening
+      </Button>
       <FormControl sx={{ m: 2, minWidth: 120 }}>
         <InputLabel id="role-select-label">Select Role</InputLabel>
         <Select
@@ -214,6 +265,72 @@ function EditJobOpening() {
           </TableBody>
         </Table>
       </TableContainer>
+
+
+            {/* Add Job Opening Dialog */}
+            <Dialog open={openAddDialog} onClose={handleDialogClose}>
+        <DialogTitle>Add New Job Opening</DialogTitle>
+        <DialogContent>
+          <form>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="role"
+              label="Role"
+              type="text"
+              fullWidth
+              value={editedJob?.role || ""}
+              onChange={(e) =>
+                setEditedJob({ ...editedJob, role: e.target.value })
+              }
+            />
+            <TextField
+              margin="dense"
+              id="position"
+              label="Position"
+              type="text"
+              fullWidth
+              value={editedJob?.position || ""}
+              onChange={(e) =>
+                setEditedJob({ ...editedJob, position: e.target.value })
+              }
+            />
+            <TextField
+              margin="dense"
+              id="location"
+              label="Location"
+              type="text"
+              fullWidth
+              value={editedJob?.location || ""}
+              onChange={(e) =>
+                setEditedJob({ ...editedJob, location: e.target.value })
+              }
+            />
+            <TextField
+              margin="dense"
+              id="level"
+              label="Level"
+              type="text"
+              fullWidth
+              value={editedJob?.level || ""}
+              onChange={(e) =>
+                setEditedJob({ ...editedJob, level: e.target.value })
+              }
+            />
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button
+            onClick={handleAddNewJob}
+            variant="contained"
+            color="primary"
+          >
+            Add Job Opening
+          </Button>
+        </DialogActions>
+      </Dialog>
+
 
       {/* Edit Dialog */}
       <Dialog open={openDialog} onClose={handleDialogClose}>
