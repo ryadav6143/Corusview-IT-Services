@@ -575,7 +575,7 @@ export const deleteContactFormEntry = async (id) => {
 // Get Job Opening data
 export const fetchJobOpenings = async () => {
   try {
-    const response = await axios.get("http://192.168.1.5:5000/jobOpenings");
+    const response = await axios.get(`${BASE_URL}/jobOpenings`);
     return response.data;
   } catch (error) {
     console.error("Error fetching job openings:", error);
@@ -586,7 +586,16 @@ export const fetchJobOpenings = async () => {
 // Get Job roles data
 export const fetchJobRoles = async () => {
   try {
-    const response = await axios.get("http://192.168.1.5:5000/jobRoles");
+    const response = await axios.get(`${BASE_URL}/jobRoles`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching job roles:", error);
+    throw error;
+  }
+};
+export const addJobRole = async (newRole) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/jobRoles`, newRole);
     return response.data;
   } catch (error) {
     console.error("Error fetching job roles:", error);
@@ -609,17 +618,19 @@ export const updateJobOpening = async (id, updatedJob) => {
 };
 
 // Add Job Opening data
-export const addJobOpening = async () => {
+export const addJobOpening = async (formData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/jobOpenings`);
-    return response.data;  // Assuming your API returns data in response
+    const response = await axios.post(`${BASE_URL}/jobOpenings`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data', // Ensure correct content type for FormData
+      },
+    });
+    return response.data; // Assuming your API returns data in response
   } catch (error) {
-    console.error('Error fetching job openings:', error);
-    throw error;  // Propagate the error back to the component
+    console.error("Error adding job opening:", error);
+    throw error; // Propagate the error back to the component
   }
 };
-
-
 
 // Delete Job Opening data
 export const deleteJobOpening = async (jobId) => {
@@ -662,8 +673,7 @@ export const fetchFooterData = async () => {
   }
 };
 
-
-// put footer data 
+// put footer data
 export const updateFooterData = async (id, updatedData) => {
   try {
     const response = await axios.put(`${API_URL}/footer`, updatedData);

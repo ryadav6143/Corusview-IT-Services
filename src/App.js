@@ -35,6 +35,7 @@ import EditJobOpening from "./admin/AdminPages/EditCarrer/EditJobOpenings/EditJo
 import EditHeader from "./admin/AdminPages/EditHeader/EditHeader";
 import EditFooter from "./admin/AdminPages/EditFooter/EditFooter";
 import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
+import AddJobRole from "./admin/AdminPages/EditCarrer/AddJobRole";
 
 function App() {
   return (
@@ -117,6 +118,7 @@ function App() {
           ></Route>
           <Route exact path="editheader" element={<EditHeader />}></Route>
           <Route exact path="editfooter" element={<EditFooter />}></Route>
+          <Route exact path="createjobroles" element={<AddJobRole />}></Route>
 
           <Route
             exact
