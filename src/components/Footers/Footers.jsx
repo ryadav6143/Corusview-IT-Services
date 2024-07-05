@@ -40,8 +40,17 @@ function Footers() {
             </div>
             <div className="info">
               <div className="flex-info">
-                <img src={locationlogo} alt="" />
-                <p>{footerData ? footerData.address : "Loading..."}</p>
+                <img src={locationlogo} alt="Location Logo" />
+
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    footerData ? footerData.address : ""
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p>{footerData ? footerData.address : "Loading..."}</p>
+                </a>
               </div>
               <div className="flex-info">
                 <img src={email} alt="" />

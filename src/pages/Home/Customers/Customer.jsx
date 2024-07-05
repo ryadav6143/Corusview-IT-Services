@@ -67,8 +67,10 @@ function Customer() {
                         alt={testimonial.img_originalname}
                       />
                       <div className="client-details">
+                        
+                      <p>{testimonial.name}</p>
                         <p>{testimonial.designation}</p>
-                        <p>{testimonial.name}</p>
+                       
                       </div>
                     </div>
                   </div>

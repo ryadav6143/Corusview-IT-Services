@@ -30,7 +30,7 @@ function EditAboutPage() {
     story_content: "",
     vision_content: "",
   });
-  const [selectedField, setSelectedField] = useState("");
+  const [selectedField, setSelectedField] = useState("company_content"); // Set default value here
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
 
@@ -49,7 +49,7 @@ function EditAboutPage() {
 
   const handleEditOpen = (data) => {
     setEditedData(data);
-    setSelectedField("");
+    setSelectedField("company_content"); // Reset to default value on edit open
     setEditOpen(true);
   };
 
@@ -136,14 +136,12 @@ function EditAboutPage() {
         </Table>
       </TableContainer>
 
-      {/* Dialog for Editing Content */}
+
       <Dialog open={editOpen} onClose={handleEditClose}>
         <DialogTitle>Edit Content</DialogTitle>
         <DialogContent>
           <FormControl fullWidth margin="dense">
-            <InputLabel fullWidth margin="dense">
-              Select Field to Edit
-            </InputLabel>
+            <InputLabel>Select Field to Edit</InputLabel>
             <Select
               value={selectedField}
               onChange={handleFieldChange}
@@ -152,7 +150,7 @@ function EditAboutPage() {
             >
               <MenuItem value="company_content">Our Company</MenuItem>
               <MenuItem value="story_content">Our Story</MenuItem>
-              <MenuItem value="vision_content">Our Vision </MenuItem>
+              <MenuItem value="vision_content">Our Vision</MenuItem>
             </Select>
           </FormControl>
           {selectedField === "company_content" && (
@@ -182,7 +180,7 @@ function EditAboutPage() {
           {selectedField === "vision_content" && (
             <TextField
               name="vision_content"
-              label="Our Vision "
+              label="Our Vision"
               fullWidth
               margin="dense"
               multiline
@@ -202,7 +200,7 @@ function EditAboutPage() {
         </DialogActions>
       </Dialog>
 
-      {/* Notification */}
+
       <Notification
         open={notificationOpen}
         handleClose={closeNotification}
