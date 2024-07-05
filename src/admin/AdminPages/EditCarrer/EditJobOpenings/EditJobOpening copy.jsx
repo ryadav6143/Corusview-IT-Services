@@ -32,8 +32,7 @@ import Notification from "../../../../Notification/Notification";
 function EditJobOpening() {
   const [jobOpenings, setJobOpenings] = useState([]);
   const [jobRoles, setJobRoles] = useState([]);
-  const [selectedRole, setSelectedRole] = useState("All");
-  const [addJobRole, setAddJobRole] = useState(""); // Separate state for add job role
+  const [selectedRole, setSelectedRole] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [editedJob, setEditedJob] = useState(null);
   const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -51,7 +50,7 @@ function EditJobOpening() {
     const fetchRoles = async () => {
       try {
         const roles = await fetchJobRoles();
-        setJobRoles([{ role_id: 0, role: "All" }, ...roles]);
+        setJobRoles(roles);
       } catch (error) {
         console.error("Error fetching roles:", error);
       }
@@ -62,12 +61,7 @@ function EditJobOpening() {
 
   const fetchData = async () => {
     try {
-      let openings;
-      if (selectedRole === "All") {
-        openings = await fetchJobOpenings(); // Fetch all job openings
-      } else {
-        openings = await fetchJobOpenings(selectedRole);
-      }
+      const openings = await fetchJobOpenings(selectedRole);
       setJobOpenings(openings);
     } catch (error) {
       console.error("Error in fetching data:", error);
@@ -82,17 +76,13 @@ function EditJobOpening() {
     setSelectedRole(event.target.value);
   };
 
-  const handleAddJobRoleChange = (event) => {
-    setAddJobRole(event.target.value);
-  };
-
   const handleAddNewJob = async () => {
     if (
       !editedJob ||
       !editedJob.position ||
       !editedJob.location ||
       !editedJob.level ||
-      !addJobRole // Check against addJobRole instead of selectedRole
+      !selectedRole
     ) {
       setNotificationMessage("All fields are required.");
       setNotificationSeverity("error");
@@ -102,7 +92,7 @@ function EditJobOpening() {
 
     try {
       const formData = new FormData();
-      formData.append("role", addJobRole); // Use addJobRole for adding new job opening
+      formData.append("role", selectedRole);
       formData.append("position", editedJob.position);
       formData.append("location", editedJob.location);
       formData.append("level", editedJob.level);
@@ -113,7 +103,7 @@ function EditJobOpening() {
 
       setOpenAddDialog(false);
       setEditedJob(null);
-      setAddJobRole(""); // Reset addJobRole after submission
+      setSelectedRole("");
 
       setNotificationMessage(response.message);
       setNotificationSeverity("success");
@@ -212,25 +202,24 @@ function EditJobOpening() {
     setSelectedJobId(null);
   };
 
-  const filteredJobOpenings =
-    selectedRole === "All"
-      ? jobOpenings
-      : jobOpenings.filter((job) => job.role === selectedRole);
+  const filteredJobOpenings = selectedRole
+    ? jobOpenings.filter((job) => job.role === selectedRole)
+    : jobOpenings;
 
-  // Update form validation state based on editedJob and addJobRole
+  // Update form validation state based on editedJob and selectedRole
   useEffect(() => {
     if (
       editedJob &&
       editedJob.position &&
       editedJob.location &&
       editedJob.level &&
-      addJobRole // Check against addJobRole instead of selectedRole
+      selectedRole
     ) {
       setFormValid(true);
     } else {
       setFormValid(false);
     }
-  }, [editedJob, addJobRole]);
+  }, [editedJob, selectedRole]);
 
   return (
     <Box>
@@ -247,7 +236,7 @@ function EditJobOpening() {
         sx={{ minWidth: 250 }}
         style={{ float: "right", marginTop: "10px" }}
       >
-        <InputLabel id="role-select-label">Filter by Role</InputLabel>
+        <InputLabel id="role-select-label">Select Role</InputLabel>
 
         <Select
           labelId="role-select-label"
@@ -255,7 +244,7 @@ function EditJobOpening() {
           fullWidth
           value={selectedRole}
           onChange={handleRoleChange}
-          label="Filter by Role"
+          label="Select Role"
         >
           {jobRoles.map((role) => (
             <MenuItem key={role.role_id} value={role.role}>
@@ -264,7 +253,6 @@ function EditJobOpening() {
           ))}
         </Select>
       </FormControl>
-
       <Paper>
         <TableContainer style={{ marginTop: "30px" }}>
           <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table">
@@ -312,18 +300,17 @@ function EditJobOpening() {
           <DialogTitle>Add New Job Opening</DialogTitle>
           <DialogContent>
             <form>
-              <FormControl fullWidth style={{marginTop:"10px"}}>
+              <FormControl fullWidth>
                 <InputLabel id="role-select-label">Select Role</InputLabel>
                 <Select
                   labelId="role-select-label"
                   id="role-select"
-                  value={addJobRole}
-                  onChange={handleAddJobRoleChange}
+                  value={selectedRole}
+                  onChange={handleRoleChange}
                   fullWidth
-                  label="select role"
                 >
                   {jobRoles &&
-                    jobRoles.slice(1).map((role) => (
+                    jobRoles.map((role) => (
                       <MenuItem key={role.role_id} value={role.role}>
                         {role.role}
                       </MenuItem>
@@ -382,24 +369,22 @@ function EditJobOpening() {
           <DialogTitle>Edit Job Opening</DialogTitle>
           <DialogContent>
             <form>
-              <FormControl fullWidth style={{marginTop:"10px"}}>
-                <InputLabel id="role-select-label">Select Role</InputLabel>
+              <FormControl fullWidth>
+                <InputLabel id="edit-role-select-label">Select Role</InputLabel>
                 <Select
-                  labelId="role-select-label"
-                  id="role-select"
+                  labelId="edit-role-select-label"
+                  id="edit-role-select"
                   value={editedJob ? editedJob.role : ""}
                   onChange={(e) =>
                     setEditedJob({ ...editedJob, role: e.target.value })
                   }
-                  label="Select Role"
                   fullWidth
                 >
-                  {jobRoles &&
-                    jobRoles.slice(1).map((role) => (
-                      <MenuItem key={role.role_id} value={role.role}>
-                        {role.role}
-                      </MenuItem>
-                    ))}
+                  {jobRoles.map((role) => (
+                    <MenuItem key={role.role_id} value={role.role}>
+                      {role.role}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <TextField
