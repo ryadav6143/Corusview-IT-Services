@@ -100,7 +100,7 @@ function Footers() {
           </div>
         </div>
         <div className="footer-2 set-footer">
-          <p>&#169;Corusview 2023 All rights reserved </p>
+          <p>@Corusview 2023 All rights reserved </p>
           <p>Terms & Conditions Applied </p>
           <p>Privacy policy</p>
         </div>

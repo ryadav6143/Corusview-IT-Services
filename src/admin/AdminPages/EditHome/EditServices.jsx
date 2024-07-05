@@ -22,7 +22,7 @@ import Box from "@mui/material/Box";
 import Notification from "../../../Notification/Notification"; // Adjust the path as per your project structure
 
 const MAX_HEADING_LENGTH = 20;
-const MAX_CONTENT_LENGTH = 100;
+const MAX_CONTENT_LENGTH = 200;
 
 function EditServices() {
   const [servicesData, setServicesData] = useState([]);

@@ -152,7 +152,7 @@ function EditServiceProblem() {
 
   return (
     <Box>
-      <h2> Problems</h2>
+    
 
       {/* Add Button */}
       <Button
@@ -172,7 +172,8 @@ function EditServiceProblem() {
               <TableCell>ID</TableCell>
               <TableCell>Inner Heading</TableCell>
               <TableCell>Inner Content</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -183,7 +184,10 @@ function EditServiceProblem() {
                 <TableCell>{problem.inner_content}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEditClick(problem)}>Edit</Button>
-                  <Button
+                
+                </TableCell>
+                <TableCell>
+                <Button
                     color="error"
                     onClick={() => handleDeleteClick(problem)}
                   >
@@ -222,7 +226,7 @@ function EditServiceProblem() {
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
           <Button
             onClick={handleSaveChanges}
-            variant="contained"
+          
             color="primary"
           >
             Save
@@ -256,7 +260,7 @@ function EditServiceProblem() {
           <Button onClick={handleCloseAddDialog}>Cancel</Button>
           <Button
             onClick={handleAddProblem}
-            variant="contained"
+       
             color="primary"
           >
             Add Problem
@@ -273,7 +277,7 @@ function EditServiceProblem() {
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button
             onClick={handleConfirmDelete}
-            variant="contained"
+          
             color="error"
           >
             Delete

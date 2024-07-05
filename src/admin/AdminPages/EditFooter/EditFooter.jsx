@@ -111,7 +111,7 @@ const EditFooter = () => {
               <TableCell>Link 2</TableCell>
               <TableCell>Link 3</TableCell>
               <TableCell>Footer Color</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -205,7 +205,7 @@ const EditFooter = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleUpdate} variant="contained" color="primary">Update</Button>
+          <Button onClick={handleUpdate}  color="primary">Update</Button>
         </DialogActions>
       </Dialog>
 

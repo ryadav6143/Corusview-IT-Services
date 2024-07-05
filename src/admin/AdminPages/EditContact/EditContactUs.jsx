@@ -99,7 +99,7 @@ const handleUpdate = async () => {
 
   return (
     <div>
-      <h2>Contact Us Information</h2>
+
       {contactInfo && (
         <>
           <TableContainer component={Paper}>
@@ -111,7 +111,7 @@ const handleUpdate = async () => {
                   <TableCell>Email</TableCell>
                   <TableCell>Phone</TableCell>
                   <TableCell>Address</TableCell>
-                  <TableCell>Actions</TableCell> {/* Add Actions column */}
+                  <TableCell>Edit</TableCell> {/* Add Actions column */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -122,7 +122,7 @@ const handleUpdate = async () => {
                   <TableCell>{contactInfo.phone}</TableCell>
                   <TableCell>{contactInfo.address}</TableCell>
                   <TableCell>
-                    <Button variant="outlined" onClick={() => handleEditClick(contactInfo)}>
+                    <Button  onClick={() => handleEditClick(contactInfo)}>
                       Edit
                     </Button>
                   </TableCell>

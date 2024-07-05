@@ -174,7 +174,7 @@ function EditWhatYouGet() {
 
   return (
     <div>
-      <h2>Services What You Get</h2>
+   
       <Button
         onClick={handleAddClick}
         variant="contained"
@@ -202,7 +202,7 @@ function EditWhatYouGet() {
                   <Button onClick={() => handleEditClick(service)}>Edit</Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDeleteClick(service.id)}>
+                  <Button color="error" onClick={() => handleDeleteClick(service.id)}>
                     Delete
                   </Button>
                 </TableCell>
@@ -234,7 +234,7 @@ function EditWhatYouGet() {
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
           <Button
             onClick={handleSaveChanges}
-            variant="contained"
+           
             color="primary"
             disabled={editedHeading.length > 30}
           >
@@ -265,7 +265,7 @@ function EditWhatYouGet() {
           <Button onClick={handleCloseAddDialog}>Cancel</Button>
           <Button
             onClick={handleAddService}
-            variant="contained"
+          
             color="primary"
             disabled={newHeading.length > 30}
           >
@@ -286,8 +286,8 @@ function EditWhatYouGet() {
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button
             onClick={handleConfirmDelete}
-            variant="contained"
-            color="secondary"
+          
+            color="error"
           >
             Delete
           </Button>

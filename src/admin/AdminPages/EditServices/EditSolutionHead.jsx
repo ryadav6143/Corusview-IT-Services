@@ -67,7 +67,7 @@ function EditSolutionHead() {
 
   return (
     <div>
-      <h2>Solutions Main Heading</h2>
+
 
       <TableContainer component={Paper}>
         <Table>
@@ -83,7 +83,7 @@ function EditSolutionHead() {
               <TableCell>1</TableCell>
               <TableCell>{mainHeading}</TableCell>
               <TableCell>
-                <Button variant="outlined" onClick={handleEditClick}>
+                <Button  onClick={handleEditClick}>
                   Edit
                 </Button>
               </TableCell>
@@ -109,7 +109,7 @@ function EditSolutionHead() {
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
           <Button
             onClick={handleSaveChanges}
-            variant="contained"
+      
             color="primary"
           >
             Save

@@ -104,6 +104,21 @@ export default function EditProductsForm() {
   };
 
   const handleUpdate = async () => {
+    // Check if any required field is empty
+    if (
+      !updatedProduct.heading ||
+      !updatedProduct.content ||
+      !updatedProduct.video_link ||
+      !updatedProduct.link1 ||
+      !updatedProduct.link2
+    ) {
+      // Show error notification
+      setNotificationSeverity("error");
+      setNotificationMessage("All fields are required.");
+      setNotificationOpen(true);
+      return; // Exit function to prevent API call
+    }
+
     try {
       const updatedData = await updateProducts(
         selectedProduct.id,
@@ -134,6 +149,21 @@ export default function EditProductsForm() {
   };
 
   const handleAddProduct = async () => {
+    // Check if any required field is empty
+    if (
+      !newProduct.heading ||
+      !newProduct.content ||
+      !newProduct.video_link ||
+      !newProduct.link1 ||
+      !newProduct.link2
+    ) {
+      // Show error notification
+      setNotificationSeverity("error");
+      setNotificationMessage("All fields are required.");
+      setNotificationOpen(true);
+      return; // Exit function to prevent API call
+    }
+
     try {
       const newProductData = await createProducts(newProduct);
       setProducts([...products, newProductData]);
@@ -191,7 +221,7 @@ export default function EditProductsForm() {
       <Button variant="contained" color="primary" onClick={handleAddClick}>
         Add Products
       </Button>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{marginTop:"20px"}}>
         <Table>
           <TableHead>
             <TableRow>
@@ -252,7 +282,7 @@ export default function EditProductsForm() {
                 </TableCell>
                 <TableCell>
                   <Button
-                    variant="outlined"
+                
                     onClick={() => handleEditClick(product)}
                   >
                     Edit

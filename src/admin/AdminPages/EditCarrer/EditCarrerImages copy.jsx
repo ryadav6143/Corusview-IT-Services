@@ -52,9 +52,6 @@ function EditCarrerImages() {
     img_8: false,
   });
 
-  // State to disable save button in Edit dialog
-  const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
-
   const fetchData = async () => {
     try {
       const data = await fetchCareerImages();
@@ -72,13 +69,10 @@ function EditCarrerImages() {
   const handleEditOpen = (data) => {
     setSelectedImageId(data.id);
     setOpenDialog(true);
-    setSelectedOption(""); // Reset selectedOption when dialog opens
   };
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
-    // Reset save button state when option changes
-    setSaveButtonDisabled(true);
   };
 
   const handleFileChange = (event, fieldName) => {
@@ -91,7 +85,6 @@ function EditCarrerImages() {
         "File size exceeds 20 MB. Please choose a smaller file."
       );
       setNotificationOpen(true);
-      setSaveButtonDisabled(true);
       return;
     }
 
@@ -103,7 +96,6 @@ function EditCarrerImages() {
         "Unsupported file format. Please choose a JPG, JPEG, or PNG file."
       );
       setNotificationOpen(true);
-      setSaveButtonDisabled(true);
       return;
     }
 
@@ -118,26 +110,10 @@ function EditCarrerImages() {
       ...prevFields,
       [fieldName]: true,
     }));
-
-    // Enable save button if all conditions are met
-    setSaveButtonDisabled(false);
   };
 
   const handleDialogClose = () => {
     setOpenDialog(false);
-    // Reset fileFieldsFilled and selectedFiles on dialog close
-    setFileFieldsFilled({
-      img_1: false,
-      img_2: false,
-      img_3: false,
-      img_4: false,
-      img_5: false,
-      img_6: false,
-      img_7: false,
-      img_8: false,
-    });
-    setSelectedFiles({});
-    setSaveButtonDisabled(true);
   };
 
   const handleSaveChanges = async () => {
@@ -158,11 +134,13 @@ function EditCarrerImages() {
       setNotificationSeverity("success");
       setNotificationMessage(response.message); // Use API response message
       setNotificationOpen(true);
+      // Optionally, update state or display a success message
     } catch (error) {
       console.error("Error updating career image:", error);
       setNotificationSeverity("error");
       setNotificationMessage("Error updating career image.");
       setNotificationOpen(true);
+      // Handle error as needed
     }
     fetchData();
     setOpenDialog(false);
@@ -200,11 +178,13 @@ function EditCarrerImages() {
       setNotificationSeverity("success");
       setNotificationMessage(response.message); // Use API response message
       setNotificationOpen(true);
+      // Optionally, update state or display a success message
     } catch (error) {
       console.error("Error adding career images:", error);
       setNotificationSeverity("error");
       setNotificationMessage("Error adding career images.");
       setNotificationOpen(true);
+      // Handle error as needed
     }
 
     fetchData();
@@ -228,11 +208,13 @@ function EditCarrerImages() {
       setNotificationSeverity("success");
       setNotificationMessage(response.message); // Use API response message
       setNotificationOpen(true);
+      // Optionally, update state or display a success message
     } catch (error) {
       console.error("Error deleting career image:", error);
       setNotificationSeverity("error");
       setNotificationMessage("Error deleting career image.");
       setNotificationOpen(true);
+      // Handle error as needed
     }
     fetchData();
     handleDeleteClose();
@@ -389,9 +371,7 @@ function EditCarrerImages() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleSaveChanges} disabled={saveButtonDisabled}>
-            Save
-          </Button>
+          <Button onClick={handleSaveChanges}>Save</Button>
         </DialogActions>
       </Dialog>
 

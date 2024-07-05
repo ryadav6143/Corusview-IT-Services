@@ -149,7 +149,7 @@ function EditServiceSolution() {
 
   return (
     <Box>
-      <h2>Service Solutions</h2>
+ 
       <Button
         onClick={handleAddClick}
         variant="contained"
@@ -159,7 +159,7 @@ function EditServiceSolution() {
         Add New Solution
       </Button>
       {/* Table of Solutions */}
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{marginTop:"20px"}}>
         <Table>
           <TableHead>
             <TableRow>
@@ -171,9 +171,9 @@ function EditServiceSolution() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {solutions.map((solution) => (
+            {solutions.map((solution,index) => (
               <TableRow key={solution.id}>
-                <TableCell>{solution.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{solution.inner_heading}</TableCell>
                 <TableCell>{solution.inner_content}</TableCell>
                 <TableCell>
@@ -182,7 +182,7 @@ function EditServiceSolution() {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDeleteClick(solution)}>
+                  <Button color="error" onClick={() => handleDeleteClick(solution)}>
                     Delete
                   </Button>
                 </TableCell>
@@ -218,10 +218,10 @@ function EditServiceSolution() {
           <Button onClick={handleCloseEditDialog}>Cancel</Button>
           <Button
             onClick={handleSaveChanges}
-            variant="contained"
+           
             color="primary"
           >
-            Save Changes
+            Save 
           </Button>
         </DialogActions>
       </Dialog>
@@ -236,8 +236,8 @@ function EditServiceSolution() {
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button
             onClick={handleConfirmDelete}
-            variant="contained"
-            color="secondary"
+          
+            color="error"
           >
             Delete
           </Button>
@@ -270,7 +270,7 @@ function EditServiceSolution() {
           <Button onClick={handleCloseAddDialog}>Cancel</Button>
           <Button
             onClick={handleSaveNewSolution}
-            variant="contained"
+          
             color="primary"
           >
             Add Solution

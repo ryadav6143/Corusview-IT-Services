@@ -85,7 +85,7 @@ function EditCarrerRYS() {
 
   return (
     <div>
-      <h2>Career Head Information</h2>
+   
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -103,7 +103,7 @@ function EditCarrerRYS() {
               <TableCell>{careerHead.ryh_content}</TableCell>
               <TableCell>
                 <Button
-                  variant="outlined"
+                  
                   color="primary"
                   onClick={handleEditClick}
                 >
@@ -119,9 +119,7 @@ function EditCarrerRYS() {
       <Dialog open={openEdit} onClose={handleCloseEdit}>
         <DialogTitle>Edit Career Head Information</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Edit the career head information:
-          </DialogContentText>
+          
           <TextField
             autoFocus
             margin="dense"

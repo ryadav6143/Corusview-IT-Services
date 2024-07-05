@@ -226,21 +226,21 @@ function EditSlider() {
     <>
       <Box>
         <Button
-          variant="outlined"
+      variant="contained" color="primary"
           onClick={handleOpenAddDialog}
           style={{ marginTop: 10 }}
         >
           Add Testimonial
         </Button>
-        <TableContainer component={Paper}>
+        <TableContainer style={{marginTop:"20px"}} component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell>Description</TableCell>
+                <TableCell>Name</TableCell>
                 <TableCell>Image</TableCell>
                 <TableCell>Designation</TableCell>
-                <TableCell>Name</TableCell>
                 <TableCell>Edit</TableCell>
                 <TableCell>Delete</TableCell>
               </TableRow>

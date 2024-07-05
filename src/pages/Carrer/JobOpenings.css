@@ -66,6 +66,7 @@
   border-radius: 15px;
 }
 .all-roles {
+  max-width: 1000px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;

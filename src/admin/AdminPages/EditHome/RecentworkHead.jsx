@@ -48,7 +48,14 @@ const RecentworkHead = () => {
   };
 
   const handleHeadingChange = (event) => {
-    setUpdatedHeading(event.target.value);
+    const value = event.target.value;
+    if (value.length > 150) {
+      setNotificationSeverity("error");
+      setNotificationMessage("Heading cannot exceed 150 characters");
+      setNotificationOpen(true);
+    } else {
+      setUpdatedHeading(value);
+    }
   };
 
   const handleUpdateHeading = async () => {

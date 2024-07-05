@@ -82,7 +82,7 @@ function EditContactForm() {
 
   return (
     <div>
-      <h2>Contact Form Entries</h2>
+     
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -92,19 +92,19 @@ function EditContactForm() {
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Message</TableCell>
-              <TableCell>Actions</TableCell> {/* Add Actions column */}
+              <TableCell>Delete</TableCell> {/* Add Actions column */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {contactFormData.map((entry) => (
+            {contactFormData.map((entry,index) => (
               <TableRow key={entry.id}>
-                <TableCell>{entry.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{entry.role}</TableCell>
                 <TableCell>{entry.name}</TableCell>
                 <TableCell>{entry.email}</TableCell>
                 <TableCell>{entry.message}</TableCell>
                 <TableCell>
-                  <Button onClick={() => handleDeleteClick(entry.id)}>
+                  <Button color="error" onClick={() => handleDeleteClick(entry.id)}>
                     Delete
                   </Button>
                 </TableCell>

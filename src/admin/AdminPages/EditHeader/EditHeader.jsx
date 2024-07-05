@@ -63,7 +63,11 @@ const HeaderTable = () => {
         fieldToUpdate = "header_color2";
       }
 
-      const response = await updateHeaderColor(headerData.id, selectedColor, fieldToUpdate);
+      const response = await updateHeaderColor(
+        headerData.id,
+        selectedColor,
+        fieldToUpdate
+      );
 
       // Handle successful update
       setNotificationMessage(response.message || "Update successful");
@@ -105,7 +109,7 @@ const HeaderTable = () => {
               <TableCell>{headerData.id}</TableCell>
               <TableCell
                 style={{
-                  backgroundColor: headerData.header_color1, width: 50, height: 50,
+                  backgroundColor: headerData.header_color1,
                 }}
               ></TableCell>
               <TableCell>
@@ -118,7 +122,7 @@ const HeaderTable = () => {
               <TableCell>{headerData.id}</TableCell>
               <TableCell
                 style={{
-                  backgroundColor: headerData.header_color2, width: 50, height: 50,
+                  backgroundColor: headerData.header_color2,
                 }}
               ></TableCell>
               <TableCell>
@@ -141,11 +145,7 @@ const HeaderTable = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-          <Button
-            onClick={handleColorUpdate}
-            variant="contained"
-            color="primary"
-          >
+          <Button onClick={handleColorUpdate} color="primary">
             Update Color
           </Button>
         </DialogActions>

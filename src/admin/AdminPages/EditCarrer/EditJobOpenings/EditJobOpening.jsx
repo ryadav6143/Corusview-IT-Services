@@ -17,6 +17,7 @@ import {
   DialogActions,
   Button,
   TextField,
+  Box,
   DialogContentText,
 } from "@mui/material";
 import {
@@ -108,14 +109,14 @@ function EditJobOpening() {
       setSelectedRole(""); // Reset selected role after submission
 
       // Show success notification
-      setNotificationMessage("New job opening added successfully.");
+      setNotificationMessage(response.message);
       setNotificationSeverity("success");
       setNotificationOpen(true);
 
       console.log("New job opening added successfully.");
     } catch (error) {
       console.error("Error adding new job opening:", error);
-      setNotificationMessage("Error adding new job opening.");
+      setNotificationMessage(error.message);
       setNotificationSeverity("error");
       setNotificationOpen(true);
     }
@@ -148,7 +149,7 @@ function EditJobOpening() {
 
     try {
       const updatedJob = { ...editedJob }; // Clone editedJob object
-      await updateJobOpening(editedJob.id, updatedJob);
+     const response = await updateJobOpening(editedJob.id, updatedJob);
 
       // Update jobOpenings state with the updated job
       const updatedOpenings = jobOpenings.map((job) =>
@@ -160,14 +161,14 @@ function EditJobOpening() {
       setEditedJob(null);
 
       // Show success notification
-      setNotificationMessage("Job opening updated successfully.");
+      setNotificationMessage(response.message);
       setNotificationSeverity("success");
       setNotificationOpen(true);
       fetchData();
       console.log("Job opening updated successfully.");
     } catch (error) {
       console.error("Error updating job opening:", error);
-      setNotificationMessage("Error updating job opening.");
+      setNotificationMessage(error.message);
       setNotificationSeverity("error");
       setNotificationOpen(true);
     }
@@ -180,7 +181,7 @@ function EditJobOpening() {
 
   const handleConfirmDelete = async () => {
     try {
-      await deleteJobOpening(selectedJobId);
+    const response =  await deleteJobOpening(selectedJobId);
 
       // Update jobOpenings state by filtering out the deleted job
       const updatedOpenings = jobOpenings.filter(
@@ -189,14 +190,14 @@ function EditJobOpening() {
       setJobOpenings(updatedOpenings);
 
       // Show success notification
-      setNotificationMessage("Job opening deleted successfully.");
+      setNotificationMessage(response.message);
       setNotificationSeverity("success");
       setNotificationOpen(true);
       fetchData();
       console.log("Job opening deleted successfully.");
     } catch (error) {
       console.error("Error deleting job opening:", error);
-      setNotificationMessage("Error deleting job opening.");
+      setNotificationMessage(error.message);
       setNotificationSeverity("error");
       setNotificationOpen(true);
     } finally {
@@ -215,7 +216,7 @@ function EditJobOpening() {
     : jobOpenings;
 
   return (
-    <Paper>
+    <Box>
       <Button
         variant="contained"
         color="primary"
@@ -224,12 +225,15 @@ function EditJobOpening() {
       >
         Add Job Opening
       </Button>
-      <FormControl sx={{ m: 2, minWidth: 120 }}>
+
+      <FormControl sx={{ minWidth: 250, }} style={{ float: "right",marginTop:"10px" }}>
         <InputLabel id="role-select-label">Select Role</InputLabel>
 
         <Select
           labelId="role-select-label"
           id="role-select"
+          fullWidth
+        
           value={selectedRole}
           onChange={handleRoleChange}
           label="Select Role"
@@ -241,209 +245,215 @@ function EditJobOpening() {
           ))}
         </Select>
       </FormControl>
-      <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Position</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Posted Date</TableCell>
-              <TableCell>Level</TableCell>
-              <TableCell>Edit</TableCell> {/* Added Actions column */}
-              <TableCell>Delete</TableCell> {/* Added Actions column */}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredJobOpenings.map((job, index) => (
-              <TableRow key={job.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{job.role}</TableCell>
-                <TableCell>{job.position}</TableCell>
-                <TableCell>{job.location}</TableCell>
-                <TableCell>
-                  {new Date(job.posted_date).toLocaleDateString()}
-                </TableCell>
-                <TableCell>{job.level}</TableCell>
-                <TableCell>
-                  <Button onClick={() => handleEditClick(job)}>Edit</Button>
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => handleDeleteClick(job.id)}>
-                    Delete
-                  </Button>{" "}
-                  {/* Delete button */}
-                </TableCell>
+      <Paper>
+        <TableContainer style={{ marginTop: "30px" }}>
+          <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table">
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Role</TableCell>
+                <TableCell>Position</TableCell>
+                <TableCell>Location</TableCell>
+                <TableCell>Posted Date</TableCell>
+                <TableCell>Level</TableCell>
+                <TableCell>Edit</TableCell> {/* Added Actions column */}
+                <TableCell>Delete</TableCell> {/* Added Actions column */}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {filteredJobOpenings.map((job, index) => (
+                <TableRow key={job.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{job.role}</TableCell>
+                  <TableCell>{job.position}</TableCell>
+                  <TableCell>{job.location}</TableCell>
+                  <TableCell>
+                    {new Date(job.posted_date).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>{job.level}</TableCell>
+                  <TableCell>
+                    <Button onClick={() => handleEditClick(job)}>Edit</Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button color="error" onClick={() => handleDeleteClick(job.id)}>
+                      Delete
+                    </Button>{" "}
+                    {/* Delete button */}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      {/* Add Job Opening Dialog */}
-      <Dialog open={openAddDialog} onClose={handleDialogClose}>
-        <DialogTitle>Add New Job Opening</DialogTitle>
-        <DialogContent>
-          <form>
-            <FormControl fullWidth>
-              <InputLabel id="role-select-label">Select Role</InputLabel>
-              <Select
-                labelId="role-select-label"
-                id="role-select"
-                value={selectedRole}
-                onChange={handleRoleChange}
+        {/* Add Job Opening Dialog */}
+        <Dialog open={openAddDialog} onClose={handleDialogClose}>
+          <DialogTitle>Add New Job Opening</DialogTitle>
+          <DialogContent>
+            <form>
+              <FormControl fullWidth>
+                <InputLabel id="role-select-label">Select Role</InputLabel>
+                <Select
+                  labelId="role-select-label"
+                  id="role-select"
+                  value={selectedRole}
+                  onChange={handleRoleChange}
+                  fullWidth
+                >
+                  {jobRoles &&
+                    jobRoles.map((role) => (
+                      <MenuItem key={role.role_id} value={role.role}>
+                        {role.role}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="position"
+                label="Position"
+                type="text"
                 fullWidth
-              >
-                {jobRoles &&
-                  jobRoles.map((role) => (
+                value={editedJob?.position || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, position: e.target.value })
+                }
+              />
+              <TextField
+                margin="dense"
+                id="location"
+                label="Location"
+                type="text"
+                fullWidth
+                value={editedJob?.location || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, location: e.target.value })
+                }
+              />
+              <TextField
+                margin="dense"
+                id="level"
+                label="Level"
+                type="text"
+                fullWidth
+                value={editedJob?.level || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, level: e.target.value })
+                }
+              />
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose}>Cancel</Button>
+            <Button
+              onClick={handleAddNewJob}
+           
+              color="primary"
+            >
+              Add Job Opening
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Edit Job Opening Dialog */}
+        <Dialog open={openDialog} onClose={handleDialogClose}>
+          <DialogTitle>Edit Job Opening</DialogTitle>
+          <DialogContent>
+            <form>
+              <FormControl fullWidth>
+                <InputLabel id="edit-role-select-label">Select Role</InputLabel>
+                <Select
+                  labelId="edit-role-select-label"
+                  id="edit-role-select"
+                  value={editedJob ? editedJob.role : ""}
+                  onChange={(e) =>
+                    setEditedJob({ ...editedJob, role: e.target.value })
+                  }
+                  fullWidth
+                >
+                  {jobRoles.map((role) => (
                     <MenuItem key={role.role_id} value={role.role}>
                       {role.role}
                     </MenuItem>
                   ))}
-              </Select>
-            </FormControl>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="position"
-              label="Position"
-              type="text"
-              fullWidth
-              value={editedJob?.position || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, position: e.target.value })
-              }
-            />
-            <TextField
-              margin="dense"
-              id="location"
-              label="Location"
-              type="text"
-              fullWidth
-              value={editedJob?.location || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, location: e.target.value })
-              }
-            />
-            <TextField
-              margin="dense"
-              id="level"
-              label="Level"
-              type="text"
-              fullWidth
-              value={editedJob?.level || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, level: e.target.value })
-              }
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleAddNewJob} variant="contained" color="primary">
-            Add Job Opening
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Edit Job Opening Dialog */}
-      <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogTitle>Edit Job Opening</DialogTitle>
-        <DialogContent>
-          <form>
-            <FormControl fullWidth>
-              <InputLabel id="edit-role-select-label">Select Role</InputLabel>
-              <Select
-                labelId="edit-role-select-label"
-                id="edit-role-select"
-                value={editedJob ? editedJob.role : ""}
-                onChange={(e) =>
-                  setEditedJob({ ...editedJob, role: e.target.value })
-                }
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="edit-position"
+                label="Position"
+                type="text"
                 fullWidth
-              >
-                {jobRoles.map((role) => (
-                  <MenuItem key={role.role_id} value={role.role}>
-                    {role.role}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="edit-position"
-              label="Position"
-              type="text"
-              fullWidth
-              value={editedJob?.position || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, position: e.target.value })
-              }
-            />
-            <TextField
-              margin="dense"
-              id="edit-location"
-              label="Location"
-              type="text"
-              fullWidth
-              value={editedJob?.location || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, location: e.target.value })
-              }
-            />
-            <TextField
-              margin="dense"
-              id="edit-level"
-              label="Level"
-              type="text"
-              fullWidth
-              value={editedJob?.level || ""}
-              onChange={(e) =>
-                setEditedJob({ ...editedJob, level: e.target.value })
-              }
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button
-            onClick={handleSaveChanges}
-            variant="contained"
-            color="primary"
-          >
-            Save Changes
-          </Button>
-        </DialogActions>
-      </Dialog>
+                value={editedJob?.position || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, position: e.target.value })
+                }
+              />
+              <TextField
+                margin="dense"
+                id="edit-location"
+                label="Location"
+                type="text"
+                fullWidth
+                value={editedJob?.location || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, location: e.target.value })
+                }
+              />
+              <TextField
+                margin="dense"
+                id="edit-level"
+                label="Level"
+                type="text"
+                fullWidth
+                value={editedJob?.level || ""}
+                onChange={(e) =>
+                  setEditedJob({ ...editedJob, level: e.target.value })
+                }
+              />
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose}>Cancel</Button>
+            <Button
+              onClick={handleSaveChanges}
+            
+              color="primary"
+            >
+              Save 
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={openConfirmationDialog} onClose={handleCancelDelete}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this job opening?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelDelete} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmDelete} color="primary">
-            Confirm Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={openConfirmationDialog} onClose={handleCancelDelete}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this job opening?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancelDelete} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmDelete} color="primary">
+              Confirm Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-      {/* Notification Snackbar */}
-      <Notification
-        open={notificationOpen}
-        message={notificationMessage}
-        severity={notificationSeverity}
-        onClose={() => setNotificationOpen(false)}
-      />
-    </Paper>
+        {/* Notification Snackbar */}
+        <Notification
+          open={notificationOpen}
+          message={notificationMessage}
+          severity={notificationSeverity}
+          onClose={() => setNotificationOpen(false)}
+        />
+      </Paper>
+    </Box>
   );
 }
 

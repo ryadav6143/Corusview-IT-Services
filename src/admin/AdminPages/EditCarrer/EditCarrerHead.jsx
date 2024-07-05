@@ -122,7 +122,7 @@ function EditCarrerHead() {
               <TableCell>{careerHead.carrer_heading}</TableCell>
               <TableCell>{careerHead.carrer_content}</TableCell>
               <TableCell>
-                <Button variant="outlined" onClick={handleEditOpen}>
+                <Button  onClick={handleEditOpen}>
                   Edit
                 </Button>
               </TableCell>

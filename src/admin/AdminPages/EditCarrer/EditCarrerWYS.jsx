@@ -157,11 +157,11 @@ function EditCarrerWYS() {
 
   return (
     <div>
-      <h2>Career Information</h2>
+ 
       <Button variant="contained" color="primary" onClick={handleAddClick}>
         Add Career
       </Button>
-      <TableContainer component={Paper}>
+      <TableContainer style={{marginTop:"10px"}} component={Paper}>
         <Table>
           <TableHead>
             <TableRow>

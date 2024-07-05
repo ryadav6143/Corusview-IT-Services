@@ -14,53 +14,105 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import axios from "axios"; // Import Axios for API calls
-import { fetchJobRoles, addJobRole, deleteJobRole } from "../../AdminServices"; // Adjust path based on your project structure
+import { fetchJobRoles, addJobRole, deleteJobRole } from "../../AdminServices";
+import Notification from "../../../Notification/Notification";
 
 const AddJobRole = () => {
   const [jobRoles, setJobRoles] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [newRoleName, setNewRoleName] = useState("");
-
- // Fetch data on component mount
+  const [roleToDelete, setRoleToDelete] = useState(null);
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "default",
+  });
 
   const fetchData = async () => {
     try {
       const roles = await fetchJobRoles();
+      console.log("Fetched roles:", roles);
       setJobRoles(roles);
     } catch (error) {
       console.error("Error fetching job roles:", error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  const handleAddRole = async () => {
-    try {
-      const newRole = { role: newRoleName };
-      const addedRole = await addJobRole(newRole);
-      setJobRoles([...jobRoles, addedRole]);
-      setNewRoleName(""); // Clear input field
-      fetchData();
-      setOpenDialog(false);
-    } catch (error) {
-      console.error("Error adding job role:", error);
+      setNotification({
+        open: true,
+        message: "Error fetching job roles.",
+        severity: "error",
+      });
     }
   };
 
-  const handleDeleteRole = async (role_id) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleAddRole = async () => {
     try {
-      const response = await deleteJobRole(role_id);
-console.log(response,"???");
-fetchData();
+      const newRole = { role: newRoleName };
+      const response = await addJobRole(newRole);
+      console.log("Add role response:", response);
+      setJobRoles([...jobRoles, response.data]);
+      setNewRoleName("");
+      fetchData();
+      setOpenDialog(false);
+      setNotification({
+        open: true,
+        message: response.message,
+        severity: "success",
+      });
+    } catch (error) {
+      console.error("Error adding job role:", error);
+      setNotification({
+        open: true,
+        message: error.response?.data?.message || "Error adding job role.",
+        severity: "error",
+      });
+    }
+  };
+
+  const handleDeleteRole = async () => {
+    try {
+      if (roleToDelete) {
+        const response = await deleteJobRole(roleToDelete.role_id);
+        console.log("Delete role response:", response);
+        fetchData();
+        setOpenDeleteDialog(false);
+        setRoleToDelete(null);
+        setNotification({
+          open: true,
+          message: response.message,
+          severity: "success",
+        });
+      }
     } catch (error) {
       console.error("Error deleting job role:", error);
+      setNotification({
+        open: true,
+        message: error.response?.data?.message || "Error deleting job role.",
+        severity: "error",
+      });
     }
+  };
+
+  const handleOpenDeleteDialog = (role) => {
+    setRoleToDelete(role);
+    setOpenDeleteDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setNewRoleName(""); // Clear input field
+    setNewRoleName("");
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+    setRoleToDelete(null);
+  };
+
+  const handleCloseNotification = () => {
+    setNotification({ ...notification, open: false });
   };
 
   return (
@@ -104,28 +156,49 @@ fetchData();
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Role Name</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobRoles.map((role, index) => (
-              <TableRow key={role.role_id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{role.role}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDeleteRole(role.role_id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {jobRoles.map((role, index) =>
+              role && role.role ? (
+                <TableRow key={role.role_id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{role.role}</TableCell>
+                  <TableCell>
+                    <Button
+                      color="error"
+                      onClick={() => handleOpenDeleteDialog(role)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ) : null
+            )}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>Are you sure you want to delete the role?</DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteRole} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Notification
+        open={notification.open}
+        handleClose={handleCloseNotification}
+        alertMessage={notification.message}
+        alertSeverity={notification.severity}
+      />
     </div>
   );
 };

@@ -106,7 +106,7 @@ function EditServicesHead() {
               <TableCell>{servicesHead.services_content}</TableCell>
               <TableCell>
                 <Button
-                  variant="outlined"
+              
                   onClick={() => handleEditOpen(servicesHead)}
                 >
                   Edit

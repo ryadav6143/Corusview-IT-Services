@@ -115,11 +115,7 @@ function App() {
             path="recentworktitle"
             element={<RecentworkHead />}
           ></Route>
-          <Route
-            exact
-            path="editcarrerrys"
-            element={<RecentworkHead />}
-          ></Route>
+          <Route exact path="editcarrerrys" element={<EditCarrerRYS />}></Route>
           <Route
             exact
             path="editjobopening"
