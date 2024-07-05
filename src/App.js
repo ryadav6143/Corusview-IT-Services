@@ -37,14 +37,13 @@ import EditFooter from "./admin/AdminPages/EditFooter/EditFooter";
 import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
 import AddJobRole from "./admin/AdminPages/EditCarrer/AddJobRole";
 import RecentworkHead from "./admin/AdminPages/EditHome/RecentworkHead";
-
+import NoPage from "./pages/NotFound/NoPage";
 function App() {
   return (
     <Main>
       {/* <Nav></Nav> */}
       <Routes>
         <Route path="admin" element={<AdminPanel />}>
-          {/* // Home page routing  */}
           <Route exact path="editheading" element={<EditHeading />}></Route>
           <Route exact path="editaboutus" element={<EditAboutUs />}></Route>
           <Route exact path="editservices" element={<EditServices />}></Route>
@@ -136,6 +135,7 @@ function App() {
             element={<EditProductsForm />}
           ></Route>
         </Route>
+        <Route exact path="*" element={<NoPage />}></Route>
         <Route exact path="/" element={<Home />}></Route>
         <Route path="about" element={<About />}></Route>
         <Route path="carrer" element={<Carrer />}></Route>
