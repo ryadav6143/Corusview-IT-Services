@@ -36,13 +36,15 @@ export const fetchOurServicesData = async () => {
 // put service data
 export const updateServiceData = async (id, newData) => {
   try {
-    const response = await axios.put(`${BASE_URL}/our_services`, newData);
+    const response = await axios.post(
+      `${BASE_URL}/our_services/${id}`,
+      newData
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
-
 // add Service Data
 export const addServiceData = async (formData) => {
   try {
@@ -583,7 +585,6 @@ export const fetchJobOpenings = async (role) => {
     throw error;
   }
 };
-
 
 // Get Job roles data
 export const fetchJobRoles = async () => {

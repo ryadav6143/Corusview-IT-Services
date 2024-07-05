@@ -61,7 +61,10 @@
   width: 25px;
   height: 25px;
 }
-
+.flex-info a {
+  color: #f3f9e9;
+  text-decoration: none;
+}
 /* For small devices (phones, 768px and up) */
 @media only screen and (max-width: 768px) {
   .flex-footer {

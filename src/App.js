@@ -36,6 +36,7 @@ import EditHeader from "./admin/AdminPages/EditHeader/EditHeader";
 import EditFooter from "./admin/AdminPages/EditFooter/EditFooter";
 import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
 import AddJobRole from "./admin/AdminPages/EditCarrer/AddJobRole";
+import RecentworkHead from "./admin/AdminPages/EditHome/RecentworkHead";
 
 function App() {
   return (
@@ -110,7 +111,16 @@ function App() {
             element={<EditCarrerImages />}
           ></Route>
           <Route exact path="editcarrerwys" element={<EditCarrerWYS />}></Route>
-          <Route exact path="editcarrerrys" element={<EditCarrerRYS />}></Route>
+          <Route
+            exact
+            path="recentworktitle"
+            element={<RecentworkHead />}
+          ></Route>
+          <Route
+            exact
+            path="editcarrerrys"
+            element={<RecentworkHead />}
+          ></Route>
           <Route
             exact
             path="editjobopening"

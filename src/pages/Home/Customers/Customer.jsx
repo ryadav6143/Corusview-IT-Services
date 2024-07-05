@@ -49,38 +49,8 @@ function Customer() {
             What our <br /> Customers <br /> are Saying
           </p>
         </div>
-        <motion.div
-          className="custom-crousol"
-          ref={ref}
-          variants={{
-            hidden: { rotate: 19 },
-            visible: { rotate: 0 },
-          }}
-          initial="hidden"
-          animate={controls}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
+        <div className="custom-crousol">
           <div id="carouselExample" className="carousel slide">
-            {/* <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book.
-                  </p>
-                  <div className="about-client">
-                    <img src={client} alt="" />
-                    <div className="client-details">
-                      <p>Mr. Bob</p>
-                      <p>CEO</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="carousel-inner">
               {testimonials.map((testimonial, index) => (
                 <div
@@ -98,6 +68,7 @@ function Customer() {
                       />
                       <div className="client-details">
                         <p>{testimonial.designation}</p>
+                        <p>{testimonial.name}</p>
                       </div>
                     </div>
                   </div>
@@ -127,7 +98,7 @@ function Customer() {
               <span className="visually-hidden">Next</span>
             </button>
           </div>
-        </motion.div>
+        </div>
 
         <div className="custom-heading">
           <p>

@@ -55,7 +55,7 @@ function Home() {
           <img src={vector2} alt="" />
         </div>
 
-        <motion.div className="abt-com-flex" ref={ref}>
+        <div className="abt-com-flex" ref={ref}>
           <div>
             <p>About Us</p>
           </div>
@@ -63,7 +63,7 @@ function Home() {
           <div>
             <p>{mainTableData.about_us}</p>
           </div>
-        </motion.div>
+        </div>
       </div>
       <div>
         <Customer></Customer>

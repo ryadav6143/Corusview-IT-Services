@@ -44,9 +44,9 @@
 .env-card {
   width: 400px;
   padding: 5px;
-  -webkit-animation: slide-top-carrer linear;
+  /* -webkit-animation: slide-top-carrer linear;
   animation: slide-top-carrer linear;
-  animation-timeline: view();
+  animation-timeline: view(); */
 }
 .env-card p:nth-child(1) {
   font-size: 20px;
@@ -63,9 +63,9 @@
   max-width: 1440px;
   margin-top: 5%;
   margin-bottom: 10%;
-  -webkit-animation: slide-left-joinus linear;
+  /* -webkit-animation: slide-left-joinus linear;
   animation: slide-left-joinus linear;
-  animation-timeline: view();
+  animation-timeline: view(); */
 }
 .join-us p:nth-child(1) {
   font-size: 72px;
@@ -132,9 +132,9 @@
   border-radius: 15px;
   -webkit-box-shadow: 0px 9px 10.899999618530273px 0px #00000040;
   box-shadow: 0px 9px 10.899999618530273px 0px #00000040;
-  -webkit-animation: popup-new linear;
+  /* -webkit-animation: popup-new linear;
   animation: popup-new linear;
-  animation-timeline: view();
+  animation-timeline: view(); */
 }
 @-webkit-keyframes popup-new {
   0% {

@@ -1,10 +1,3 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v8.4.14,
-* Autoprefixer: v10.4.7
-* Browsers: last 4 version
-*/
-
 .our-customers {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -21,14 +14,12 @@
 }
 .custom-crousol {
   max-width: 526px;
+  width: 526px;
   min-height: 375px;
   background: url("../../../assets/images/slider-bg.png");
   background-size: cover;
   background-position: center;
   padding: 30px 50px 30px 50px;
-  /* -webkit-animation: rotateslider linear;
-          animation: rotateslider linear;
-  animation-timeline: view(-300px); */
 }
 @-webkit-keyframes rotateslider {
   0% {
@@ -77,6 +68,7 @@
   font-weight: 700;
 }
 .client-details p:nth-child(2) {
+  color: white;
   font-weight: 400;
 }
 .custom-btn {
@@ -134,4 +126,12 @@
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
   /* Styles for larger desktops and laptops */
+}
+.carousel-control-next {
+  right: 0;
+  top: 50%;
+}
+.carousel-control-prev {
+  right: 0;
+  top: 50%;
 }

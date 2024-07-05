@@ -45,11 +45,26 @@ function Footers() {
               </div>
               <div className="flex-info">
                 <img src={email} alt="" />
-                <p>{footerData ? footerData.email : "Loading..."}</p>
+
+                {footerData ? (
+                  <p>
+                    <a href={`mailto:${footerData.email}`}>
+                      {footerData.email}
+                    </a>
+                  </p>
+                ) : (
+                  "Loading..."
+                )}
               </div>
               <div className="flex-info">
                 <img src={phone} alt="" />
-                <p>{footerData ? footerData.phone : "Loading..."}</p>
+                {footerData ? (
+                  <p>
+                    <a href={`tel:${footerData.phone}`}>{footerData.phone}</a>
+                  </p>
+                ) : (
+                  "Loading..."
+                )}
               </div>
 
               <div className="social-icons">

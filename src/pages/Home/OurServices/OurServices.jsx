@@ -2,12 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 import { getHomeServices } from "../../FrontendServices/Services";
 import "./OurServices.css";
-import SD from "../../../assets/logos/software devlopment.png";
-import UIUX from "../../../assets/logos/ui ux.png";
-import Mobile from "../../../assets/logos/mobile development.png";
-import WD from "../../../assets/logos/web development.png";
-import DG from "../../../assets/logos/digital merketing.png";
-import QA from "../../../assets/logos/Quality.png";
+import { Link } from "react-router-dom";
 
 function OurServices() {
   const [services, setServices] = useState([]);
@@ -73,7 +68,7 @@ function OurServices() {
                 <div className="accordion-body">
                   <p>{service.content}</p>
                   <button>
-                    <a href="">Read More...</a>
+                    <Link to="/services">Read More...</Link>
                   </button>
                 </div>
               </div>

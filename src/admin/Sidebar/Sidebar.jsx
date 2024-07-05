@@ -87,10 +87,13 @@ function Sidebar({ isOpen }) {
                   <a>Edit About Us </a>
                 </Link>
                 <Link to="/admin/editslider" onClick={handleLinkClick}>
-                  <a>Edit Slider</a>
+                  <a>Edit Testimonials</a>
                 </Link>
                 <Link to="/admin/editrecentwork" onClick={handleLinkClick}>
                   <a>Edit Recent Work</a>
+                </Link>
+                <Link to="/admin/recentworktitle" onClick={handleLinkClick}>
+                  <a>Edit Recent Title</a>
                 </Link>
               </div>
               <button className="dropdown-btn" onClick={handleAboutDropdown}>
@@ -125,19 +128,19 @@ function Sidebar({ isOpen }) {
                 style={{ display: galleryDropdownOpen ? "block" : "none" }}
               >
                 <Link to="/admin/editservicehead" onClick={handleLinkClick}>
-                  Edit Services Head
+                  Edit Heading
                 </Link>
                 <Link to="/admin/editproblemhead" onClick={handleLinkClick}>
                   Edit Problem Head
                 </Link>
-                <Link to="/admin/editserviceproblems" onClick={handleLinkClick}>
-                  Edit Services Problems
-                </Link>
                 <Link to="/admin/editsolutionhead" onClick={handleLinkClick}>
                   Edit Solution Head
                 </Link>
+                <Link to="/admin/editserviceproblems" onClick={handleLinkClick}>
+                  Edit Problems
+                </Link>
                 <Link to="/admin/editservicesolution" onClick={handleLinkClick}>
-                  Edit Services Solution
+                  Edit Solution
                 </Link>
                 <Link to="/admin/editwhatyouget" onClick={handleLinkClick}>
                   Edit What You'll Get
@@ -156,23 +159,23 @@ function Sidebar({ isOpen }) {
                 }`}
                 style={{ display: nriDropdownOpen ? "block" : "none" }}
               >
+                <Link to="/admin/editcarrerhead" onClick={handleLinkClick}>
+                  <a>Edit Heading</a>
+                </Link>
                 <Link to="/admin/createjobroles" onClick={handleLinkClick}>
                   <a>Create Job Role</a>
                 </Link>
-                <Link to="/admin/editcarrerhead" onClick={handleLinkClick}>
-                  <a>Edit Carrer Head</a>
-                </Link>
                 <Link to="/admin/editcarrerimages" onClick={handleLinkClick}>
-                  <a>Edit Carrer Images</a>
+                  <a>Edit Gallery</a>
+                </Link>
+                <Link to="/admin/editcarrerrys" onClick={handleLinkClick}>
+                  <a>Edit Go Ahead</a>
                 </Link>
                 <Link to="/admin/editcarrerwys" onClick={handleLinkClick}>
                   <a>Edit Carrer What you see</a>
                 </Link>
-                <Link to="/admin/editcarrerrys" onClick={handleLinkClick}>
-                  <a>Edit Carrer Raise your Hand</a>
-                </Link>
                 <Link to="/admin/editjobopening" onClick={handleLinkClick}>
-                  <a>Edit Job Opening</a>
+                  <a>Create Job Opening</a>
                 </Link>
               </div>
 
@@ -197,7 +200,7 @@ function Sidebar({ isOpen }) {
                   <a>Edit Contact us</a>
                 </Link>
                 <Link to="/admin/editcontactform" onClick={handleLinkClick}>
-                  <a>Edit Contact Form </a>
+                  <a>Contact Entries</a>
                 </Link>
               </div>
 
@@ -219,7 +222,7 @@ function Sidebar({ isOpen }) {
                   to="/admin/editproducts"
                   onClick={handleLinkClick}
                 >
-                  <a>Edit products </a>
+                  <a>Add Products </a>
                 </Link>
                 {/* <Link to="/admin/editproductsform" onClick={handleLinkClick}>
                   <a>Edit products Form </a>

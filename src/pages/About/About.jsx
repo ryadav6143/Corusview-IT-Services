@@ -3,6 +3,7 @@ import { getAboutCompany, getOurValues } from "../FrontendServices/Services";
 import "./About.css";
 import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
+import { Link } from "react-router-dom";
 
 function About() {
   const [aboutUsData, setAboutUsData] = useState(null);
@@ -105,7 +106,7 @@ function About() {
         )}
         <div className="join-us-btn">
           <button>
-            <a href="">Join Us</a>
+            <Link to="/carrer">Join Us</Link>
           </button>
         </div>
       </div>

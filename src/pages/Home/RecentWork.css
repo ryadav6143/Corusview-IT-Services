@@ -1,7 +1,7 @@
 .workcard img {
   width: inherit;
   height: inherit;
-  object-fit: cover;
+
   border-radius: inherit;
 }
 .workcard {
@@ -14,7 +14,7 @@
 }
 .main-container {
   position: relative;
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   display: flex;
   flex: 1;
@@ -26,5 +26,18 @@
   .workcard {
     height: 400px;
     width: 275px;
+  }
+  .main-container {
+    height: 50vh;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .main-container {
+    height: 70vh;
+  }
+}
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+  .main-container {
+    height: 80vh;
   }
 }

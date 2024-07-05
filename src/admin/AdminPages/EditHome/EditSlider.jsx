@@ -33,6 +33,7 @@ function EditSlider() {
     description: "",
     img: "",
     designation: "",
+    name: "",
   });
   const [showErrorNotification, setShowErrorNotification] = useState(false);
   const [errorNotificationMessage, setErrorNotificationMessage] = useState("");
@@ -63,6 +64,7 @@ function EditSlider() {
       description: "",
       img: "",
       designation: "",
+      name: "",
     });
     setOpenAddDialog(true);
   };
@@ -74,6 +76,7 @@ function EditSlider() {
       description: "",
       img: "",
       designation: "",
+      name: "",
     });
   };
 
@@ -84,21 +87,27 @@ function EditSlider() {
       description: "",
       img: "",
       designation: "",
+      name: "",
     });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     // Apply character limit if applicable
-    if (name === "description" && value.length > 150) {
+    if (name === "description" && value.length > 300) {
       setShowErrorNotification(true);
-      setErrorNotificationMessage("Description cannot exceed 150 characters.");
+      setErrorNotificationMessage("Description cannot exceed 300 characters.");
       return;
     } else if (name === "designation" && value.length > 10) {
       setShowErrorNotification(true);
       setErrorNotificationMessage("Designation cannot exceed 10 characters.");
       return;
     }
+    //  else if (name === "name" && value.length > 20) {
+    //   setShowErrorNotification(true);
+    //   setErrorNotificationMessage("name cannot exceed 20 characters.");
+    //   return;
+    // }
     setEditedTestimonial({ ...editedTestimonial, [name]: value });
   };
 
@@ -133,6 +142,7 @@ function EditSlider() {
     if (
       !editedTestimonial.description ||
       !editedTestimonial.img ||
+      !editedTestimonial.name ||
       !editedTestimonial.designation
     ) {
       setShowErrorNotification(true);
@@ -144,6 +154,7 @@ function EditSlider() {
       const formData = new FormData();
       formData.append("description", editedTestimonial.description);
       formData.append("designation", editedTestimonial.designation);
+      formData.append("name", editedTestimonial.name);
       if (editedTestimonial.img instanceof File) {
         formData.append("img", editedTestimonial.img);
       }
@@ -166,6 +177,7 @@ function EditSlider() {
     if (
       !editedTestimonial.description ||
       !editedTestimonial.img ||
+      !editedTestimonial.name ||
       !editedTestimonial.designation
     ) {
       setShowErrorNotification(true);
@@ -178,6 +190,7 @@ function EditSlider() {
       formData.append("description", editedTestimonial.description);
       formData.append("designation", editedTestimonial.designation);
       formData.append("img", editedTestimonial.img);
+      formData.append("name", editedTestimonial.name);
 
       await addTestimonial(formData);
 
@@ -227,6 +240,7 @@ function EditSlider() {
                 <TableCell>Description</TableCell>
                 <TableCell>Image</TableCell>
                 <TableCell>Designation</TableCell>
+                <TableCell>Name</TableCell>
                 <TableCell>Edit</TableCell>
                 <TableCell>Delete</TableCell>
               </TableRow>
@@ -236,6 +250,7 @@ function EditSlider() {
                 <TableRow key={testimonial.id}>
                   <TableCell>{testimonial.id}</TableCell>
                   <TableCell>{testimonial.description}</TableCell>
+                  <TableCell>{testimonial.name}</TableCell>
                   <TableCell>
                     <img
                       src={testimonial.img}
@@ -267,6 +282,16 @@ function EditSlider() {
         <Dialog open={openEditDialog} onClose={handleCloseEditDialog}>
           <DialogTitle>Edit Testimonial</DialogTitle>
           <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              label="name"
+              type="name"
+              fullWidth
+              name="name"
+              value={editedTestimonial.name}
+              onChange={handleChange}
+            />
             <TextField
               autoFocus
               margin="dense"
@@ -335,6 +360,15 @@ function EditSlider() {
               fullWidth
               name="designation"
               value={editedTestimonial.designation}
+              onChange={handleChange}
+            />
+            <TextField
+              margin="dense"
+              label="name"
+              type="text"
+              fullWidth
+              name="name"
+              value={editedTestimonial.name}
               onChange={handleChange}
             />
           </DialogContent>
