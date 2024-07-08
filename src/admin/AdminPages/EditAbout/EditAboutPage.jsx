@@ -104,7 +104,10 @@ function EditAboutPage() {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <Typography variant="h5" component="h5">
+      Edit About Page
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

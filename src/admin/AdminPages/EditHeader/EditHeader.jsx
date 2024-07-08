@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   CircularProgress,
+  Typography
 } from "@mui/material";
 import { ChromePicker } from "react-color";
 import { fetchHeaderData, updateHeaderColor } from "../../AdminServices";
@@ -95,7 +96,10 @@ const HeaderTable = () => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
+        <Typography variant="h5" component="h5">
+      Edit Header
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

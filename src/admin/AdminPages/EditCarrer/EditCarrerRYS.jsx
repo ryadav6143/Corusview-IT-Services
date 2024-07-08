@@ -14,6 +14,7 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  Typography
 } from "@mui/material";
 import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
 import Notification from "../../../Notification/Notification"; // Adjust the path as per your file structure
@@ -85,8 +86,10 @@ function EditCarrerRYS() {
 
   return (
     <div>
-   
-      <TableContainer component={Paper}>
+     <Typography variant="h5" component="h5">
+      Edit Go Ahead
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

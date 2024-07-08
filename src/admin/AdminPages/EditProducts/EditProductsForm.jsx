@@ -21,6 +21,7 @@ import {
   DialogActions,
   Button,
   TextField,
+  Typography
 } from "@mui/material";
 import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
 
@@ -218,10 +219,13 @@ export default function EditProductsForm() {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleAddClick}>
+      <Typography variant="h5" component="h5">
+      Edit Product
+    </Typography>
+      <Button style={{marginTop:"10px"}} variant="contained" color="primary" onClick={handleAddClick}>
         Add Products
       </Button>
-      <TableContainer component={Paper} style={{marginTop:"20px"}}>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

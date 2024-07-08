@@ -19,6 +19,7 @@ import {
   TextField,
   Box,
   DialogContentText,
+  Typography
 } from "@mui/material";
 import {
   fetchJobOpenings,
@@ -234,10 +235,13 @@ function EditJobOpening() {
 
   return (
     <Box>
+        <Typography variant="h5" component="h5">
+      Edit Job Opening
+    </Typography>
       <Button
         variant="contained"
         color="primary"
-        style={{ marginTop: "10px", marginLeft: "10px" }}
+        style={{ marginTop: "10px",  }}
         onClick={() => setOpenAddDialog(true)}
       >
         Add Job Opening

@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Typography
 } from "@mui/material";
 import { fetchSolutions, updateSolutionHeading } from "../../AdminServices";
 import Notification from "../../../Notification/Notification"; // Adjust path as per your project structure
@@ -68,8 +69,10 @@ function EditSolutionHead() {
   return (
     <div>
 
-
-      <TableContainer component={Paper}>
+<Typography variant="h5" component="h5">
+      Edit Solution Head
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

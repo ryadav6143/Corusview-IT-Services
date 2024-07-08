@@ -15,6 +15,7 @@ import {
   Select,
   MenuItem,
   TextField,
+  Typography,
   Box,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -255,8 +256,11 @@ function EditCarrerImages() {
 
   return (
     <div>
+        <Typography variant="h5" component="h5">
+      Edit Carrer Image
+    </Typography>
       {/* Button to add images */}
-      <Button variant="contained" color="primary" onClick={handleAddOpen}>
+      <Button variant="contained" color="primary" onClick={handleAddOpen} style={{marginTop:"10px"}}>
         Add Image
       </Button>
 

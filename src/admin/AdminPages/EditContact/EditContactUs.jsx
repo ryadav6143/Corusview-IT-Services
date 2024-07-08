@@ -13,6 +13,7 @@ import {
   DialogActions,
   Button,
   TextField,
+  Typography
 } from '@mui/material';
 import { fetchContactUsInfo, updateContactUsInfo } from '../../AdminServices';
 import Notification from '../../../Notification/Notification'; // Adjust the path as per your file structure
@@ -99,10 +100,12 @@ const handleUpdate = async () => {
 
   return (
     <div>
-
+  <Typography variant="h5" component="h5">
+      Edit Contact Us
+    </Typography>
       {contactInfo && (
         <>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} style={{marginTop:"10px"}}>
             <Table>
               <TableHead>
                 <TableRow>

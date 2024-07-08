@@ -19,6 +19,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Notification from "../../../Notification/Notification"; // Adjust the path as per your project structure
 
 const MAX_HEADING_LENGTH = 20;
@@ -331,12 +332,15 @@ function EditServices() {
 
   return (
     <>
+      <Typography variant="h5" component="h5">
+      Edit Sevices
+    </Typography>
       <Box>
         <Button
           variant="contained"
           color="primary"
           onClick={handleOpenAddDialog}
-          style={{ marginBottom: "1rem" }}
+          style={{ marginBottom: "1rem" ,marginTop:"10px" }}
         >
           Add Service
         </Button>
@@ -351,7 +355,7 @@ function EditServices() {
           />
         )}
 
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{marginTop:"10px"}}>
           <Table>
             <TableHead>
               <TableRow>

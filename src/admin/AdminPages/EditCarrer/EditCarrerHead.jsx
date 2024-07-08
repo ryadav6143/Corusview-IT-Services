@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Typography
 } from "@mui/material";
 import { fetchCareerHead, updateCareerHead } from "../../AdminServices";
 import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
@@ -105,8 +106,10 @@ function EditCarrerHead() {
 
   return (
     <div>
-      <h2>Career Head Details</h2>
-      <TableContainer component={Paper}>
+      <Typography variant="h5" component="h5">
+      Edit Carrer Head
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

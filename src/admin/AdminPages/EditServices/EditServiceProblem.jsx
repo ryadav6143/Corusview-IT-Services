@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Typography
 } from "@mui/material";
 import {
   fetchProblems,
@@ -152,20 +153,22 @@ function EditServiceProblem() {
 
   return (
     <Box>
-    
+      <Typography variant="h5" component="h5">
+      Edit Service Problem
+    </Typography>
 
       {/* Add Button */}
       <Button
         variant="contained"
         color="primary"
         onClick={handleAddClick}
-        style={{ marginBottom: "1rem" }}
+        style={{ marginBottom: "1rem" ,marginTop:"10px"}}
       >
         Add Problem
       </Button>
 
       {/* Table of Problems */}
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

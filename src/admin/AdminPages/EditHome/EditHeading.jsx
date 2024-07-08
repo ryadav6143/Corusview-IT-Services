@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import Notification from "../../../Notification/Notification";
 
 function EditHeading() {
@@ -95,7 +96,10 @@ function EditHeading() {
 
   return (
     <>
-      <TableContainer component={Paper}>
+    <Typography variant="h5" component="h5">
+      Edit Heading
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

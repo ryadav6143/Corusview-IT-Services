@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+
 import Notification from "../../../Notification/Notification"; // Adjust the import path as per your folder structure
 
 function EditRecentWork() {
@@ -201,16 +202,19 @@ function EditRecentWork() {
 
   return (
     <>
+      <Typography variant="h5" component="h5">
+      Edit Recent Work
+    </Typography>
       <Button
         variant="contained"
         color="primary"
         onClick={handleAddOpen}
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: "20px", marginTop:"10px" }}
       >
         Add New Work
       </Button>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

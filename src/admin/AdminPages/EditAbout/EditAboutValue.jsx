@@ -138,7 +138,10 @@ function EditAboutValue() {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <Typography variant="h5" component="h5">
+      Edit About Value
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

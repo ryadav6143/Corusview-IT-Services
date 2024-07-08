@@ -14,6 +14,7 @@ import {
   DialogActions,
   TextField,
   CircularProgress,
+  Typography
 } from "@mui/material";
 import { fetchFooterData, updateFooterData } from "../../AdminServices";
 import { ChromePicker } from "react-color";
@@ -99,7 +100,10 @@ const EditFooter = () => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
+        <Typography variant="h5" component="h5">
+      Edit Footer
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

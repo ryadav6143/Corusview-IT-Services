@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Typography,
   TextField,
 } from "@mui/material";
 import {
@@ -174,16 +175,18 @@ function EditWhatYouGet() {
 
   return (
     <div>
-   
+     <Typography variant="h5" component="h5">
+      Edit What You Will Get
+    </Typography>
       <Button
         onClick={handleAddClick}
         variant="contained"
         color="primary"
-        style={{ marginBottom: "1rem" }}
+        style={{ marginBottom: "1rem",marginTop:"10px" }}
       >
         Add Service
       </Button>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  Typography
 } from "@mui/material";
 import { fetchContactForm, deleteContactFormEntry } from "../../AdminServices";
 import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
@@ -82,8 +83,10 @@ function EditContactForm() {
 
   return (
     <div>
-     
-      <TableContainer component={Paper}>
+       <Typography variant="h5" component="h5">
+       Contact Entries
+    </Typography>
+      <TableContainer component={Paper} style={{marginTop:"10px"}}>
         <Table>
           <TableHead>
             <TableRow>

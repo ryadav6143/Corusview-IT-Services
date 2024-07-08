@@ -14,6 +14,7 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  Typography
 } from "@mui/material";
 import {
   fetchCareerWYS,
@@ -157,8 +158,10 @@ function EditCarrerWYS() {
 
   return (
     <div>
- 
-      <Button variant="contained" color="primary" onClick={handleAddClick}>
+   <Typography variant="h5" component="h5">
+      Edit Carrer What You'll See
+    </Typography>
+      <Button variant="contained" color="primary" onClick={handleAddClick} style={{marginTop:"10px"}}>
         Add Career
       </Button>
       <TableContainer style={{marginTop:"10px"}} component={Paper}>

@@ -224,6 +224,9 @@ function EditSlider() {
 
   return (
     <>
+      <Typography variant="h5" component="h5">
+      Edit Testimonial
+    </Typography>
       <Box>
         <Button
       variant="contained" color="primary"
@@ -232,7 +235,7 @@ function EditSlider() {
         >
           Add Testimonial
         </Button>
-        <TableContainer style={{marginTop:"20px"}} component={Paper}>
+        <TableContainer style={{marginTop:"10px"}} component={Paper} >
           <Table>
             <TableHead>
               <TableRow>
