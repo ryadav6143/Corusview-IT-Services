@@ -25,13 +25,17 @@ function JobOpenings() {
   }, []);
 
   // Filter job openings based on selected role or search term
-  const filteredJobOpenings = jobOpenings.filter(
-    (job) =>
+  const filteredJobOpenings = jobOpenings.filter((job) => {
+    if (searchTerm === "") {
+      return true; // Show all if search term is empty
+    }
+    return (
       job.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.level.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    );
+  });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -39,6 +43,10 @@ function JobOpenings() {
 
   const handleClearSearch = () => {
     setSearchTerm("");
+  };
+
+  const handleFilterByRole = (role) => {
+    setSearchTerm(role.toLowerCase());
   };
 
   return (
@@ -53,15 +61,19 @@ function JobOpenings() {
               <div>
                 <input
                   type="text"
-                  placeholder="Search by job role, level, or location..."
+                  placeholder="Search Jobs"
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
               </div>
             </div>
             <div className="all-roles">
+              <button onClick={handleClearSearch}>All</button>
               {roles.map((role) => (
-                <button key={role.id} onClick={() => setSearchTerm(role.role)}>
+                <button
+                  key={role.id}
+                  onClick={() => handleFilterByRole(role.role)}
+                >
                   {role.role}
                 </button>
               ))}

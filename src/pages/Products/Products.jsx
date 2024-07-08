@@ -49,16 +49,13 @@ function Products() {
           </div>
 
           <div className="product-btns">
-            <button>
-              <a href={product.link1} target="_blank">
-                Know More
-              </a>
-            </button>
-            <button>
-              <a href={product.link2} target="_blank">
-                How it works
-              </a>
-            </button>
+            <a href={product.link1} target="_blank" className="first-btn">
+              <button>Know More</button>
+            </a>
+
+            <a href={product.link2} target="_blank" className="second-btn">
+              <button>How it works</button>
+            </a>
           </div>
         </div>
       ))}

@@ -93,6 +93,13 @@
   align-items: center;
   gap: 20px;
 }
+.search-bar input {
+  border-radius: 10px;
+  border: none;
+}
+.search-bar input:focus {
+  outline: none;
+}
 @media only screen and (max-width: 767px) {
   .position {
     flex-direction: column;

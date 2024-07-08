@@ -10,7 +10,10 @@
   -webkit-animation: 0.5s slide-top ease-in-out;
   animation: 0.5s slide-top ease-in-out;
 }
-
+.our-values {
+  max-width: 1440px;
+  margin: auto;
+}
 .about-us-cards {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -65,6 +68,7 @@
   color: var(--sub-heading);
   font-weight: 700;
 }
+
 .our-values-card {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -157,7 +161,7 @@
   border-radius: 15px;
   padding: 16px 80px 16px 80px;
 }
-.join-us-btn button a {
+.join-us-btn button {
   text-decoration: none;
   font-size: 30px;
   color: #375350;
@@ -206,11 +210,30 @@
   .about-us {
     padding-inline: 15px;
   }
+  .our-values-card{
+    margin-inline: 10px;
+  }
 }
-
-@media screen and (min-width: 481px) and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
+  .value-numberings p {
+    font-family: "Playfair Display", serif;
+    font-size: 100px;
+  }
+  .our-values-cards {
+    height: auto;
+  }
+  .value-content {
+    margin-top: 10px;
+  }
+  .about-page-heading,
+  .our-values-heading p {
+    font-size: 30px;
+  }
+  .our-values,
+  .about-us {
+    padding-inline: 15px;
+  }
 }
-
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   /* Styles for small desktops and tablets in landscape */
 }

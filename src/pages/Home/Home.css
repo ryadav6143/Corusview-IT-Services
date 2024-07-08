@@ -260,6 +260,9 @@
 
 @media screen and (min-width: 321px) and (max-width: 480px) {
   /* Styles for larger smartphones */
+  .abt-com-flex {
+    text-align: center;
+  }
   .home-heading {
     padding: 50px 10px 50px 10px;
     line-height: 1.5;
@@ -300,8 +303,21 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   .recent-flex {
     gap: 100px;
+  }
+
+  .about-company {
+    background: url("../../assets/images/abt-background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 250px 50px 150px 50px;
+    position: relative;
+    margin-block: 50px;
+  }
+  .abt-com-flex {
+    text-align: center;
   }
 }
