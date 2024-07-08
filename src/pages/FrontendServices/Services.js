@@ -193,3 +193,22 @@ export const getHeaderData = async () => {
     throw error;
   }
 };
+// add apply now data
+export const addApplicants = async (data) => {
+  try {
+    const response = await axios.post(`${API_URL}/applicants`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// get positions 
+export const getPositions = async (data) => {
+  try {
+    const response = await axios.get(`${API_URL}/jobPositions`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
