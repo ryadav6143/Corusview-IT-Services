@@ -145,19 +145,21 @@
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
+  .accordion-button p {
+    margin-left: 8%;
+    font-size: 18px;
+  }
+  .services-heading {
+    font-size: 30px;
+    text-align: center;
+    -webkit-animation: none;
+    animation: none;
+  }
   .accordion-body {
     margin-left: 0%;
   }
-  .accordion-button p {
-    font-size: 25px;
-  }
-  .accordion-button p,
-  .accordion-body {
-    margin-left: 52%;
-    font-size: 20px;
-  }
   .services-heading {
-    font-size: 40px;
+    font-size: 30px;
   }
 }
 
