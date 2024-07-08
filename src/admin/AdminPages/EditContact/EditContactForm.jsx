@@ -11,7 +11,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  Typography
+  Typography,
 } from "@mui/material";
 import { fetchContactForm, deleteContactFormEntry } from "../../AdminServices";
 import Notification from "../../../Notification/Notification"; // Adjust path as per your file structure
@@ -61,6 +61,7 @@ function EditContactForm() {
         setNotificationMessage(response.message); // Assuming your API response has a 'message' field
         setNotificationSeverity("success");
         setNotificationOpen(true);
+        fetchData();
       } catch (error) {
         console.error(
           `Error deleting contact form entry with ID ${deleteEntryId}:`,
@@ -83,15 +84,14 @@ function EditContactForm() {
 
   return (
     <div>
-       <Typography variant="h5" component="h5">
-       Contact Entries
-    </Typography>
-      <TableContainer component={Paper} style={{marginTop:"10px"}}>
+      <Typography variant="h5" component="h5">
+        Contact Entries
+      </Typography>
+      <TableContainer component={Paper} style={{ marginTop: "10px" }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell>Role</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Message</TableCell>
@@ -99,15 +99,17 @@ function EditContactForm() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {contactFormData.map((entry,index) => (
+            {contactFormData.map((entry, index) => (
               <TableRow key={entry.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{entry.role}</TableCell>
                 <TableCell>{entry.name}</TableCell>
                 <TableCell>{entry.email}</TableCell>
                 <TableCell>{entry.message}</TableCell>
                 <TableCell>
-                  <Button color="error" onClick={() => handleDeleteClick(entry.id)}>
+                  <Button
+                    color="error"
+                    onClick={() => handleDeleteClick(entry.id)}
+                  >
                     Delete
                   </Button>
                 </TableCell>

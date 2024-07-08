@@ -24,17 +24,14 @@
 
 @media only screen and (max-width: 767px) {
   .workcard {
-    height: 400px;
-    width: 275px;
+    height: 300px;
+    width: 240px;
   }
   .main-container {
-    height: 50vh;
+    height: 40vh;
   }
 }
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .main-container {
-    height: 70vh;
-  }
 }
 @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
   .main-container {

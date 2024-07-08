@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   getContactInfo,
-  getRoles,
   submitContactForm,
 } from "../FrontendServices/Services";
 
@@ -14,17 +13,13 @@ import Nav from "../../components/Headers/Nav";
 import Footers from "../../components/Footers/Footers";
 import Notification from "../../Notification/Notification";
 function Contact() {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [selectedButton, setSelectedButton] = useState(""); // State for selected button
   const [contactInfo, setContactInfo] = useState(null);
-  const [roles, setRoles] = useState(null);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-    role: "",
   });
 
   const [formErrors, setFormErrors] = useState({
@@ -42,31 +37,9 @@ function Contact() {
     }
   };
 
-  const fetchRole = async () => {
-    try {
-      const data = await getRoles();
-      setRoles(data);
-    } catch (error) {
-      console.error("Error fetching contact information:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchRole();
     fetchData();
   }, []);
-
-  const handleSelectChange = (event) => {
-    const selectedRole = event.target.value;
-    setSelectedOption(selectedRole);
-  };
-
-  const handleClickChange = (roleValue) => {
-    setSelectedOption(roleValue); // Set selectedOption state
-
-    // Set selected button and update style
-    setSelectedButton(roleValue);
-  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -116,7 +89,8 @@ function Contact() {
     }
 
     try {
-      const response = await submitContactForm(formData, selectedOption);
+      console.log(formData, "--------------------------");
+      const response = await submitContactForm(formData);
 
       console.log("Response:", response);
       showNotification(response.message, "success");
@@ -126,10 +100,7 @@ function Contact() {
         name: "",
         email: "",
         message: "",
-        role: "",
       });
-      setSelectedOption("");
-      setSelectedButton(""); // Clear selected button state after submission
     } catch (error) {
       console.error("Error:", error);
     }
@@ -179,33 +150,6 @@ function Contact() {
           <p>I'm interested in...</p>
           <div className="contact-form">
             <form onSubmit={handleSubmit}>
-              <div className="vacancy-btns">
-                {roles &&
-                  roles.map((role) => (
-                    <button
-                      key={role.id}
-                      type="button"
-                      onClick={() => handleClickChange(role.role)}
-                      className={selectedButton === role.role ? "selected" : ""}
-                    >
-                      {role.role}
-                    </button>
-                  ))}
-              </div>
-
-              <select
-                value={selectedOption}
-                onChange={handleSelectChange}
-                className="hidden-select-options"
-              >
-                <option value="">Select...</option>
-                {roles &&
-                  roles.map((role) => (
-                    <option key={role.id} value={role.value}>
-                      {role.role}
-                    </option>
-                  ))}
-              </select>
               <input
                 type="text"
                 name="name"

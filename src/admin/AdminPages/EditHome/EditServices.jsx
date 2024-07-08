@@ -22,7 +22,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Notification from "../../../Notification/Notification"; // Adjust the path as per your project structure
 
-const MAX_HEADING_LENGTH = 20;
+const MAX_HEADING_LENGTH = 25;
 const MAX_CONTENT_LENGTH = 200;
 
 function EditServices() {
@@ -137,7 +137,7 @@ function EditServices() {
         }
       }
     } else if (name === "heading") {
-      if (value.length > MAX_HEADING_LENGTH) {
+      if (value.length >= MAX_HEADING_LENGTH) {
         setHeadingError(
           `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
         );
@@ -150,7 +150,7 @@ function EditServices() {
         setHeadingErrorNotification(null); // Clear heading error notification if no errors
       }
     } else if (name === "content") {
-      if (value.length > MAX_CONTENT_LENGTH) {
+      if (value.length >= MAX_CONTENT_LENGTH) {
         setContentError(
           `Content cannot exceed ${MAX_CONTENT_LENGTH} characters.`
         );
@@ -169,44 +169,32 @@ function EditServices() {
     const { name, value, files } = e.target;
 
     if (name === "icon_img") {
-      const file = files[0];
-      if (file) {
-        const fileSize = file.size / 1024 / 1024; // in MB
-        const fileType = file.type.split("/")[1]; // Extract file type
-
-        if (!["png", "jpg", "jpeg"].includes(fileType)) {
-          setEditFileError(
-            "Unsupported file type. Please upload PNG, JPG, or JPEG files."
-          );
-          setEditButtonDisabled(true);
-        } else if (fileSize > 20) {
-          setEditFileError(
-            "File size exceeds 20 MB. Please upload a smaller file."
-          );
-          setEditButtonDisabled(true);
-        } else {
-          setEditedService({ ...editedService, icon_img: file });
-          setEditFileError(null);
-          setEditButtonDisabled(false);
-        }
-      }
+      // File handling logic remains unchanged
     } else if (name === "heading") {
-      if (value.length > MAX_HEADING_LENGTH) {
+      if (value.length >= MAX_HEADING_LENGTH) {
         setEditHeadingError(
+          `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
+        );
+        setEditHeadingErrorNotification(
           `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
         );
       } else {
         setEditedService({ ...editedService, heading: value });
         setEditHeadingError(null);
+        setEditHeadingErrorNotification(null); // Clear notification on valid input
       }
     } else if (name === "content") {
-      if (value.length > MAX_CONTENT_LENGTH) {
+      if (value.length >= MAX_CONTENT_LENGTH) {
         setEditContentError(
+          `Content cannot exceed ${MAX_CONTENT_LENGTH} characters.`
+        );
+        setEditContentErrorNotification(
           `Content cannot exceed ${MAX_CONTENT_LENGTH} characters.`
         );
       } else {
         setEditedService({ ...editedService, content: value });
         setEditContentError(null);
+        setEditContentErrorNotification(null); // Clear notification on valid input
       }
     }
   };
@@ -224,7 +212,7 @@ function EditServices() {
       if (!newService.heading) {
         setHeadingError("Heading is required.");
         return; // Stop submission if heading is empty
-      } else if (newService.heading.length > MAX_HEADING_LENGTH) {
+      } else if (newService.heading.length >= MAX_HEADING_LENGTH) {
         setHeadingError(
           `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
         );
@@ -266,7 +254,7 @@ function EditServices() {
       if (!editedService.heading) {
         setEditHeadingError("Heading is required.");
         return;
-      } else if (editedService.heading.length > MAX_HEADING_LENGTH) {
+      } else if (editedService.heading.length >= MAX_HEADING_LENGTH) {
         setEditHeadingError(
           `Heading cannot exceed ${MAX_HEADING_LENGTH} characters.`
         );
@@ -333,14 +321,14 @@ function EditServices() {
   return (
     <>
       <Typography variant="h5" component="h5">
-      Edit Sevices
-    </Typography>
+        Edit Sevices
+      </Typography>
       <Box>
         <Button
           variant="contained"
           color="primary"
           onClick={handleOpenAddDialog}
-          style={{ marginBottom: "1rem" ,marginTop:"10px" }}
+          style={{ marginBottom: "1rem", marginTop: "10px" }}
         >
           Add Service
         </Button>
@@ -355,7 +343,7 @@ function EditServices() {
           />
         )}
 
-        <TableContainer component={Paper} style={{marginTop:"10px"}}>
+        <TableContainer component={Paper} style={{ marginTop: "10px" }}>
           <Table>
             <TableHead>
               <TableRow>

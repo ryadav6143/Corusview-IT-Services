@@ -147,13 +147,14 @@ function JobOpenings({ openDialog, setOpenDialog }) {
               <div>
                 <input
                   type="text"
-                  placeholder="Search by job role, level, or location..."
+                  placeholder="Search Jobs"
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
               </div>
             </div>
             <div className="all-roles">
+              <button onClick={handleClearSearch}>All</button>
               {roles.map((role) => (
                 <button key={role.id} onClick={() => setSearchTerm(role.role)}>
                   {role.role}
@@ -302,7 +303,6 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                     onChange={handleChange}
                     label="Year of Experience"
                   >
-                   
                     {Array.from(Array(5).keys()).map((index) => (
                       <MenuItem key={index} value={`${index}-${index + 1}`}>
                         {index}-{index + 1} year{index === 0 ? "" : "s"}

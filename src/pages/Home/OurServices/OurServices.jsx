@@ -24,7 +24,7 @@ function OurServices() {
     fetchData();
   }, []);
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div className="container">
       <motion.div
         variants={{
           hidden: { opacity: 0, x: -500 },
@@ -54,7 +54,6 @@ function OurServices() {
                     alt={service.icon_img_originalname}
                   />
                   <p>
-                    {index + 1} &nbsp;
                     <span>{service.heading}</span>
                   </p>
                 </button>
@@ -68,7 +67,9 @@ function OurServices() {
                 <div className="accordion-body">
                   <p>{service.content}</p>
                   <button>
-                    <Link to="/services">Read More...</Link>
+                    <Link to="/services" target="_top">
+                      Read More...
+                    </Link>
                   </button>
                 </div>
               </div>

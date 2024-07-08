@@ -216,11 +216,10 @@
   }
 }
 @media screen and (max-width: 320px) {
-  /* Styles for smaller smartphones */
   .home-heading {
     padding: 50px 10px 50px 10px;
     line-height: 1.5;
-    font-size: 40px;
+    font-size: 30px;
   }
   .recent-works-heading {
     padding: 10px;
@@ -230,7 +229,7 @@
   }
 
   .abt-com-flex div:first-child p {
-    font-size: 40px;
+    font-size: 30px;
   }
 
   .abt-com-flex {
@@ -258,12 +257,15 @@
   }
 }
 
-@media screen and (min-width: 321px) and (max-width: 480px) {
+@media screen and (min-width: 321px) and (max-width: 767px) {
   /* Styles for larger smartphones */
+  .abt-com-flex {
+    text-align: center;
+  }
   .home-heading {
     padding: 50px 10px 50px 10px;
     line-height: 1.5;
-    font-size: 40px;
+    font-size: 30px;
   }
   .recent-works-heading {
     padding: 10px;
@@ -273,7 +275,7 @@
   }
 
   .abt-com-flex div:first-child p {
-    font-size: 40px;
+    font-size: 30px;
   }
   .abt-com-flex {
     gap: 10px;
@@ -292,16 +294,42 @@
     width: 285px;
     height: 380px;
   }
-  .abt-com-flex div:first-child p {
-    font-size: 30px;
-  }
+
   .recent-works-heading p:nth-child(1) {
     font-size: 30px;
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .abt-com-flex div:first-child p {
+    font-size: 40px;
+  }
   .recent-flex {
     gap: 100px;
+  }
+
+  .about-company {
+    padding: 250px 50px 150px 50px;
+  }
+  .abt-com-flex {
+    text-align: center;
+  }
+  .home-heading {
+    font-size: 40px;
+  }
+  .abt-com-flex {
+    gap: 30px;
+  }
+  .recent-works-heading p:nth-child(1) {
+    font-size: 40px;
+  }
+  .recent-works-heading p:nth-child(2) {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+  .abt-com-flex div:first-child p {
+    font-size: 40px;
   }
 }

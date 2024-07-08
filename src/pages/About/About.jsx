@@ -105,9 +105,9 @@ function About() {
           </div>
         )}
         <div className="join-us-btn">
-          <button>
-            <Link to="/carrer">Join Us</Link>
-          </button>
+          <Link to="/carrer" target="_top">
+            <button >Join Us</button>
+          </Link>
         </div>
       </div>
       <Footers></Footers>
