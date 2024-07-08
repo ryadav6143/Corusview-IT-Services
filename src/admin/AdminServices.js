@@ -733,3 +733,41 @@ export const createProducts = async (data) => {
     throw error;
   }
 };
+
+// AdminServices.js or wherever getApplicants is defined
+export const getApplicants = async (role) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/applicants`, {
+      params: { role }, // Pass role as query parameter
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching applicants:", error);
+    throw error;
+  }
+};
+
+// export applicants to excel
+export const getExportApplicants = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/export/applicants`, {
+      responseType: 'blob' // important to handle the file response
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error exporting applicants:', error);
+    throw error;
+  }
+};
+
+// delete apply now form data
+export const deleteApplicants = async (applicantId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/applicants/${applicantId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting applicant:', error);
+    throw error;
+  }
+};
+

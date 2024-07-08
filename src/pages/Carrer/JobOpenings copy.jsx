@@ -1,44 +1,25 @@
 import React, { useEffect, useState } from "react";
-import {
-  currentJobOpenings,
-  getRoles,
-  addApplicants,
-  getPositions,
-} from "../FrontendServices/Services";
-import "./JobOpenings.css";
-import {
-  Grid,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
-  Box,
-} from "@mui/material";
 
-function JobOpenings({ openDialog, setOpenDialog }) {
+import { currentJobOpenings, getRoles, addApplicants } from "../FrontendServices/Services";
+import "./JobOpenings.css";
+import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, MenuItem, Select, InputLabel, FormControl, Box } from '@mui/material';
+
+function JobOpenings() {
   const [jobOpenings, setJobOpenings] = useState([]);
   const [roles, setRoles] = useState([]);
-  const [positions, setPositions] = useState([]); // State to store positions
   const [searchTerm, setSearchTerm] = useState("");
-  // const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    contact: "",
-    applied_for: "",
-    position: "", // Updated to use dropdown
-    last_ctc: "",
-    year_of_exp: "",
+    name: '',
+    surname: '',
+    email: '',
+    contact: '',
+    applied_for: '',
+    position: '',
+    last_ctc: '',
+    year_of_exp: '',
     drop_cv: null,
   });
-  const [fileName, setFileName] = useState(""); // State to store selected file name
 
   const getJobRoles = async () => {
     const data = await getRoles();
@@ -50,19 +31,9 @@ function JobOpenings({ openDialog, setOpenDialog }) {
     setJobOpenings(data);
   };
 
-  const getJobPositions = async () => {
-    try {
-      const data = await getPositions();
-      setPositions(data);
-    } catch (error) {
-      console.error("Error fetching positions:", error);
-    }
-  };
-
   useEffect(() => {
     getJobOpenings();
     getJobRoles();
-    getJobPositions(); // Fetch positions when component mounts
   }, []);
 
   const filteredJobOpenings = jobOpenings.filter(
@@ -92,7 +63,6 @@ function JobOpenings({ openDialog, setOpenDialog }) {
   };
 
   const handleClose = () => {
-    setFormData("");
     setOpenDialog(false);
   };
 
@@ -109,29 +79,31 @@ function JobOpenings({ openDialog, setOpenDialog }) {
       ...formData,
       drop_cv: e.target.files[0],
     });
-    setFileName(e.target.files[0].name); // Set selected file name
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prepare form data for API submission
     const formDataToSubmit = new FormData();
-    formDataToSubmit.append("name", formData.name);
-    formDataToSubmit.append("surname", formData.surname);
-    formDataToSubmit.append("email", formData.email);
-    formDataToSubmit.append("contact", formData.contact);
-    formDataToSubmit.append("applied_for", formData.applied_for);
-    formDataToSubmit.append("position", formData.position);
-    formDataToSubmit.append("last_ctc", formData.last_ctc);
-    formDataToSubmit.append("year_of_exp", formData.year_of_exp);
-    formDataToSubmit.append("drop_cv", formData.drop_cv);
+    formDataToSubmit.append('name', formData.name);
+    formDataToSubmit.append('surname', formData.surname);
+    formDataToSubmit.append('email', formData.email);
+    formDataToSubmit.append('contact', formData.contact);
+    formDataToSubmit.append('applied_for', formData.applied_for);
+    formDataToSubmit.append('position', formData.position);
+    formDataToSubmit.append('last_ctc', formData.last_ctc);
+    formDataToSubmit.append('year_of_exp', formData.year_of_exp);
+    formDataToSubmit.append('drop_cv', formData.drop_cv);
 
     try {
+      // API call to submit the form data
       const response = await addApplicants(formDataToSubmit);
-      console.log("Form submitted successfully:", response);
+      console.log('Form submitted successfully:', response);
+      // Close the dialog after form submission
       handleClose();
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error('Error submitting form:', error);
     }
   };
 
@@ -147,14 +119,13 @@ function JobOpenings({ openDialog, setOpenDialog }) {
               <div>
                 <input
                   type="text"
-                  placeholder="Search Jobs"
+                  placeholder="Search by job role, level, or location..."
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
               </div>
             </div>
             <div className="all-roles">
-              <button onClick={handleClearSearch}>All</button>
               {roles.map((role) => (
                 <button key={role.id} onClick={() => setSearchTerm(role.role)}>
                   {role.role}
@@ -174,12 +145,10 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                       {job.position}-<span>{job.level}</span>
                     </p>
                     <p className="job-location">{job.location}</p>
+
                   </div>
                   <div>
-                    <button
-                      className="apply-btn"
-                      onClick={() => handleClickOpen(job)}
-                    >
+                    <button className="apply-btn" onClick={() => handleClickOpen(job)}>
                       Apply
                     </button>
                   </div>
@@ -193,6 +162,58 @@ function JobOpenings({ openDialog, setOpenDialog }) {
         <DialogTitle>Apply Now</DialogTitle>
         <DialogContent>
           <Box component="form" onSubmit={handleSubmit}>
+            <Grid item xs={12}>
+              <FormControl fullWidth required margin="normal">
+                <InputLabel htmlFor="applied_for">Applied For</InputLabel>
+                {/* <Select
+                  id="applied_for"
+                  name="applied_for"
+                  value={formData.applied_for}
+                  onChange={handleChange}
+                  label="Applied For"
+                  disabled
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {roles.map((role) => (                  
+                    <MenuItem key={role.id} value={role.value}>
+                      {role.role}
+                    </MenuItem>
+                    
+                  ))}
+                </Select> */}
+                 <Select
+                  id="appliedFor"
+                  name="appliedFor"
+                  value={formData.applied_for}
+                  onChange={handleChange}
+                  label="Applied For"
+                  disabled
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {roles.map((role) => (
+                    <MenuItem key={role.id} value={role.role}>
+                      {role.role}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Position"
+                name="position"
+                value={formData.position}
+                onChange={handleChange}
+                fullWidth
+                required
+                margin="normal"
+                disabled
+              />
+            </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -203,7 +224,6 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   fullWidth
                   required
                   margin="normal"
-                  placeholder="John"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -215,7 +235,6 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   fullWidth
                   required
                   margin="normal"
-                  placeholder="Doe"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -228,7 +247,6 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   fullWidth
                   required
                   margin="normal"
-                  placeholder="john.doe@example.com"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -240,44 +258,7 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   fullWidth
                   required
                   margin="normal"
-                  placeholder="1234567890"
                 />
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth required margin="normal">
-                  <InputLabel htmlFor="appliedFor">Role</InputLabel>
-                  <Select
-                    id="appliedFor"
-                    name="applied_for"
-                    value={formData.applied_for}
-                    onChange={handleChange}
-                    label="Applied For"
-                  >
-                    {roles.map((role) => (
-                      <MenuItem key={role.id} value={role.role_id}>
-                        {role.role}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth required margin="normal">
-                  <InputLabel htmlFor="position">Position</InputLabel>
-                  <Select
-                    id="position"
-                    name="position"
-                    value={formData.position}
-                    onChange={handleChange}
-                    label="Position"
-                  >
-                    {positions.map((pos) => (
-                      <MenuItem key={pos.id} value={pos.position}>
-                        {pos.position}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -288,14 +269,11 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   fullWidth
                   required
                   margin="normal"
-                  placeholder="0.0 LPA"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth required margin="normal">
-                  <InputLabel htmlFor="yearOfExperience">
-                    Year of Experience
-                  </InputLabel>
+                  <InputLabel htmlFor="yearOfExperience">Year of Experience</InputLabel>
                   <Select
                     id="yearOfExperience"
                     name="year_of_exp"
@@ -303,39 +281,40 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                     onChange={handleChange}
                     label="Year of Experience"
                   >
-                    {Array.from(Array(5).keys()).map((index) => (
-                      <MenuItem key={index} value={`${index}-${index + 1}`}>
-                        {index}-{index + 1} year{index === 0 ? "" : "s"}
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {[1, 2, 3, 4, 5].map((year) => (
+                      <MenuItem key={year} value={year}>
+                        {year} year{year > 1 && 's'}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  label="Upload CV"
-                  variant="outlined"
+                <Button
+                  variant="contained"
+                  component="label"
                   fullWidth
                   margin="normal"
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{
-                    type: "file",
-                    inputProps: {
-                      accept: ".pdf,.doc,.docx", // Specify accepted file types if needed
-                    },
-                    onChange: handleFileChange,
-                    required: true,
-                  }}
-                  placeholder="Select your CV file"
-                />
+                >
+                  Upload CV
+                  <input
+                    type="file"
+                    hidden
+                    name="drop_cv"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </Button>
               </Grid>
             </Grid>
-
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" variant="contained">
                 Submit
               </Button>
             </DialogActions>

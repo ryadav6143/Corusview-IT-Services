@@ -10,22 +10,23 @@ import JobOpenings from "./JobOpenings";
 function Carrer() {
   const [careerData, setCareerData] = useState(null);
   const [careerInfo, setCareerInfo] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+
   const getCarrerHeadings = async () => {
     try {
       const data = await carrerHead();
       setCareerData(data);
     } catch (error) {
-      // Handle error if needed
       console.error("Error fetching data:", error);
     }
   };
+
   const fetchCarrerInfo = async () => {
     try {
       const data = await getCareerInfo();
       setCareerInfo(data);
     } catch (error) {
       console.error("Error fetching career info:", error);
-      // Handle error state if needed
     }
   };
 
@@ -33,14 +34,17 @@ function Carrer() {
     fetchCarrerInfo();
     getCarrerHeadings();
   }, []);
+
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const controls = useAnimation();
+
   useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
   }, [isInView]);
+
   const dummyCarrerInfo = [
     {
       id: 1,
@@ -80,9 +84,10 @@ function Carrer() {
     },
     // Add more dummy data items as needed
   ];
+
   return (
     <>
-      <Nav></Nav>
+      <Nav />
 
       <div>
         {careerData ? (
@@ -92,7 +97,7 @@ function Carrer() {
           </div>
         ) : (
           <div className="carrer-heading">
-            <p>Exploring exciting career opportunities in it innovation </p>
+            <p>Exploring exciting career opportunities in IT innovation </p>
             <p>
               At CorusView, we are not just a team; we are a family dedicated to
               innovation, collaboration, and excellence in every project we
@@ -105,7 +110,8 @@ function Carrer() {
           </div>
         )}
       </div>
-      <CarrerGallery></CarrerGallery>
+      <CarrerGallery />
+
       <div className="environment">
         <div className="env-heading">
           <p>What You See, What You Get</p>
@@ -127,14 +133,15 @@ function Carrer() {
         </div>
       </div>
 
-      <JobOpenings></JobOpenings>
+      {/* Dialog component */}
+      <JobOpenings openDialog={openDialog} setOpenDialog={setOpenDialog} />
 
       {careerData ? (
         <div className="join-us">
           <p>{careerData.ryh_heading}</p>
           <p>{careerData.ryh_content}</p>
-          <button>
-            <a href="">Go Ahead &#8594;</a>
+          <button onClick={() => setOpenDialog(true)}>
+            Go Ahead &#8594;
           </button>
         </div>
       ) : (
@@ -148,13 +155,13 @@ function Carrer() {
             and ready to contribute, raise your hand and join us on our mission.
             Let's build something amazing together.
           </p>
-          <button>
-            <a href="">Go Ahead &#8594;</a>
+          <button onClick={() => setOpenDialog(true)}>
+            Go Ahead &#8594;
           </button>
         </div>
       )}
 
-      <Footers></Footers>
+      <Footers />
     </>
   );
 }

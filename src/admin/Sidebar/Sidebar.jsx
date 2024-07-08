@@ -24,6 +24,28 @@ function Sidebar({ isOpen }) {
         <div className="side-bar">
           <div className={`custom-sidebar ${isOpen ? "open" : ""}`}>
             <ul>
+
+            <li>
+                <button
+                  className="dropdown-btn"
+                  onClick={() => handleDropdown("editheader")}
+                >
+                  Edit Header
+                  <span className="custom-dropdown-btn">
+                    {activeDropdown === "editheader" ? "-" : "+"}
+                  </span>
+                </button>
+                <div
+                  className={`dropdown-container ${
+                    activeDropdown === "editheader" ? "active" : ""
+                  }`}
+                >
+                  <Link to="/admin/editheader" onClick={handleLinkClick}>
+                    Edit Header
+                  </Link>
+                </div>
+              </li>
+        
               <button
                 className="dropdown-btn"
                 onClick={() => handleDropdown("home")}
@@ -189,16 +211,47 @@ function Sidebar({ isOpen }) {
                 </Link>
               </div>
 
-              <button className="dropdown-btn" style={{ marginLeft: "-10px" }}>
-                <Link to="/admin/editheader" onClick={handleLinkClick}>
-                  Edit Header
-                </Link>
-              </button>
-              <button className="dropdown-btn" style={{ marginLeft: "-10px" }}>
-                <Link to="/admin/editfooter" onClick={handleLinkClick}>
+          
+              <li>
+                <button
+                  className="dropdown-btn"
+                  onClick={() => handleDropdown("applynow")}
+                >
+                  Apply Now
+                  <span className="custom-dropdown-btn">
+                    {activeDropdown === "applynow" ? "-" : "+"}
+                  </span>
+                </button>
+                <div
+                  className={`dropdown-container ${
+                    activeDropdown === "applynow" ? "active" : ""
+                  }`}
+                >
+                  <Link to="/admin/applynow" onClick={handleLinkClick}>
+                    Apply Now
+                  </Link>
+                </div>
+              </li>
+              <li>
+                <button
+                  className="dropdown-btn"
+                  onClick={() => handleDropdown("editfooter")}
+                >
                   Edit Footer
-                </Link>
-              </button>
+                  <span className="custom-dropdown-btn">
+                    {activeDropdown === "editfooter" ? "-" : "+"}
+                  </span>
+                </button>
+                <div
+                  className={`dropdown-container ${
+                    activeDropdown === "editfooter" ? "active" : ""
+                  }`}
+                >
+                  <Link to="/admin/editfooter" onClick={handleLinkClick}>
+                    Edit Footer
+                  </Link>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
