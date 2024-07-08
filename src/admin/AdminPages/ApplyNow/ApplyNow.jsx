@@ -3,7 +3,7 @@ import {
   getApplicants,
   getExportApplicants,
   deleteApplicants,
-  fetchJobRoles
+  fetchJobRoles,
 } from "../../AdminServices";
 import {
   Table,
@@ -27,7 +27,9 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
-import GetAppIcon from '@mui/icons-material/GetApp';
+import GetAppIcon from "@mui/icons-material/GetApp";
+
+import Notification from "../../../Notification/Notification"; // Update the path as per your file structure
 
 function ApplyNow() {
   const [applicants, setApplicants] = useState([]);
@@ -35,27 +37,32 @@ function ApplyNow() {
   const [selectedRole, setSelectedRole] = useState("All");
   const [open, setOpen] = useState(false);
   const [cvUrl, setCvUrl] = useState("");
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false); // State for delete confirmation dialog
-  const [deleteApplicantId, setDeleteApplicantId] = useState(null); // State to store applicant id for deletion
-  
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteApplicantId, setDeleteApplicantId] = useState(null);
+
+  // Notification state
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [notificationSeverity, setNotificationSeverity] = useState("success");
+
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
         let data;
         if (selectedRole === "All") {
-          data = await getApplicants(); // Fetch all applicants if "All" is selected
+          data = await getApplicants();
         } else {
-          data = await getApplicants(selectedRole); // Fetch applicants based on selectedRole
+          data = await getApplicants(selectedRole);
         }
         setApplicants(data);
       } catch (error) {
         console.error("Error fetching applicants:", error);
       }
     };
-  
+
     fetchApplicants();
-  }, [selectedRole]); // Add selectedRole as a dependency
-  
+  }, [selectedRole]);
+
   useEffect(() => {
     const fetchRoles = async () => {
       try {
@@ -85,30 +92,58 @@ function ApplyNow() {
       const url = window.URL.createObjectURL(new Blob([blob]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "applicants.xlsx"); // specify the file name
+      link.setAttribute("download", "applicants.xlsx");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
+
+      // Show notification for successful download
+      setNotificationMessage("Excel file downloaded successfully");
+      setNotificationSeverity("success");
+      setNotificationOpen(true);
     } catch (error) {
       console.error("Error exporting applicants:", error);
+      // Show notification for error if needed
+      setNotificationMessage("Error exporting applicants");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
     }
   };
 
   const handleDelete = async (applicantId) => {
-    // Open delete confirmation dialog
     setDeleteApplicantId(applicantId);
     setDeleteDialogOpen(true);
   };
 
   const confirmDelete = async () => {
     try {
-      await deleteApplicants(deleteApplicantId);
-      setApplicants(
-        applicants.filter((applicant) => applicant.id !== deleteApplicantId)
-      );
+      // Call API to delete applicant
+      const response = await deleteApplicants(deleteApplicantId);
+
+      // Check response status or message to determine success or failure
+      if (response.status === "success") {
+        setApplicants(
+          applicants.filter((applicant) => applicant.id !== deleteApplicantId)
+        );
+
+        // Show success notification
+        setNotificationMessage(response.message);
+        setNotificationSeverity("success");
+        setNotificationOpen(true);
+      } else {
+        // Show error notification if deletion failed
+        setNotificationMessage(response.message); // Adjust if the API returns a specific error message
+        setNotificationSeverity("success");
+        setNotificationOpen(true);
+      }
+
       setDeleteDialogOpen(false);
     } catch (error) {
       console.error("Error deleting applicant:", error);
+      // Show error notification
+      setNotificationMessage("Error deleting applicant");
+      setNotificationSeverity("error");
+      setNotificationOpen(true);
     }
   };
 
@@ -119,6 +154,10 @@ function ApplyNow() {
 
   const handleRoleChange = (event) => {
     setSelectedRole(event.target.value);
+  };
+
+  const handleNotificationClose = () => {
+    setNotificationOpen(false);
   };
 
   return (
@@ -135,10 +174,7 @@ function ApplyNow() {
       >
         Download Excel
       </Button>
-      <FormControl
-        sx={{ minWidth: 250 }}
-        style={{ float: "right" }}
-      >
+      <FormControl sx={{ minWidth: 250 }} style={{ float: "right" }}>
         <InputLabel id="role-select-label">Filter by Role</InputLabel>
 
         <Select
@@ -161,7 +197,7 @@ function ApplyNow() {
           <TableHead>
             <TableRow>
               <TableCell>S No.</TableCell>
-              <TableCell>applied_for</TableCell>
+              <TableCell>Applied For</TableCell>
               <TableCell>Position</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Surname</TableCell>
@@ -170,7 +206,7 @@ function ApplyNow() {
               <TableCell>Last CTC</TableCell>
               <TableCell>Years of Experience</TableCell>
               <TableCell>CV</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -178,13 +214,13 @@ function ApplyNow() {
               <TableRow key={applicant.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{applicant.role || "-"}</TableCell>
-                <TableCell>{applicant.position|| "-"}</TableCell>
-                <TableCell>{applicant.name|| "-"}</TableCell>
-                <TableCell>{applicant.surname|| "-"}</TableCell>
-                <TableCell>{applicant.email|| "-"}</TableCell>
-                <TableCell>{applicant.contact|| "-"}</TableCell>
-                <TableCell>{applicant.last_ctc|| "-"}</TableCell>
-                <TableCell>{applicant.year_of_exp|| "-"}</TableCell>
+                <TableCell>{applicant.position || "-"}</TableCell>
+                <TableCell>{applicant.name || "-"}</TableCell>
+                <TableCell>{applicant.surname || "-"}</TableCell>
+                <TableCell>{applicant.email || "-"}</TableCell>
+                <TableCell>{applicant.contact || "-"}</TableCell>
+                <TableCell>{applicant.last_ctc || "-"}</TableCell>
+                <TableCell>{applicant.year_of_exp || "-"}</TableCell>
                 <TableCell>
                   <IconButton
                     onClick={() => handleClickOpen(applicant.drop_cv)}
@@ -228,6 +264,14 @@ function ApplyNow() {
           <iframe src={cvUrl} title="CV" width="100%" height="500px" />
         </DialogContent>
       </Dialog>
+
+      {/* Notification for Excel download and delete actions */}
+      <Notification
+        open={notificationOpen}
+        handleClose={handleNotificationClose}
+        alertMessage={notificationMessage}
+        alertSeverity={notificationSeverity}
+      />
     </div>
   );
 }

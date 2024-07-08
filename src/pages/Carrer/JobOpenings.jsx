@@ -342,6 +342,7 @@ function JobOpenings({ openDialog, setOpenDialog }) {
           </Box>
         </DialogContent>
       </Dialog>
+      
     </>
   );
 }
