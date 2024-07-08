@@ -74,7 +74,9 @@ function Home() {
           <p>Recent work</p>
           <p>{mainTableData.recent_work_heading}</p>
         </div>
-        <RecentWork></RecentWork>
+        <div style={{ paddingBlock: "20px" }}>
+          <RecentWork></RecentWork>
+        </div>
       </div>
       <Footers></Footers>
     </>

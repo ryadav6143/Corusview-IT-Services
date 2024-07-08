@@ -65,61 +65,7 @@
   color: darkgray;
   padding: 5px 10px 5px 10px;
 }
-@media screen and (max-width: 320px) {
-  .accordion-button p {
-    margin-left: 8%;
-    font-size: 18px;
-  }
-  .accordion-body {
-    margin-left: 0%;
-  }
-}
 
-@media screen and (min-width: 321px) and (max-width: 480px) {
-  .accordion-button p {
-    margin-left: 8%;
-    font-size: 18px;
-  }
-  .services-heading {
-    font-size: 30px;
-    text-align: center;
-    -webkit-animation: none;
-    animation: none;
-  }
-  .accordion-body {
-    margin-left: 0%;
-  }
-}
-
-@media screen and (min-width: 481px) and (max-width: 768px) {
-  .accordion-body {
-    margin-left: 0%;
-  }
-  .accordion-button p {
-    font-size: 25px;
-  }
-  .accordion-button p,
-  .accordion-body {
-    margin-left: 52%;
-    font-size: 20px;
-  }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  /* Styles for small desktops and tablets in landscape */
-  .accordion-body {
-    margin-left: 0%;
-  }
-  .accordion-button p,
-  .accordion-body {
-    margin-left: 52%;
-    font-size: 20px;
-  }
-}
-
-@media screen and (min-width: 1025px) and (max-width: 1440px) {
-  /* Styles for larger desktops and laptops */
-}
 @-webkit-keyframes grabspace {
   0% {
     -webkit-transform: translate(-50%);
@@ -164,5 +110,68 @@
   40% {
     -webkit-transform: rotate(0deg) scale(1) translateY(10px);
     transform: rotate(0deg) scale(1) translateY(10px);
+  }
+}
+@media screen and (max-width: 320px) {
+  .accordion-button p {
+    margin-left: 8%;
+    font-size: 18px;
+  }
+  .accordion-body {
+    margin-left: 0%;
+  }
+  .services-heading {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .accordion-button p {
+    margin-left: 8%;
+    font-size: 18px;
+  }
+  .services-heading {
+    font-size: 30px;
+    text-align: center;
+    -webkit-animation: none;
+    animation: none;
+  }
+  .accordion-body {
+    margin-left: 0%;
+  }
+  .services-heading {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .accordion-body {
+    margin-left: 0%;
+  }
+  .accordion-button p {
+    font-size: 25px;
+  }
+  .accordion-button p,
+  .accordion-body {
+    margin-left: 52%;
+    font-size: 20px;
+  }
+  .services-heading {
+    font-size: 40px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  /* Styles for small desktops and tablets in landscape */
+  .accordion-body {
+    margin-left: 0%;
+  }
+  .accordion-button p,
+  .accordion-body {
+    margin-left: 52%;
+    font-size: 20px;
+  }
+  .services-heading {
+    font-size: 40px;
   }
 }

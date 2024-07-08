@@ -82,9 +82,9 @@
 }
 .custom-heading-mobile {
   display: none;
+  font-size: 30px;
 }
 @media screen and (max-width: 320px) {
-  /* Styles for smaller smartphones */
   .custom-crousol {
     padding: 30px 10px 30px 10px;
   }
@@ -118,14 +118,25 @@
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
   /* Styles for tablets */
+  .custom-heading p {
+    text-align: center;
+    font-size: 40px !important;
+  }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   /* Styles for small desktops and tablets in landscape */
+  .custom-heading p {
+    text-align: center;
+    font-size: 40px !important;
+  }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
-  /* Styles for larger desktops and laptops */
+  .custom-heading p {
+    text-align: center;
+    font-size: 40px !important;
+  }
 }
 .carousel-control-next {
   right: 0;

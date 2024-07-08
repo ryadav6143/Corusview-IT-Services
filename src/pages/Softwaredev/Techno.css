@@ -106,9 +106,7 @@
 .sub-services {
   max-width: 1040px;
   margin: auto;
-  /* -webkit-animation: slide-left-new linear;
-  animation: slide-left-new linear;
-  animation-timeline: view(); */
+  padding-left: 10px;
 }
 .services li {
   font-weight: 400;
@@ -129,9 +127,6 @@
 .dev-process img {
   width: 100%;
   position: relative;
-  /* -webkit-animation: slide-left-new linear;
-  animation: slide-left-new linear;
-  animation-timeline: view(); */
 }
 .dev-process {
   text-align: center;
@@ -154,6 +149,9 @@
   .page-heading p:first-child {
     font-size: 30px;
   }
+  .page-heading p:last-child {
+    font-size: 20px;
+  }
   .services-vector {
     display: none;
   }
@@ -166,12 +164,18 @@
   .flex-header {
     font-size: 20px;
   }
+  .services li {
+    font-size: 20px;
+  }
 }
 
 @media screen and (min-width: 321px) and (max-width: 480px) {
   /* Styles for larger smartphones */
   .page-heading p:first-child {
     font-size: 30px;
+  }
+  .page-heading p:last-child {
+    font-size: 20px;
   }
   .services-vector {
     display: none;
@@ -192,6 +196,12 @@
     font-size: 20px;
     text-align: center;
   }
+  .services p {
+    font-size: 30px;
+  }
+  .services li {
+    font-size: 20px;
+  }
 }
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
@@ -199,10 +209,39 @@
   .dot {
     display: none;
   }
+  .page-heading p:first-child {
+    font-size: 30px;
+  }
+  .page-heading p:last-child {
+    font-size: 20px;
+  }
+  .services p {
+    font-size: 30px;
+  }
+  .services li {
+    font-size: 20px;
+  }
+  .dev-process p {
+    font-size: 30px;
+  }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-  /* Styles for small desktops and tablets in landscape */
+  .page-heading p:first-child {
+    font-size: 40px;
+  }
+  .page-heading p:last-child {
+    font-size: 20px;
+  }
+  .services p {
+    font-size: 30px !important;
+  }
+  .services li {
+    font-size: 20px;
+  }
+  .dev-process p {
+    font-size: 40px;
+  }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {

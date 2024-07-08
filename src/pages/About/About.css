@@ -188,6 +188,9 @@
   .about-us {
     padding-inline: 15px;
   }
+  .value-content p:nth-child(1) {
+    font-size: 30px;
+  }
 }
 
 @media screen and (min-width: 321px) and (max-width: 480px) {
@@ -210,8 +213,11 @@
   .about-us {
     padding-inline: 15px;
   }
-  .our-values-card{
+  .our-values-card {
     margin-inline: 10px;
+  }
+  .value-content p:nth-child(1) {
+    font-size: 30px;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -233,13 +239,24 @@
   .about-us {
     padding-inline: 15px;
   }
+  .value-content p:nth-child(1) {
+    font-size: 30px;
+  }
 }
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   /* Styles for small desktops and tablets in landscape */
+  .about-page-heading,
+  .our-values-heading p {
+    font-size: 40px;
+  }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
   /* Styles for larger desktops and laptops */
+  .about-page-heading,
+  .our-values-heading p {
+    font-size: 40px;
+  }
 }
 
 @-webkit-keyframes slide-top {

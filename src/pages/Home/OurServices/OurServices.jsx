@@ -24,7 +24,7 @@ function OurServices() {
     fetchData();
   }, []);
   return (
-    <div className="container" style={{ marginTop: "100px" }}>
+    <div className="container">
       <motion.div
         variants={{
           hidden: { opacity: 0, x: -500 },

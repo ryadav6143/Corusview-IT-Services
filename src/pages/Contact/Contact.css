@@ -190,7 +190,9 @@
   font-family: "Poppins", sans-serif;
 }
 @media screen and (max-width: 320px) {
-  /* Styles for smaller smartphones */
+  .contact-card-1 div:first-child {
+    font-size: 30px;
+  }
 }
 
 @media screen and (min-width: 321px) and (max-width: 480px) {
@@ -199,18 +201,25 @@
     padding: 20px 30px 20px 30px;
   }
   .contact-card-1 div:first-child {
-    font-size: 40px;
+    font-size: 30px;
     line-height: normal;
-    /* text-align: center; */
   }
 }
 
-@media screen and (min-width: 481px) and (max-width: 768px) {
+@media screen and (min-width: 481px) and (max-width: 767px) {
   /* Styles for tablets */
+  .contact-card-1 div:first-child {
+    font-size: 40px;
+    line-height: normal;
+  }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   /* Styles for small desktops and tablets in landscape */
+  .contact-card-1 div:first-child {
+    font-size: 60px;
+    line-height: normal;
+  }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
