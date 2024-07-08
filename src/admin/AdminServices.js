@@ -733,3 +733,14 @@ export const createProducts = async (data) => {
     throw error;
   }
 };
+
+// get apply now form data
+export const getApplicants = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/applicants`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching applicants:', error);
+    throw error;
+  }
+};

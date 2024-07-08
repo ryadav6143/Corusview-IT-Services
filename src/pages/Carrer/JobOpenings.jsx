@@ -2,12 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { currentJobOpenings, getRoles } from "../FrontendServices/Services";
 import "./JobOpenings.css";
-import clr from "../../assets/logos/clear.png";
+import { Grid,Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, MenuItem, Select, InputLabel, FormControl, Typography, Box, Paper } from '@mui/material';
 
 function JobOpenings() {
   const [jobOpenings, setJobOpenings] = useState([]);
   const [roles, setRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    contact: '',
+    appliedFor: '',
+    lastCtc: '',
+    yearOfExperience: '',
+    cv: null,
+  });
+
 
   const getJobRoles = async () => {
     const data = await getRoles();
@@ -40,6 +52,38 @@ function JobOpenings() {
   const handleClearSearch = () => {
     setSearchTerm("");
   };
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      cv: e.target.files[0],
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log('Form data:', formData);
+    // Close the dialog after form submission
+    handleClose();
+  };
+
 
   return (
     <>
@@ -81,8 +125,8 @@ function JobOpenings() {
                     <p className="job-location">{job.location}</p>
                   </div>
                   <div>
-                    <button className="apply-btn">
-                      <Link to="/contact">Apply</Link>
+                    <button className="apply-btn" onClick={handleClickOpen}>
+                     Apply
                     </button>
                   </div>
                 </div>
@@ -91,6 +135,139 @@ function JobOpenings() {
           </div>
         </div>
       </div>
+      <Dialog open={openDialog} onClose={handleClose} maxWidth="sm" fullWidth>
+  <DialogTitle>Apply Now</DialogTitle>
+  <DialogContent>
+    <Box component="form" onSubmit={handleSubmit}>
+    <Grid item xs={12}>
+          <FormControl fullWidth required margin="normal">
+            <InputLabel htmlFor="appliedFor">Applied For</InputLabel>
+            <Select
+              id="appliedFor"
+              name="appliedFor"
+              value={formData.appliedFor}
+              onChange={handleChange}
+              label="Applied For"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {roles.map((role) => (
+                <MenuItem key={role.id} value={role.role}>
+                  {role.role}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Surname"
+            name="surname"
+            value={formData.surname}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Contact"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Last CTC"
+            name="lastCtc"
+            value={formData.lastCtc}
+            onChange={handleChange}
+            fullWidth
+            required
+            margin="normal"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth required margin="normal">
+            <InputLabel htmlFor="yearOfExperience">Year of Experience</InputLabel>
+            <Select
+              id="yearOfExperience"
+              name="yearOfExperience"
+              value={formData.yearOfExperience}
+              onChange={handleChange}
+              label="Year of Experience"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {[1, 2, 3, 4, 5].map((year) => (
+                <MenuItem key={year} value={year}>
+                  {year} year{year > 1 && 's'}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            component="label"
+            fullWidth
+            margin="normal"
+          >
+            Upload CV
+            <input
+              type="file"
+              hidden
+              name="cv"
+              onChange={handleFileChange}
+              required
+            />
+          </Button>
+        </Grid>
+      </Grid>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancel
+        </Button>
+        <Button type="submit" color="primary">
+          Submit
+        </Button>
+      </DialogActions>
+    </Box>
+  </DialogContent>
+</Dialog>
     </>
   );
 }

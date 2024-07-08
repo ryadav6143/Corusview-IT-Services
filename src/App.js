@@ -38,6 +38,8 @@ import EditProductsForm from "./admin/AdminPages/EditProducts/EditProductsForm";
 import AddJobRole from "./admin/AdminPages/EditCarrer/AddJobRole";
 import RecentworkHead from "./admin/AdminPages/EditHome/RecentworkHead";
 import NoPage from "./pages/NotFound/NoPage";
+
+import ApplyNow from "./admin/AdminPages/ApplyNow/ApplyNow";
 function App() {
   return (
     <Main>
@@ -48,6 +50,7 @@ function App() {
           <Route exact path="editaboutus" element={<EditAboutUs />}></Route>
           <Route exact path="editservices" element={<EditServices />}></Route>
           <Route exact path="editslider" element={<EditSlider />}></Route>
+        
           <Route
             exact
             path="editrecentwork"
@@ -130,6 +133,11 @@ function App() {
             path="editProducts"
             element={<EditProductsForm />}
           ></Route>
+          <Route
+            exact
+            path="applynow"
+            element={<ApplyNow />}
+          ></Route>
         </Route>
         <Route exact path="*" element={<NoPage />}></Route>
         <Route exact path="/" element={<Home />}></Route>
@@ -140,6 +148,7 @@ function App() {
         <Route path="test" element={<Test />}></Route>
         <Route path="our-products" element={<Products />}></Route>
         <Route path="test" element={<Test />}></Route>
+      
       </Routes>
     </Main>
   );
