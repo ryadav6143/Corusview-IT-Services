@@ -66,6 +66,7 @@
 .client-details p:nth-child(1) {
   color: black;
   font-weight: 700;
+  margin: 0;
 }
 .client-details p:nth-child(2) {
   color: white;
