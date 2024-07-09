@@ -112,13 +112,26 @@ function JobOpenings({ openDialog, setOpenDialog }) {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type !== "application/pdf") {
+      setNotification({
+        open: true,
+        message: "Only PDF files are allowed",
+        severity: "error",
+      });
+      setFormData({
+        ...formData,
+        drop_cv: null,
+      });
+      setFileName(""); // Clear file name
+      return;
+    }
     setFormData({
       ...formData,
-      drop_cv: e.target.files[0],
+      drop_cv: file,
     });
-    setFileName(e.target.files[0].name); // Set selected file name
+    setFileName(file.name); // Set selected file name
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -364,6 +377,9 @@ function JobOpenings({ openDialog, setOpenDialog }) {
                   }}
                   placeholder="Select your CV file"
                 />
+                  <p style={{ color: "gray", fontSize: "0.8rem" }}>
+                  Only PDF files are allowed.
+                </p>
               </Grid>
             </Grid>
 

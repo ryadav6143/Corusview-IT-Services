@@ -164,8 +164,8 @@ function EditCarrerWYS() {
       <Button variant="contained" color="primary" onClick={handleAddClick} style={{marginTop:"10px"}}>
         Add Career
       </Button>
-      <TableContainer style={{marginTop:"10px"}} component={Paper}>
-        <Table>
+      <TableContainer style={{marginTop:"10px",maxHeight: "500px", overflow: "auto"}} component={Paper}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

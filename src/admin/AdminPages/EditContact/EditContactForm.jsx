@@ -87,8 +87,8 @@ function EditContactForm() {
       <Typography variant="h5" component="h5">
         Contact Entries
       </Typography>
-      <TableContainer component={Paper} style={{ marginTop: "10px" }}>
-        <Table>
+      <TableContainer component={Paper} style={{ marginTop: "10px",maxHeight: "500px", overflow: "auto" }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

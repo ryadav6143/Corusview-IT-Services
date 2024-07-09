@@ -225,8 +225,8 @@ export default function EditProductsForm() {
       <Button style={{marginTop:"10px"}} variant="contained" color="primary" onClick={handleAddClick}>
         Add Products
       </Button>
-      <TableContainer component={Paper} style={{marginTop:"10px"}}>
-        <Table>
+      <TableContainer component={Paper} style={{marginTop:"10px",maxHeight: "500px", overflow: "auto"}}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

@@ -270,8 +270,8 @@ function EditJobOpening() {
       </FormControl>
 
       <Paper>
-        <TableContainer style={{ marginTop: "30px" }}>
-          <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table">
+        <TableContainer style={{ marginTop: "30px",maxHeight: "500px", overflow: "auto" }}>
+          <Table sx={{ minWidth: 650 }} aria-label="Job Openings Table" stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>

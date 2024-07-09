@@ -192,8 +192,8 @@ function ApplyNow() {
           ))}
         </Select>
       </FormControl>
-      <TableContainer component={Paper} style={{ marginTop: "20px" }}>
-        <Table>
+      <TableContainer component={Paper} style={{ marginTop: "20px", maxHeight: "500px", overflow: "auto" }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>S No.</TableCell>

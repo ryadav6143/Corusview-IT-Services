@@ -162,8 +162,8 @@ function EditServiceSolution() {
         Add New Solution
       </Button>
       {/* Table of Solutions */}
-      <TableContainer component={Paper} style={{marginTop:"10px"}}>
-        <Table>
+      <TableContainer component={Paper} style={{marginTop:"10px",maxHeight: "500px", overflow: "auto"}}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

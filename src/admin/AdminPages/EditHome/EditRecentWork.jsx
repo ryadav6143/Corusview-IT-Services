@@ -214,8 +214,8 @@ function EditRecentWork() {
         Add New Work
       </Button>
 
-      <TableContainer component={Paper} style={{marginTop:"10px"}}>
-        <Table>
+      <TableContainer component={Paper} style={{marginTop:"10px",maxHeight: "500px", overflow: "auto"}}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>

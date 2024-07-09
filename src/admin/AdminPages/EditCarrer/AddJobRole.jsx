@@ -154,8 +154,8 @@ const AddJobRole = () => {
         </DialogActions>
       </Dialog>
 
-      <TableContainer component={Paper} style={{ marginTop: "10px" }}>
-        <Table aria-label="Job Roles Table">
+      <TableContainer component={Paper} style={{ marginTop: "10px" ,maxHeight: "500px", overflow: "auto"}}>
+        <Table aria-label="Job Roles Table" stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
