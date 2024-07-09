@@ -68,7 +68,7 @@ function Customer() {
                       />
                       <div className="client-details">
                         
-                      <p>{testimonial.name}</p>
+                       <p>{testimonial.name}</p>
                         <p>{testimonial.designation}</p>
                        
                       </div>
