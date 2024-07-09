@@ -86,8 +86,9 @@ function EditSlider() {
       id: null,
       description: "",
       img: "",
-      designation: "",
       name: "",
+      designation: "",
+     
     });
   };
 
