@@ -6,6 +6,7 @@ import {
   getPositions,
 } from "../FrontendServices/Services";
 import "./JobOpenings.css";
+
 import {
   Grid,
   Dialog,
@@ -20,7 +21,7 @@ import {
   FormControl,
   Box,
 } from "@mui/material";
-
+import Notification from "../../Notification/Notification";
 function JobOpenings({ openDialog, setOpenDialog }) {
   const [jobOpenings, setJobOpenings] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -39,6 +40,12 @@ function JobOpenings({ openDialog, setOpenDialog }) {
     drop_cv: null,
   });
   const [fileName, setFileName] = useState(""); // State to store selected file name
+
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "info",
+  });
 
   const getJobRoles = async () => {
     const data = await getRoles();
@@ -115,6 +122,21 @@ function JobOpenings({ openDialog, setOpenDialog }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      !formData.name ||
+      !formData.surname ||
+      !formData.email ||
+      !formData.contact ||
+      !formData.drop_cv
+    ) {
+      setNotification({
+        open: true,
+        message: "This field is required",
+        severity: "error",
+      });
+      return;
+    }
+
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("name", formData.name);
     formDataToSubmit.append("surname", formData.surname);
@@ -129,10 +151,24 @@ function JobOpenings({ openDialog, setOpenDialog }) {
     try {
       const response = await addApplicants(formDataToSubmit);
       console.log("Form submitted successfully:", response);
+      setNotification({
+        open: true,
+        message: response.message,
+        severity: "success",
+      });
       handleClose();
     } catch (error) {
       console.error("Error submitting form:", error);
+      setNotification({
+        open: true,
+        message: error.response?.data?.message,
+        severity: "error",
+      });
     }
+  };
+
+  const handleNotificationClose = () => {
+    setNotification({ ...notification, open: false });
   };
 
   return (
@@ -335,14 +371,19 @@ function JobOpenings({ openDialog, setOpenDialog }) {
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button onClick={handleSubmit} type="submit" color="primary">
                 Submit
               </Button>
             </DialogActions>
           </Box>
         </DialogContent>
       </Dialog>
-      
+      <Notification
+        open={notification.open}
+        handleClose={handleNotificationClose}
+        alertMessage={notification.message}
+        alertSeverity={notification.severity}
+      />
     </>
   );
 }
